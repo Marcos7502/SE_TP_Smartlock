@@ -31,9 +31,9 @@ Cada vez que se accede o se intenta acceder al edificio se envia un resumen a tr
 Plataforma de desarrollo: NUCLEO-F429ZI
 
 Periféricos a utilizar:
--LED 1: Se encenderá para indicar que se desbloquea la puerta
--LED 2: Se encenderá para indicar que se bloquea la puerta
--UART1: Se utiliza para leer el código ID del lector RFID
--UART2: Se utiliza para enviar información de estado del sistema a la PC y para escribir la tarjeta
--USER BUTTON: Fuerza el bloqueo de la puerta
+- LED 1: Se encenderá para indicar que se desbloquea la puerta
+- LED 2: Se encenderá para indicar que se bloquea la puerta
+- UART1: Se utiliza para leer el código ID del lector RFID
+- UART2: Se utiliza para enviar información de estado del sistema a la PC y para escribir la tarjeta
+- USER BUTTON: Fuerza el bloqueo de la puerta
 
