@@ -5,6 +5,8 @@ Título:
 
 Alumno: Marcos Gómez Villafañe
 
+Padrón: 105055
+
 Objetivo: Desarrollar una cerradura inteligente que permita acceder con tarjeta y, en caso de visita sin tarjeta, permita hablar por telefono con la visita.
 
 Descripción: 
