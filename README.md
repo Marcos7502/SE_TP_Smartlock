@@ -18,7 +18,7 @@ Adicionalmente, el sistema deberá tener acceso a una computadora para que se pu
 El lector de la tarjeta rfid es como el que se muestra debajo:
 - https://articulo.mercadolibre.com.ar/MLA-884349718-kit-rfid-rc522-con-lector-llavero-tarjeta-para-arduino-_JM#polycard_client=search-nordic&position=8&search_layout=grid&type=item&tracking_id=086e1311-712d-4cdf-94db-4764c49c0e53
 
-
+Observaciones:
 - IMPORTANTE: no se controla ningún motor en esta primera versión del sistema.
 - IMPORTANTE: no se implementa ningún sistema de habla con visitas que no tengan el tag en esta versión del sistema.
 - IMPORTANTE: no se implementa ningún tipo de conexión wifi para transmitir datos
