@@ -37,5 +37,7 @@ Periféricos a utilizar:
 - UART2: Se utiliza para enviar información de estado del sistema a la PC y para escribir una contraseña a la tarjeta
 - USER BUTTON: Fuerza el bloqueo de la puerta
 
+Diagrama en bloques:
+
 ![Sistemas Embebidos TP1 drawio](https://github.com/user-attachments/assets/3cda84e4-b717-47ed-8139-8f63a08ccd90)
 
