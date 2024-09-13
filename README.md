@@ -47,3 +47,4 @@ Periféricos a utilizar:
 
 ![Sistemas Embebidos TP1 drawio](https://github.com/user-attachments/assets/3cda84e4-b717-47ed-8139-8f63a08ccd90)
 
+Diagrama de flujos
