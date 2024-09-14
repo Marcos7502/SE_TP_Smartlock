@@ -70,7 +70,7 @@ A continuación, se describe el contenido de este Trabajo Práctico:
 1) Algunas de las condiciones de if del puntero rfid_content no funcionan correctamente y por eso no se escriben los mensajes en la computadora.
 
 ## Resultado
-El siguiente video muestra el funcionamiento para leer una tarjeta con el Lector RFID. El lector guardó la tarjeta y al acercarla nuevamente se prende el led indicando que abrio la puerta.
+El siguiente video muestra que el ID de la tarjeta fue leído y guardado por el sistema. Al acercar la tarjeta nuevamente, se prende el led verde indicando que abrió la puerta.
 
 https://github.com/user-attachments/assets/06ab2fae-fa66-4fb5-a746-cb7c03a149e0
 
