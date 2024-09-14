@@ -7,6 +7,7 @@
 
 char allowed_id[20] = "";  // ID permitido
 char reading_rfid[20] = "";
+char* rfid_content = nullptr;
 int timer_door_open;
 bool dooropen = false;
 bool wrong_id = false;
@@ -32,7 +33,6 @@ int main()
 {   
     doorblockbutton.mode(PullDown);
     RFID_READER.PCD_Init();
-    uartInit();
     doorTimer.reset();
     open_door = false;
 
@@ -49,12 +49,16 @@ int main()
                 open_door = false; 
 
             }
-            char* rfid_content = RFID_read(RFID_READER); 
-            strcpy(reading_rfid, rfid_content);
+            rfid_content = RFID_read(RFID_READER); 
+            if(rfid_content != nullptr){
+                strcpy(reading_rfid, rfid_content);
+            }
             uartTask();
             if(save_id == true && rfid_content != nullptr){
                 strcpy(allowed_id, rfid_content);
                 save_id = false;
+                uartUsb.write("Saved ID\r\n",8);
+
             }
             if(rfid_content != nullptr){
                 compare_content_read_rfid_to_keys();
@@ -83,20 +87,20 @@ int main()
         
     }
 }
-void uartInit(){
-    if( uartUsb.readable() ){
-        uartUsb.write( "Available command:\r\n", 20 );
-        uartUsb.write( "Press '1' to save card\r\n\r\n", 36 );
-    }
-}
+
 void uartTask(){
     char receivedChar = '\0';
     if( uartUsb.readable() ){
+       if(rfid_content != nullptr){
+           uartUsb.write( "Read ID\r\n", 9 );
+           uartUsb.write( rfid_content, strlen(rfid_content) );
+           uartUsb.write( "To save Tag press 1\r\n", 23 );
+       }
+        
        uartUsb.read( &receivedChar, 1 );
-       
        if(receivedChar == '1'){
             save_id = true;
-            uartUsb.write("\r\nRecieved char\r\n",15);
+            uartUsb.write("Recieved char\r\n",15);
         }
     }
     
