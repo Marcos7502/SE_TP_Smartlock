@@ -9,7 +9,7 @@ Padrón: 105055
 
 Objetivo Final: Desarrollar una cerradura inteligente que permita acceder con tarjeta y, en caso de visita sin tarjeta, permita hablar por telefono con la visita.
 
-## Descripción: 
+## Descripción 
 
 Para el TP1 se desarrollará la lectura de tarjetas mediante un lector RFID y la visualización del estado de la cerradura (Bloqueado o Desbloqueado)
 
