@@ -62,7 +62,7 @@ A continuación, se describe el contenido de este Trabajo Práctico:
    - Si no se desea guardar, no se escribe nada en la memoria
    - Si el ID de la tarjeta leida es igual al ID guardado, se abre la puerta y se inicializa un timer
    - Si el tiempo del timer es mayor a 10 segundos,se cierra la puerta
-   - En todo el proceso, si se aprieta el botón para cerrar la puerta se cierra la puerta
+   - En todo el proceso, si se presiona el botón para cerrar la puerta se cierra la puerta
 
 ![Estados TP1](https://github.com/user-attachments/assets/62f4d531-08d9-4f3d-b6ac-242f25beefea)
 
