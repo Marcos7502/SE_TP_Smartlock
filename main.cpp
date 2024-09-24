@@ -95,6 +95,7 @@ int main()
     }
 }
 
+// Module: uart communications  -------------------------
 void uartShowRFID(){
     char receivedChar = '\0';
     if( uartUsb.readable() ){
@@ -112,7 +113,7 @@ void uartShowRFID(){
     }
     
 }
-
+// Module: RFID reader  -------------------------
 char* RFID_read(MFRC522& rfid_reader){
    static char id[20] = ""; // Buffer estático para almacenar el ID leído
 
@@ -127,6 +128,8 @@ char* RFID_read(MFRC522& rfid_reader){
     }
     return nullptr;
 }
+
+
 void compare_content_read_rfid_to_keys(){
     if(strcmp(reading_rfid, allowed_id) == 0){
         open_door = true;
