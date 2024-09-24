@@ -1,36 +1,54 @@
 #include "keypad.h"
 
-char Keyboard::matrixKeypadUpdate(){
+char Keypad::matrixKeypadUpdate(){
     char keyDetected = '\0';
     char keyReleased = '\0';
+    static char matrixKeypadLastkeyReleased = '\0';
+
+
     switch( matrixKeypadState ) {
     case MATRIX_KEYPAD_SCANNING:
-        keyDetected = matrixKeypadScan();
+        keyDetected = _matrixKeypadScan();
         if( keyDetected != '\0' ) {
             matrixKeypadLastkeyReleased = keyDetected;
-            accumulatedDebounceMatrixKeypadTime = 0;
+            KeypadDebouncetimer.start();
             matrixKeypadState = MATRIX_KEYPAD_DEBOUNCE;
         }
         break;
     case MATRIX_KEYPAD_DEBOUNCE:
-        if( accumulatedDebounceMatrixKeypadTime >=
+        time_debounce = KeypadDebouncetimer.read_ms();
+        if( time_debounce >=
             DEBOUNCE_BUTTON_TIME_MS ) {
-            keyDetected = matrixKeypadScan();
+            keyDetected = _matrixKeypadScan();
             if( keyDetected == matrixKeypadLastkeyReleased ) {
                 matrixKeypadState = MATRIX_KEYPAD_KEY_HOLD_PRESSED;
            } else {
                 matrixKeypadState = MATRIX_KEYPAD_SCANNING;
             }
         }
-        accumulatedDebounceMatrixKeypadTime =
-            accumulatedDebounceMatrixKeypadTime + TIME_INCREMENT_MS;
-
+        break;
+    case MATRIX_KEYPAD_KEY_HOLD_PRESSED:
+        keyDetected = _matrixKeypadScan();
+        if( keyDetected != matrixKeypadLastkeyReleased ) {
+            if( keyDetected == '\0' ) {
+                keyReleased = matrixKeypadLastkeyReleased;
+            }
+            matrixKeypadState = MATRIX_KEYPAD_SCANNING;
+        }
+        break;
+    default:
+        _matrixKeypadInit();
+        break;
+    }
+    return keyReleased;
 }
 
-int Keyboard::subtract(int a, int b) {
-    return a - b;
+char Keypad::_matrixKeypadScan() {
+  return '\0';
 }
-
-char matrixKeypadUpdate()
- {
-    
+void Keypad::_matrixKeypadInit() {
+  
+}
+void Keypad::set_debounce(int ms) {
+    DEBOUNCE_BUTTON_TIME_MS = ms;
+}
