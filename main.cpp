@@ -98,13 +98,13 @@ int main()
 // Module: uart communications  -------------------------
 void uartShowRFID(){
     char receivedChar = '\0';
+    
+    if(rfid_content != nullptr){
+        uartUsb.write( "Read ID\r\n", 9 );
+        uartUsb.write( rfid_content, strlen(rfid_content) );
+        uartUsb.write( "To save Tag press 1\r\n", 23 );
+    }
     if( uartUsb.readable() ){
-       if(rfid_content != nullptr){
-           uartUsb.write( "Read ID\r\n", 9 );
-           uartUsb.write( rfid_content, strlen(rfid_content) );
-           uartUsb.write( "To save Tag press 1\r\n", 23 );
-       }
-        
        uartUsb.read( &receivedChar, 1 );
        if(receivedChar == '1'){
             save_id = true;
