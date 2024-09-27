@@ -16,13 +16,20 @@ char allowed_id[20] = "";  // ID permitido
 char reading_rfid[20] = "";
 char* rfid_content = nullptr;
 int time_door_open;
-bool dooropen = false;
 bool wrong_id = false;
-bool open_door = false;
 bool save_id = false;
 
-DigitalIn doorblockbutton (PIN_BUTTON_DOOR_BLOCK);
+enum Door{
+    DOOR_OPENING,
+    DOOR_OPEN,
+    DOOR_CLOSING,
+    DOOR_CLOSED
+};
 
+Door door_state;
+
+DigitalIn doorblockbutton (PIN_BUTTON_DOOR_BLOCK);
+DigitalIn magnetsensor (PIN_MAGNET_SENSOR_1);
 
 DigitalOut doorblockedLED(PIN_LED_DOOR_BLOCKED);
 DigitalOut dooropenLED(PIN_LED_DOOR_OPEN);
@@ -48,14 +55,13 @@ int main()
         time_door_open = doorTimer.read_ms();
         if( (time_door_open!=0) && (time_door_open < 10000)){
             if(doorblockbutton.read() == ON){
-                open_door = false; 
+                door_state = DOOR_CLOSING; 
             }
         }
         else{
             if(time_door_open>=10000){
                 
-                open_door = false; 
-
+                door_state = DOOR_CLOSING; 
             }
             rfid_content = RFID_read(RFID_READER); 
             if(rfid_content != nullptr){
@@ -66,29 +72,37 @@ int main()
                 strncpy(allowed_id, rfid_content,sizeof(allowed_id));
                 save_id = false;
                 uartUsb.write("Saved ID\r\n",8);
-
             }
             if(rfid_content != nullptr){
                 compare_content_read_rfid_to_keys();
             }
              
             if(wrong_id == true){
-                open_door = false;
+                door_state = DOOR_CLOSING;
                 wrong_id = false;
             }
             if(doorblockbutton.read() == ON){
-                open_door = false; 
+                door_state = DOOR_CLOSING; 
             }
         }
-        
+        if(door_state == DOOR_OPEN){
+            door_state = DOOR_OPEN;
+        }
 
-        if(open_door == true){
+        if(door_state == DOOR_OPEN){
             doorblockedLED = OFF;
             dooropenLED = ON;
         }
-        if(open_door == false){
+        if(door_state == DOOR_CLOSING){
             doorTimer.stop();
             doorTimer.reset();
+            if(magnetsensor == ON){
+                door_state = DOOR_CLOSED;
+            }
+            
+            
+        }
+        if(door_state == DOOR_CLOSED){
             doorblockedLED = ON;
             dooropenLED = OFF;
         }
@@ -98,9 +112,13 @@ int main()
 // Module: initialization -------------------------
 void system_init(){
     doorblockbutton.mode(PullDown);
+    magnetsensor.mode(PullDown);
+
     RFID_READER.PCD_Init();
+
     doorTimer.reset();
-    open_door = false;
+
+    door_state=DOOR_CLOSED;
 }
 
 
@@ -141,7 +159,7 @@ char* RFID_read(MFRC522& rfid_reader){
 
 void compare_content_read_rfid_to_keys(){
     if(strcmp(reading_rfid, allowed_id) == 0){
-        open_door = true;
+        door_state = DOOR_OPENING;
         wrong_id = false;
         doorTimer.start(); 
     }
