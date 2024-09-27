@@ -22,6 +22,8 @@ bool open_door = false;
 bool save_id = false;
 
 DigitalIn doorblockbutton (PIN_BUTTON_DOOR_BLOCK);
+
+
 DigitalOut doorblockedLED(PIN_LED_DOOR_BLOCKED);
 DigitalOut dooropenLED(PIN_LED_DOOR_OPEN);
 
@@ -30,6 +32,7 @@ UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 MFRC522    RFID_READER   (PIN_RFID_MOSI, PIN_RFID_MISO, PIN_RFID_SCK, PIN_RFID_CS, PIN_RFID_RESET);
 
 
+void system_init();
 void uartShowRFID();
 char* RFID_read(MFRC522& rfid_reader);
 void compare_content_read_rfid_to_keys();
@@ -38,10 +41,8 @@ Timer doorTimer;
 
 int main()
 {   
-    doorblockbutton.mode(PullDown);
-    RFID_READER.PCD_Init();
-    doorTimer.reset();
-    open_door = false;
+    system_init();
+    
 
     while (true) {
         time_door_open = doorTimer.read_ms();
@@ -94,6 +95,14 @@ int main()
         
     }
 }
+// Module: initialization -------------------------
+void system_init(){
+    doorblockbutton.mode(PullDown);
+    RFID_READER.PCD_Init();
+    doorTimer.reset();
+    open_door = false;
+}
+
 
 // Module: uart communications  -------------------------
 void uartShowRFID(){
