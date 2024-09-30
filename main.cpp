@@ -65,13 +65,13 @@ int main(){
 
     while (true) {
         time_door_open = doorTimer.read_ms();
-        if( (time_door_open!=0) && (time_door_open < 10000)){
+        if( (time_door_open!=0) && (time_door_open < TIMEOUT_DOOR_OPEN)){
             if(doorblockbutton.read() == ON){
                 door_state = DOOR_CLOSING; 
             }
         }
         else{
-            if(time_door_open>=10000){
+            if(time_door_open>=TIMEOUT_DOOR_OPEN){
                 
                 door_state = DOOR_CLOSING; 
             }
@@ -117,7 +117,7 @@ int main(){
                     }
 
                 }
-                if(CodeTimeoutTimer.read_ms() > 15000){
+                if(CodeTimeoutTimer.read_ms() > TIMEOUT_CODE){
                     key_counter = 0;
                     CodeTimeoutTimer.stop();
                     CodeTimeoutTimer.reset();
