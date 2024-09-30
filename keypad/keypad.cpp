@@ -1,5 +1,18 @@
 #include "keypad.h"
+#include "mbed.h"
 #include "arm_book_lib.h"
+
+Keypad::Keypad( PinName* rowPinslist, PinName* colPinslist){
+    matrixKeypadState = MATRIX_KEYPAD_SCANNING;
+    for (int i = 0; i < KEYPAD_NUMBER_OF_ROWS; i++) {
+        keypadRowPins[i] =  rowPinslist[i];
+    }
+
+    for (int i = 0; i < KEYPAD_NUMBER_OF_COLS; i++) {
+        keypadColPins[i] = colPinslist[i];
+        (keypadColPins[i]).mode(PullUp);
+    }
+}
 
 char Keypad::matrixKeypadUpdate(){
     char keyDetected = '\0';

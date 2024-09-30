@@ -11,10 +11,17 @@ Link: https://os.mbed.com/teams/Project5_Software/code/RFID-RC522/docs/tip/MFRC5
 */
 #include <string.h>
 #include <SPI.h>
+#include "keypad/keypad.h"
 
 char allowed_id[20] = "";  // ID permitido
 char reading_rfid[20] = "";
 char* rfid_content = nullptr;
+
+char keyReleased = '\0';
+int key_counter = 0;
+char keypad_code[4] = {'1' ,'2' ,'3' ,'4'}; 
+char keypad_sequence_read[4] = {'0','0','0','0'};
+
 int time_door_open;
 bool wrong_id = false;
 bool save_id = false;
@@ -26,10 +33,11 @@ enum Door{
     DOOR_CLOSED
 };
 
+
 Door door_state;
 
-DigitalIn doorblockbutton (PIN_BUTTON_DOOR_BLOCK);
-DigitalIn magnetsensor (PIN_MAGNET_SENSOR_1);
+DigitalIn doorblockbutton(PIN_BUTTON_DOOR_BLOCK);
+DigitalIn magnetsensor(PIN_MAGNET_SENSOR_1);
 
 DigitalOut doorblockedLED(PIN_LED_DOOR_BLOCKED);
 DigitalOut dooropenLED(PIN_LED_DOOR_OPEN);
@@ -45,11 +53,15 @@ char* RFID_read(MFRC522& rfid_reader);
 void compare_content_read_rfid_to_keys();
 
 Timer doorTimer;
+Timer CodeTimeoutTimer;
 
-int main()
-{   
+PinName  keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
+PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
+
+Keypad Keypad_door(keypadRowPins,keypadColPins);
+
+int main(){   
     system_init();
-    
 
     while (true) {
         time_door_open = doorTimer.read_ms();
@@ -76,11 +88,47 @@ int main()
             if(rfid_content != nullptr){
                 compare_content_read_rfid_to_keys();
             }
-             
+                                   
+            if(door_state != DOOR_OPENING & wrong_id == false){
+                keyReleased = Keypad_door.matrixKeypadUpdate();
+                if(keyReleased != '\0'){
+                    if(key_counter == 0){
+                        CodeTimeoutTimer.start();
+                    }
+                    keypad_sequence_read[key_counter] = keyReleased;
+
+                    if(key_counter == 3){
+                        CodeTimeoutTimer.stop();
+                        CodeTimeoutTimer.reset();
+                        key_counter = 0;
+
+                        for (int i = 0; i < 4; i++) {
+                            if (keypad_code[i] != keypad_sequence_read[i]) {
+                                wrong_id = true;
+                                break;
+                            }
+                        }
+                        if(wrong_id == false){
+                            door_state = DOOR_OPENING;
+                        }
+                    }
+                    else{
+                        key_counter += 1;
+                    }
+
+                }
+                if(CodeTimeoutTimer.read_ms() > 15000){
+                    key_counter = 0;
+                    CodeTimeoutTimer.stop();
+                    CodeTimeoutTimer.reset();
+                    wrong_id =true;
+                }
+            }
             if(wrong_id == true){
                 door_state = DOOR_CLOSING;
                 wrong_id = false;
             }
+            
             if(doorblockbutton.read() == ON){
                 door_state = DOOR_CLOSING; 
             }
@@ -119,6 +167,7 @@ void system_init(){
     doorTimer.reset();
 
     door_state=DOOR_CLOSED;
+
 }
 
 

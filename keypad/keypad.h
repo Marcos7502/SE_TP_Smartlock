@@ -1,17 +1,18 @@
 #ifndef KEYPAD_H
 #define KEYPAD_H
 #include "mbed.h"
+#include "global_defines.h"
 
-#define KEYPAD_NUMBER_OF_ROWS                    4
-#define KEYPAD_NUMBER_OF_COLS                    4
 
 class Keypad{
-    DigitalOut keypadRowPins[KEYPAD_NUMBER_OF_ROWS];
-    DigitalIn keypadColPins[KEYPAD_NUMBER_OF_COLS] ;
+    
     public:
+        Keypad(PinName rowPins[], PinName colPins[]);
         char matrixKeypadUpdate();
         void set_debounce(int ms);
     private:
+        DigitalOut keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
+        DigitalIn keypadColPins[KEYPAD_NUMBER_OF_COLS] = {PB_12, PB_13, PB_15, PC_6};
         typedef enum {
             MATRIX_KEYPAD_SCANNING,
             MATRIX_KEYPAD_DEBOUNCE,
