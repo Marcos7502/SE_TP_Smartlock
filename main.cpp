@@ -16,12 +16,14 @@ Link: https://os.mbed.com/teams/Project5_Software/code/RFID-RC522/docs/tip/MFRC5
 char allowed_id[20] = "";  // ID permitido
 char reading_rfid[20] = "";
 char* rfid_content = nullptr;
+char UsbBuffer[3] = ""; 
 
 char keyReleased = '\0';
 int key_counter = 0;
 char keypad_code[4] = {'1' ,'2' ,'3' ,'4'}; 
 char keypad_sequence_read[4] = {'0','0','0','0'};
 
+int blinks_counter = 0;
 int time_door_open;
 bool wrong_id = false;
 bool save_id = false;
@@ -51,9 +53,11 @@ void system_init();
 void uartShowRFID();
 char* RFID_read(MFRC522& rfid_reader);
 void compare_content_read_rfid_to_keys();
+void blink_leds();
 
-Timer doorTimer;
+Timer DoorOpenTimer;
 Timer CodeTimeoutTimer;
+Timer BlinkingLedTimer; //No es el mejor uso de un timer pero no se me ocurre otra forma
 
 PinName  keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
 PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
@@ -64,7 +68,7 @@ int main(){
     system_init();
 
     while (true) {
-        time_door_open = doorTimer.read_ms();
+        time_door_open = DoorOpenTimer.read_ms();
         if( (time_door_open!=0) && (time_door_open < TIMEOUT_DOOR_OPEN)){
             if(doorblockbutton.read() == ON){
                 door_state = DOOR_CLOSING; 
@@ -72,7 +76,6 @@ int main(){
         }
         else{
             if(time_door_open>=TIMEOUT_DOOR_OPEN){
-                
                 door_state = DOOR_CLOSING; 
             }
             rfid_content = RFID_read(RFID_READER); 
@@ -91,7 +94,13 @@ int main(){
                                    
             if(door_state != DOOR_OPENING & wrong_id == false){
                 keyReleased = Keypad_door.matrixKeypadUpdate();
+                
                 if(keyReleased != '\0'){
+                    UsbBuffer[0] = keyReleased;
+                    UsbBuffer[1] = '\r';
+                    UsbBuffer[2] = '\n';
+                    uartUsb.write( "Read Key:", 9 );
+                    uartUsb.write( UsbBuffer , sizeof(UsbBuffer));
                     if(key_counter == 0){
                         CodeTimeoutTimer.start();
                     }
@@ -126,6 +135,8 @@ int main(){
             }
             if(wrong_id == true){
                 door_state = DOOR_CLOSING;
+                blinks_counter = WRONG_ID_BLINKS;
+                uartUsb.write("Wrong ID!\n",9);
                 wrong_id = false;
             }
             
@@ -133,7 +144,8 @@ int main(){
                 door_state = DOOR_CLOSING; 
             }
         }
-        if(door_state == DOOR_OPEN){
+        if(door_state == DOOR_OPENING){
+            DoorOpenTimer.start();
             door_state = DOOR_OPEN;
         }
 
@@ -142,29 +154,50 @@ int main(){
             dooropenLED = ON;
         }
         if(door_state == DOOR_CLOSING){
-            doorTimer.stop();
-            doorTimer.reset();
+            DoorOpenTimer.stop();
+            DoorOpenTimer.reset();
+                        
+            if(magnetsensor == OFF){
+                dooropenLED = ON;
+                blinks_counter = -1;
+                blink_leds();
+                     
+            }
             if(magnetsensor == ON){
+                if(blinks_counter <0){
+                    blinks_counter = 0;
+                }
+                //activar cerradura
                 door_state = DOOR_CLOSED;
             }
             
-            
         }
         if(door_state == DOOR_CLOSED){
-            doorblockedLED = ON;
-            dooropenLED = OFF;
+            if(blinks_counter > 0){
+                blink_leds();
+            }
+            else{
+                BlinkingLedTimer.stop();
+                BlinkingLedTimer.reset();
+                doorblockedLED = ON;
+                dooropenLED = OFF;
+            }
+
+            
         }
         
     }
 }
 // Module: initialization -------------------------
 void system_init(){
+    DoorOpenTimer.reset();
+    BlinkingLedTimer.reset();
     doorblockbutton.mode(PullDown);
     magnetsensor.mode(PullDown);
 
     RFID_READER.PCD_Init();
 
-    doorTimer.reset();
+    DoorOpenTimer.reset();
 
     door_state=DOOR_CLOSED;
 
@@ -210,9 +243,28 @@ void compare_content_read_rfid_to_keys(){
     if(strcmp(reading_rfid, allowed_id) == 0){
         door_state = DOOR_OPENING;
         wrong_id = false;
-        doorTimer.start(); 
     }
     if(strcmp(reading_rfid, allowed_id) != 0){
         wrong_id = true;
     }
+}
+void blink_leds(){
+    if(blinks_counter !=0){
+        if(BlinkingLedTimer.read_ms()==0){
+            BlinkingLedTimer.start();
+        }
+        if(BlinkingLedTimer.read_ms()>1000){
+            doorblockedLED = !doorblockedLED;
+            BlinkingLedTimer.reset();
+            if(blinks_counter > 0){
+                blinks_counter = blinks_counter - 1;
+            }
+        }
+        
+    }
+    if(blinks_counter == 0){
+        BlinkingLedTimer.reset();
+        BlinkingLedTimer.stop();
+    }
+    
 }
