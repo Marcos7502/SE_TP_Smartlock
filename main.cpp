@@ -75,8 +75,7 @@ int main(){
 
         switch(door_state){
             case DOOR_CLOSED:
-                doorblockedLED = ON;
-                dooropenLED = OFF;
+                
 
                 rfid_content = RFID_read(RFID_READER);
                 if(rfid_content != nullptr){
@@ -93,11 +92,12 @@ int main(){
                 }
                 keyReleased = Keypad_door.matrixKeypadUpdate();
                 if(keyReleased != '\0'){
-                    UsbBuffer[0] = keyReleased;
-                    UsbBuffer[1] = '\r';
-                    UsbBuffer[2] = '\n';
-                    UARTUsb.write( "Read Key:", 9 );
-                    UARTUsb.write( UsbBuffer , 3);
+                    // DEBUGGING
+                    // UsbBuffer[0] = keyReleased;
+                    // UsbBuffer[1] = '\r';
+                    // UsbBuffer[2] = '\n';
+                    // UARTUsb.write( "Read Key:", 9 );
+                    // UARTUsb.write( UsbBuffer , 3);
                     if(key_counter == 0){
                         CodeTimeoutTimer.start();
                     }
@@ -123,7 +123,7 @@ int main(){
                     }
 
                 }
-                if((door_state!= DOOR_OPENING) & (CodeTimeoutTimer.read_ms() > TIMEOUT_CODE)){
+                if((door_state!= DOOR_OPENING) && (CodeTimeoutTimer.read_ms() > TIMEOUT_CODE)){
                     key_counter = 0;
                     CodeTimeoutTimer.stop();
                     CodeTimeoutTimer.reset();
@@ -131,16 +131,27 @@ int main(){
                 } 
                 if(wrong_id == true){
                     blinks_counter = WRONG_ID_BLINKS;
-                    UARTUsb.write("Wrong ID!\n",9);
+                    BlinkingLedTimer.start();
+
+                    time_t seconds = time(NULL);
+                    UARTUsb.write("Door 1 wrong ID introduced at ",30);
+                    strftime(UsbBuffer, 24, "%c", localtime(&seconds));
+                    UARTUsb.write(UsbBuffer,24);
+                    UARTUsb.write("\r\n",2);
+
                     wrong_id = false;
+                    
                 }
                 if(blinks_counter != 0){
                     blink_leds();
                 }
                 else{
-                    BlinkingLedTimer.stop();
-                    BlinkingLedTimer.reset();
+                    doorblockedLED = ON;
+                    dooropenLED = OFF;
                 }
+                
+                
+                break;
             case DOOR_OPENING:
                 UART_send_access_message();
                 DoorOpenTimer.start();
@@ -148,7 +159,7 @@ int main(){
                 if(doorblockbutton.read() == ON){
                     door_state = DOOR_CLOSING; 
                 }
-
+                break;
             case DOOR_OPEN:
                 doorblockedLED = OFF;
                 dooropenLED = ON;
@@ -160,17 +171,19 @@ int main(){
                 if(time_door_open>=TIMEOUT_DOOR_OPEN){
                     door_state = DOOR_CLOSING; 
                 }
-                
+                break;
             case DOOR_CLOSING:
                          
                 if(magnetsensor == OFF){
                     dooropenLED = ON;
                     if(doorleftopen == false){
                         blinks_counter = -1;
+                        BlinkingLedTimer.start();
                         doorleftopen = true;
                         DoorOpenTimer.start();
                         DoorOpenTimer.reset();
                         UART_send_door_left_open_message();
+                        
                     }
                     if(doorleftopen == true){
                         blink_leds();
@@ -189,32 +202,32 @@ int main(){
                     //activar cerradura
                     door_state = DOOR_CLOSED;
                 }
+                break;
         }
-        
-        
-       
-        
-            
-            
-        
-      
-
-        
-        
-        
+   
     }
 }
 // Module: initialization -------------------------
 void system_init(){
     set_time(1256729737);
-    DoorOpenTimer.reset();
-    BlinkingLedTimer.reset();
+    key_counter = 0;
+    rfid_content = nullptr;
+
     doorblockbutton.mode(PullDown);
     magnetsensor.mode(PullDown);
 
-    RFID_READER.PCD_Init();
+    CodeTimeoutTimer.reset();
+    CodeTimeoutTimer.stop();
 
     DoorOpenTimer.reset();
+    DoorOpenTimer.stop();
+
+    BlinkingLedTimer.reset();
+    BlinkingLedTimer.stop();
+    
+
+    RFID_READER.PCD_Init();
+
 
     door_state=DOOR_CLOSED;
 
@@ -251,11 +264,9 @@ void compare_content_read_rfid_to_keys(){
 
 // Module: Blink Leds (wrong id, door open)  -------------------------
 void blink_leds(){
-    if(blinks_counter !=0){
-        if(BlinkingLedTimer.read_ms()==0){
-            BlinkingLedTimer.start();
-        }
-        if(BlinkingLedTimer.read_ms()>1000){
+    if(blinks_counter != 0){
+        
+        if(BlinkingLedTimer.read_ms()>=LED_BLINK_INTERVAL){
             doorblockedLED = !doorblockedLED;
             BlinkingLedTimer.reset();
             if(blinks_counter > 0){
@@ -278,7 +289,7 @@ void UARTShowRFID(){
     if(rfid_content != nullptr){
         UARTUsb.write( "Read ID: ", 9 );
         UARTUsb.write( rfid_content, strlen(rfid_content) );
-        UARTUsb.write( "\r\n ", 0 );
+        UARTUsb.write( "\r\n ", 2 );
         UARTUsb.write( "To save Tag press 1\r\n", 23 );
     }
     if( UARTUsb.readable() ){
@@ -293,37 +304,39 @@ void UARTShowRFID(){
 // Module: UART Communications: Message Door Open ---------
 void UART_send_access_message(){
     time_t seconds = time(NULL);
-    strftime(UsbBuffer, 32, "%I:%M %p\n", localtime(&seconds));
+    strftime(UsbBuffer, 24, "%c", localtime(&seconds));
     if(rfid_content !=nullptr){
-        UARTUsb.write( "Door 1 accessed at  ", 18);
-        UARTUsb.write(UsbBuffer, 32);
+        UARTUsb.write( "Door 1 accessed on ", 19);
+        UARTUsb.write(UsbBuffer, 24);
         UARTUsb.write(" with RFID ID: ",15);
         UARTUsb.write(rfid_content, strlen(rfid_content));
-        UARTUsb.write( "\r\n ", 0 );
+        UARTUsb.write( "\r\n ", 2 );
     }else{
-        UARTUsb.write( "Door 1 accessed at  ", 18);
-        UARTUsb.write(UsbBuffer, 32);
+        UARTUsb.write( "Door 1 accessed on ", 19);
+        UARTUsb.write(UsbBuffer, 24);
         UARTUsb.write(" with Keypad Code: ",19);
-        UARTUsb.write(keypad_code, strlen(keypad_code));
-        
+        UARTUsb.write(keypad_code, 4);
 
-        UARTUsb.write( "\r\n ", 0 );
+        UARTUsb.write( "\r\n ", 2 );
     }
     
 }
 
 // Modue: UART Communications: Message Access --------
 void UART_send_door_left_open_message(){
+    time_t seconds = time(NULL);
+    strftime(UsbBuffer, 24, "%c", localtime(&seconds));
     if(doorleftopen == true){
-        time_t seconds = time(NULL);
-        strftime(UsbBuffer, 32, "%I:%M %p\n", localtime(&seconds));
-        UARTUsb.write("Door 1 left open at ", 20);
-        UARTUsb.write(UsbBuffer, 32);
-        UARTUsb.write("\r\n ", 0);
+        
+        
+        UARTUsb.write("Door 1 left open on ", 20);
+        UARTUsb.write(UsbBuffer, 24);
+        UARTUsb.write("\r\n ", 2);
     }
     if(doorleftopen == false){
-        UARTUsb.write("Door 1 left open was closed at ", 31);
-        UARTUsb.write("\r\n ", 0);
+        UARTUsb.write("Door 1 left open was closed on ", 31);
+        UARTUsb.write(UsbBuffer, 24);
+        UARTUsb.write("\r\n ", 2);
     }
     
 }

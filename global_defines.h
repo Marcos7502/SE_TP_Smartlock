@@ -21,7 +21,8 @@
 #define KEYPAD_NUMBER_OF_ROWS       4
 #define KEYPAD_NUMBER_OF_COLS       4
 #define TIMEOUT_CODE                10000
-#define TIMEOUT_DOOR_OPEN           10000        
+#define TIMEOUT_DOOR_OPEN           10000 
+#define LED_BLINK_INTERVAL          1000       
 
 #define PIN_KEYPAD_R_1 PB_3
 #define PIN_KEYPAD_R_2 PB_3
