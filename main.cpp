@@ -1,6 +1,7 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
-#include "global_defines.h" 
+#include "global_defines.h"
+#include <SPI.h> 
 #include "MFRC522.h" 
 /* MFRC522.h - Library to use ARDUINO RFID MODULE KIT 13.56 MHZ WITH TAGS SPI W AND R BY COOQROBOT.
 Based on code Dr.Leong   ( WWW.B2CQSHOP.COM )
@@ -10,13 +11,13 @@ Ported to mbed by Martin Olejar, Dec, 2013
 Link: https://os.mbed.com/teams/Project5_Software/code/RFID-RC522/docs/tip/MFRC522_8h_source.html
 */
 #include <string.h>
-#include <SPI.h>
 #include "keypad/keypad.h"
 
 char allowed_id[20] = "";  // ID permitido
 char reading_rfid[20] = "";
 char* rfid_content = nullptr;
 char UsbBuffer[32];
+
 
 char keyReleased = '\0';
 int key_counter = 0;
@@ -63,6 +64,7 @@ Timer DoorOpenTimer;
 Timer CodeTimeoutTimer;
 Timer BlinkingLedTimer; //No es el mejor uso de un timer pero no se me ocurre otra forma
 
+
 PinName  keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
 PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
 
@@ -70,22 +72,24 @@ Keypad Keypad_door(keypadRowPins,keypadColPins);
 
 int main(){   
     system_init();
-
     while (true) {
 
         switch(door_state){
             case DOOR_CLOSED:
                 
-
+                
                 rfid_content = RFID_read(RFID_READER);
                 if(rfid_content != nullptr){
                     strncpy(reading_rfid, rfid_content,sizeof(reading_rfid) );
+                    
                 }
-                UARTShowRFID();
+                UARTShowRFID(); 
+                
+                
                 if(save_id == true && rfid_content != nullptr){
                     strncpy(allowed_id, rfid_content,sizeof(allowed_id));
                     save_id = false;
-                    UARTUsb.write("Saved ID\r\n",8);
+                    UARTUsb.write("Saved ID\r\n",10);
                 }
                 if(rfid_content != nullptr){
                     compare_content_read_rfid_to_keys();
@@ -134,14 +138,16 @@ int main(){
                     BlinkingLedTimer.start();
 
                     time_t seconds = time(NULL);
-                    UARTUsb.write("Door 1 wrong ID introduced at ",30);
+                    UARTUsb.write("Door 1 wrong ID introduced on ",30);
                     strftime(UsbBuffer, 24, "%c", localtime(&seconds));
                     UARTUsb.write(UsbBuffer,24);
                     UARTUsb.write("\r\n",2);
 
                     wrong_id = false;
-                    
+                        
                 }
+                   
+                
                 if(blinks_counter != 0){
                     blink_leds();
                 }
@@ -225,7 +231,6 @@ void system_init(){
     BlinkingLedTimer.reset();
     BlinkingLedTimer.stop();
     
-
     RFID_READER.PCD_Init();
 
 
@@ -253,13 +258,15 @@ char* RFID_read(MFRC522& rfid_reader){
 
 // Module: RFID content to keys comparison  -------------------------
 void compare_content_read_rfid_to_keys(){
+    
     if(strcmp(reading_rfid, allowed_id) == 0){
-        door_state = DOOR_OPENING;
-        wrong_id = false;
+    door_state = DOOR_OPENING;
+    wrong_id = false;
     }
     if(strcmp(reading_rfid, allowed_id) != 0){
         wrong_id = true;
     }
+    
 }
 
 // Module: Blink Leds (wrong id, door open)  -------------------------
@@ -290,7 +297,7 @@ void UARTShowRFID(){
         UARTUsb.write( "Read ID: ", 9 );
         UARTUsb.write( rfid_content, strlen(rfid_content) );
         UARTUsb.write( "\r\n ", 2 );
-        UARTUsb.write( "To save Tag press 1\r\n", 23 );
+        UARTUsb.write( "To save Tag press 1\r\n", 21 );
     }
     if( UARTUsb.readable() ){
        UARTUsb.read( &receivedChar, 1 );
