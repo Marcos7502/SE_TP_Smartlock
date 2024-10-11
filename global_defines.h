@@ -24,15 +24,7 @@
 #define TIMEOUT_DOOR_OPEN           10000 
 #define LED_BLINK_INTERVAL          1000       
 
-#define PIN_KEYPAD_R_1 PB_3
-#define PIN_KEYPAD_R_2 PB_3
-#define PIN_KEYPAD_R_3 PB_3
-#define PIN_KEYPAD_R_4 PB_3
 
-#define PIN_KEYPAD_C_1 PB_3
-#define PIN_KEYPAD_C_2 PB_3
-#define PIN_KEYPAD_C_3 PB_3
-#define PIN_KEYPAD_C_4 PB_3
 
 
 #define WRONG_ID_BLINKS 6

@@ -25,6 +25,7 @@ char keypad_code[4] = {'1' ,'2' ,'3' ,'4'};
 char keypad_sequence_read[4] = {'0','0','0','0'};
 
 int blinks_counter = 0;
+bool rfid_allow_read = true;
 int time_door_open;
 bool wrong_id = false;
 bool save_id = false;
@@ -63,7 +64,7 @@ void UART_send_door_left_open_message();
 Timer DoorOpenTimer;
 Timer CodeTimeoutTimer;
 Timer BlinkingLedTimer; //No es el mejor uso de un timer pero no se me ocurre otra forma
-
+Timer PausereadingTimer;
 
 PinName  keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
 PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
@@ -81,6 +82,24 @@ int main(){
                 rfid_content = RFID_read(RFID_READER);
                 if(rfid_content != nullptr){
                     strncpy(reading_rfid, rfid_content,sizeof(reading_rfid) );
+                    PausereadingTimer.start();
+                    
+                    if(PausereadingTimer.read_ms() >2000){
+                        PausereadingTimer.reset();
+                        rfid_allow_read=true;
+                    }
+
+                    if(rfid_allow_read==true){
+                        rfid_allow_read=false;
+                    }else{
+                        rfid_content=nullptr;
+                    }
+                }else{
+                    if(PausereadingTimer.read_ms() >10000){
+                        PausereadingTimer.stop();
+                        PausereadingTimer.reset();
+                        rfid_allow_read=true;
+                    }
                     
                 }
                 UARTShowRFID(); 
