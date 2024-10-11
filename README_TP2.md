@@ -67,3 +67,17 @@ Periféricos a utilizar:
 ![Estados TP2 SE](https://github.com/user-attachments/assets/89ae4942-22ab-4f68-b6c9-ae8b9b16837a)
 
 ### Resultado
+El siguiente link muestra un video del funcionamiento.
+
+https://drive.google.com/file/d/1dUj6J2dgBfxXLpf9hEOSNfRaAek-ReON/view?usp=sharing
+
+### Dificultades y Comentarios
+El lector RFID MFRC522 funcionaba con normalidad desde el TP1 hasta 3 días antes de la entrega, cuando se dejaron de leer los mensajes al micro y las tarjetas. La inoperabilidad del lector RFID fue repentina y sin mensajes de error. Se observó lo siguiente:
+1) El problema no era debido a un defecto en el MFRC522, ya que se probó con 3 distintos y el resultado era el mismo, no se reconocáa al MFRC522.
+2) El problema no era debido a las tensiones de alimentación. Se probaron todas las tensiones de alimenatación y todas eran menor a 3.3V.
+3) El problema parecía ser solamente en la nucleo debido a que en Arduino uno, con las adaptaciones necesarias, el lector funcionaba.
+4) El problema no era debido a las conexiones del protoboard o los cables. Se probó la continuidad de todos los cables, se cambiaron tanto cables como protoboards y el problema persistía.
+5) Utilizando versiones más simples para testear el lector en Keil Studio, un ejemplo del 2012 con una versión de MBED.os distinta fue el único en funcionar correctamente. Esto dio lugar a pensar que el problema era de la versión de MBED y probablemente de la configuración de los drivers. No se pudo hallar la versión que lo hizo funcionar porque no estaba detallado en la documentación de MBED.
+6) El problema no residía en el código, porque funcionaba antes y testiandolo en esta versión vieja de MBED, funcionaba también.
+
+**Este problema se solucionó temporalmente inicializando el modo debug cada vez que había que probar el código.** Si se intentaba compilar con el botón de run desde Keil Studio, la placa NUCLEO-F429ZI no reconocía al lector RFID. Se sigue desconociendo el origen del problema.
