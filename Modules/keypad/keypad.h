@@ -5,7 +5,6 @@
 
 
 class Keypad{
-    
     public:
         Keypad(PinName rowPins[], PinName colPins[]);
         char matrixKeypadUpdate();

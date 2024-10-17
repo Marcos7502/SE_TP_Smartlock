@@ -1,8 +1,12 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 #include "global_defines.h"
+#include "keypad.h"
+#include "UART_comm.h"
+#include "RFID_reader.h"
+
 #include <SPI.h> 
-#include "MFRC522.h" 
+
 /* MFRC522.h - Library to use ARDUINO RFID MODULE KIT 13.56 MHZ WITH TAGS SPI W AND R BY COOQROBOT.
 Based on code Dr.Leong   ( WWW.B2CQSHOP.COM )
 Created by Miguel Balboa (circuitito.com), Jan, 2012.
@@ -10,13 +14,14 @@ Rewritten by Soren Thing Andersen (access.thing.dk), fall of 2013 (Translation t
 Ported to mbed by Martin Olejar, Dec, 2013
 Link: https://os.mbed.com/teams/Project5_Software/code/RFID-RC522/docs/tip/MFRC522_8h_source.html
 */
+
 #include <string.h>
-#include "keypad/keypad.h"
+
 
 char allowed_id[20] = "";  // ID permitido
 char reading_rfid[20] = "";
 char* rfid_content = nullptr;
-char UsbBuffer[32];
+
 
 
 char keyReleased = '\0';
@@ -25,7 +30,6 @@ char keypad_code[4] = {'1' ,'2' ,'3' ,'4'};
 char keypad_sequence_read[4] = {'0','0','0','0'};
 
 int blinks_counter = 0;
-bool rfid_allow_read = true;
 int time_door_open;
 bool wrong_id = false;
 bool save_id = false;
@@ -48,23 +52,17 @@ DigitalOut doorblockedLED(PIN_LED_DOOR_BLOCKED);
 DigitalOut dooropenLED(PIN_LED_DOOR_OPEN);
 
 
-UnbufferedSerial UARTUsb(USBTX, USBRX, 115200);
-MFRC522    RFID_READER   (PIN_RFID_MOSI, PIN_RFID_MISO, PIN_RFID_SCK, PIN_RFID_CS, PIN_RFID_RESET);
-
-
 void system_init();
-char* RFID_read(MFRC522& rfid_reader);
+
 void compare_content_read_rfid_to_keys();
 void blink_leds();
 
-void UARTShowRFID();
-void UART_send_access_message();
-void UART_send_door_left_open_message();
+
 
 Timer DoorOpenTimer;
 Timer CodeTimeoutTimer;
 Timer BlinkingLedTimer; //No es el mejor uso de un timer pero no se me ocurre otra forma
-Timer PausereadingTimer;
+
 
 PinName  keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
 PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
@@ -79,36 +77,17 @@ int main(){
             case DOOR_CLOSED:
                 
                 
-                rfid_content = RFID_read(RFID_READER);
+                rfid_content = RFID_read();
                 if(rfid_content != nullptr){
-                    strncpy(reading_rfid, rfid_content,sizeof(reading_rfid) );
-                    PausereadingTimer.start();
-                    
-                    if(PausereadingTimer.read_ms() >2000){
-                        PausereadingTimer.reset();
-                        rfid_allow_read=true;
-                    }
-
-                    if(rfid_allow_read==true){
-                        rfid_allow_read=false;
-                    }else{
-                        rfid_content=nullptr;
-                    }
-                }else{
-                    if(PausereadingTimer.read_ms() >10000){
-                        PausereadingTimer.stop();
-                        PausereadingTimer.reset();
-                        rfid_allow_read=true;
-                    }
-                    
+                    strncpy(reading_rfid, rfid_content,sizeof(reading_rfid) );       
                 }
-                UARTShowRFID(); 
-                
+                UARTShowRFID(rfid_content); 
+                save_id = UART_get_save_id_input();
                 
                 if(save_id == true && rfid_content != nullptr){
                     strncpy(allowed_id, rfid_content,sizeof(allowed_id));
                     save_id = false;
-                    UARTUsb.write("Saved ID\r\n",10);
+                    UART_notify_ID_was_saved();
                 }
                 if(rfid_content != nullptr){
                     compare_content_read_rfid_to_keys();
@@ -155,13 +134,8 @@ int main(){
                 if(wrong_id == true){
                     blinks_counter = WRONG_ID_BLINKS;
                     BlinkingLedTimer.start();
-
-                    time_t seconds = time(NULL);
-                    UARTUsb.write("Door 1 wrong ID introduced on ",30);
-                    strftime(UsbBuffer, 24, "%c", localtime(&seconds));
-                    UARTUsb.write(UsbBuffer,24);
-                    UARTUsb.write("\r\n",2);
-
+                    UART_send_wrong_id_message();
+                    
                     wrong_id = false;
                         
                 }
@@ -178,7 +152,7 @@ int main(){
                 
                 break;
             case DOOR_OPENING:
-                UART_send_access_message();
+                UART_send_access_message(rfid_content,keypad_code);
                 DoorOpenTimer.start();
                 door_state = DOOR_OPEN;
                 if(doorblockbutton.read() == ON){
@@ -207,7 +181,7 @@ int main(){
                         doorleftopen = true;
                         DoorOpenTimer.start();
                         DoorOpenTimer.reset();
-                        UART_send_door_left_open_message();
+                        UART_send_door_left_open_message(doorleftopen);
                         
                     }
                     if(doorleftopen == true){
@@ -220,7 +194,7 @@ int main(){
                     blinks_counter = 0;
                     if(doorleftopen == true){
                         doorleftopen = false;
-                        UART_send_door_left_open_message();
+                        UART_send_door_left_open_message(doorleftopen);
                     }
                     DoorOpenTimer.stop();
                     DoorOpenTimer.reset();
@@ -250,8 +224,7 @@ void system_init(){
     BlinkingLedTimer.reset();
     BlinkingLedTimer.stop();
     
-    RFID_READER.PCD_Init();
-
+    RFID_reader_init();
 
     door_state=DOOR_CLOSED;
 
@@ -259,21 +232,7 @@ void system_init(){
 
 
 
-// Module: RFID reader  -------------------------
-char* RFID_read(MFRC522& rfid_reader){
-   static char id[20] = ""; // Buffer estático para almacenar el ID leído
 
-    if (RFID_READER.PICC_IsNewCardPresent()) {
-        if (RFID_READER.PICC_ReadCardSerial()) {
-           for (uint8_t i = 0; i < rfid_reader.uid.size; i++) {
-                sprintf(&id[i * 2], "%02X", rfid_reader.uid.uidByte[i]); // Convertimos a hexadecimal
-            }
-            id[rfid_reader.uid.size * 2] = '\0'; 
-            return id;
-        }
-    }
-    return nullptr;
-}
 
 // Module: RFID content to keys comparison  -------------------------
 void compare_content_read_rfid_to_keys(){
@@ -308,61 +267,3 @@ void blink_leds(){
     
 }
 
-// Module: UART communications: Show RFID  -------------------------
-void UARTShowRFID(){
-    char receivedChar = '\0';
-    
-    if(rfid_content != nullptr){
-        UARTUsb.write( "Read ID: ", 9 );
-        UARTUsb.write( rfid_content, strlen(rfid_content) );
-        UARTUsb.write( "\r\n ", 2 );
-        UARTUsb.write( "To save Tag press 1\r\n", 21 );
-    }
-    if( UARTUsb.readable() ){
-       UARTUsb.read( &receivedChar, 1 );
-       if(receivedChar == '1'){
-            save_id = true;
-            UARTUsb.write("Received save\r\n",15);
-        }
-    }
-    
-}
-// Module: UART Communications: Message Door Open ---------
-void UART_send_access_message(){
-    time_t seconds = time(NULL);
-    strftime(UsbBuffer, 24, "%c", localtime(&seconds));
-    if(rfid_content !=nullptr){
-        UARTUsb.write( "Door 1 accessed on ", 19);
-        UARTUsb.write(UsbBuffer, 24);
-        UARTUsb.write(" with RFID ID: ",15);
-        UARTUsb.write(rfid_content, strlen(rfid_content));
-        UARTUsb.write( "\r\n ", 2 );
-    }else{
-        UARTUsb.write( "Door 1 accessed on ", 19);
-        UARTUsb.write(UsbBuffer, 24);
-        UARTUsb.write(" with Keypad Code: ",19);
-        UARTUsb.write(keypad_code, 4);
-
-        UARTUsb.write( "\r\n ", 2 );
-    }
-    
-}
-
-// Modue: UART Communications: Message Access --------
-void UART_send_door_left_open_message(){
-    time_t seconds = time(NULL);
-    strftime(UsbBuffer, 24, "%c", localtime(&seconds));
-    if(doorleftopen == true){
-        
-        
-        UARTUsb.write("Door 1 left open on ", 20);
-        UARTUsb.write(UsbBuffer, 24);
-        UARTUsb.write("\r\n ", 2);
-    }
-    if(doorleftopen == false){
-        UARTUsb.write("Door 1 left open was closed on ", 31);
-        UARTUsb.write(UsbBuffer, 24);
-        UARTUsb.write("\r\n ", 2);
-    }
-    
-}
