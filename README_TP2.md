@@ -38,13 +38,13 @@ Adicionalmente, en este trabajo práctico se propone revisar y rediseñar la int
 
 Por último, se incorporará un sensor magnético para detectar cuando la puerta está en el lugar correcto para cerrarla. Este servirá para detectar cuando fue olvidada abierta. Si fue olvidada abierta, en el próximo trabajo práctico se notificará al usuario por celular o se hará sonar una alarma.
 
-Cada vez que se accede o se intenta acceder al edificio se envia un resumen a través del puerto serie (UART) con:
+Cada vez que se accede o se intenta acceder al edificio se envía un resumen a través del puerto serie (UART) con:
 - Hora de intento de acceso
 - Puerta de intento de acceso
 - ID del tag (en caso de ser un ID valido)
 - Código introducido (en caso de haber introducido un codigo)
 
-Si se olvida la puerta abierta se enviara a traves del puerto serie un mensaje con:
+Si se olvida la puerta abierta se enviará a traves del puerto serie un mensaje con:
 - Hora 
 - Puerta
 - Indicación de que la puerta esta abierta
