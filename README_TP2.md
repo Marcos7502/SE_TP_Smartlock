@@ -41,8 +41,8 @@ Por último, se incorporará un sensor magnético para detectar cuando la puerta
 Cada vez que se accede o se intenta acceder al edificio se envía un resumen a través del puerto serie (UART) con:
 - Hora de intento de acceso
 - Puerta de intento de acceso
-- ID del tag (en caso de ser un ID valido)
-- Código introducido (en caso de haber introducido un codigo)
+- ID del tag (en caso de ser un ID válido)
+- Código introducido (en caso de haber introducido un código)
 
 Si se olvida la puerta abierta se enviará a traves del puerto serie un mensaje con:
 - Hora 
@@ -78,6 +78,6 @@ El lector RFID MFRC522 funcionaba con normalidad desde el TP1 hasta 3 días ante
 3) El problema parecía ser solamente en la nucleo debido a que en Arduino uno, con las adaptaciones necesarias, el lector funcionaba.
 4) El problema no era debido a las conexiones del protoboard o los cables. Se probó la continuidad de todos los cables, se cambiaron tanto cables como protoboards y el problema persistía.
 5) Utilizando versiones más simples para testear el lector en Keil Studio, un ejemplo del 2012 con una versión de MBED.os distinta fue el único en funcionar correctamente. Esto dio lugar a pensar que el problema era de la versión de MBED y probablemente de la configuración de los drivers. No se pudo hallar la versión que lo hizo funcionar porque no estaba detallado en la documentación de MBED.
-6) El problema no residía en el código, porque funcionaba antes y testiandolo en esta versión vieja de MBED, funcionaba también.
+6) El problema no residía en el código, porque funcionaba antes y probandolo en ésta versión vieja de MBED, funcionaba también.
 
-**Este problema se solucionó temporalmente inicializando el modo debug cada vez que había que probar el código.** Si se intentaba compilar con el botón de run desde Keil Studio, la placa NUCLEO-F429ZI no reconocía al lector RFID. Se sigue desconociendo el origen del problema.
+**Este problema se solucionó temporalmente inicializando el modo debug cada vez que había que probar el código.** Si se intentaba compilar con el botón de run desde Keil Studio, la placa NUCLEO-F429ZI no reconocía al lector RFID. Se sigue desconociendo el origen del problema pero se intuye que es un problema de inicialización.
