@@ -7,8 +7,10 @@
 class Keypad{
     public:
         Keypad(PinName rowPins[], PinName colPins[]);
-        char matrixKeypadUpdate();
+        char* get_code();
         void set_debounce(int ms);
+        void init();
+        void reset();
     private:
         DigitalOut keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
         DigitalIn keypadColPins[KEYPAD_NUMBER_OF_COLS] = {PB_12, PB_13, PB_15, PC_6};
@@ -19,10 +21,16 @@ class Keypad{
         } matrixKeypadState_t;
         
         Timer KeypadDebouncetimer;
+        Timer CodeTimeoutTimer;
         matrixKeypadState_t matrixKeypadState;
         int time_debounce=0;
         int DEBOUNCE_BUTTON_TIME_MS = 40;
+
+        char keypad_sequence_read[4];
+        char default_incomplete_read_sequence[4]= {'\0', '\0', '\0' ,'\0'};
+        
         char _matrixKeypadScan();
         void _matrixKeypadInit();
+        char _matrixKeypadUpdate();
 };
 #endif

@@ -2,6 +2,8 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 
+
+              
 Keypad::Keypad( PinName* rowPinslist, PinName* colPinslist){
     matrixKeypadState = MATRIX_KEYPAD_SCANNING;
     for (int i = 0; i < KEYPAD_NUMBER_OF_ROWS; i++) {
@@ -13,8 +15,62 @@ Keypad::Keypad( PinName* rowPinslist, PinName* colPinslist){
         (keypadColPins[i]).mode(PullUp);
     }
 }
+void Keypad::init(){
+    CodeTimeoutTimer.reset();
+    CodeTimeoutTimer.stop();
+    
+}
+void Keypad::reset(){
+    for (int i = 0; i < 4; i++) {
+        keypad_sequence_read[i]='\0';
+    }
+}
+char* Keypad::get_code(){
+    //Returns ['\0', ..., '\0'] if no code is read
+    //Returns ['\n', ...,'\n'] if timeout occured
+    //Returns code if code length is right and no timeout occured
+    
+    char keyReleased = _matrixKeypadUpdate();
+    static int key_counter = 0;
+    if(keyReleased != '\0'){
+        // DEBUGGING
+        // UsbBuffer[0] = keyReleased;
+        // UsbBuffer[1] = '\r';
+        // UsbBuffer[2] = '\n';
+        // UARTUsb.write( "Read Key:", 9 );
+        // UARTUsb.write( UsbBuffer , 3);
+        if(key_counter == 0){
+            CodeTimeoutTimer.start();
+        }
+        keypad_sequence_read[key_counter] = keyReleased;
 
-char Keypad::matrixKeypadUpdate(){
+        if(key_counter == 3){
+            CodeTimeoutTimer.stop();
+            CodeTimeoutTimer.reset();
+            key_counter = 0;
+            return keypad_sequence_read;
+
+        }
+        else{
+            key_counter += 1;
+        }
+
+    }
+    if(CodeTimeoutTimer.read_ms() > TIMEOUT_CODE){
+        key_counter = 0;
+        CodeTimeoutTimer.stop();
+        CodeTimeoutTimer.reset();
+        for (int i = 0; i < 4; i++) {
+            keypad_sequence_read[i] = '\n';
+        }
+        return keypad_sequence_read;
+    } 
+
+    return default_incomplete_read_sequence;
+
+
+}
+char Keypad::_matrixKeypadUpdate(){
     char keyDetected = '\0';
     char keyReleased = '\0';
     static char matrixKeypadLastkeyReleased = '\0';
