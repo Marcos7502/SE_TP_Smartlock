@@ -1,6 +1,7 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 #include <SPI.h>
+#include "string.h"
 #include "system.h"
 #include "access_keys.h"
 #include "keypad.h"
@@ -14,6 +15,7 @@ access_state access_attempt;
 
 char* rfid_content = nullptr;
 char* keypad_sequence_read = nullptr;
+char last_rfid_read[20]="";
 
 bool save_id = false;
 bool doorleftopen = false;
@@ -39,11 +41,15 @@ Keypad Keypad_door(keypadRowPins,keypadColPins);
 
 door_state system_door_closed_update(){
     rfid_content = RFID_read();
+    if(rfid_content!= nullptr){
+        strncpy(last_rfid_read,rfid_content,20);
+    }
+    
     
     UARTShowRFID(rfid_content); 
     save_id = UART_get_save_id_input();
     if(save_id == true){
-        access_keys_save_id(rfid_content);
+        access_keys_save_id(last_rfid_read);
         save_id = false;
     }
     keypad_sequence_read = Keypad_door.get_code();

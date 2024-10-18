@@ -7,11 +7,11 @@ char UsbBuffer[32];
 char receivedChar = '\0';
 
 // Module: UART communications: Show RFID  -------------------------
-void UARTShowRFID(char* rfid_content){
+void UARTShowRFID(char* rfid_content_send){
     
-    if(rfid_content != nullptr){
+    if(rfid_content_send != nullptr){
         UARTUsb.write( "Read ID: ", 9 );
-        UARTUsb.write( rfid_content, strlen(rfid_content) );
+        UARTUsb.write( rfid_content_send, strlen(rfid_content_send) );
         UARTUsb.write( "\r\n ", 2 );
         UARTUsb.write( "To save Tag press 1\r\n", 21 );
     }
@@ -77,6 +77,7 @@ bool UART_get_save_id_input(){
     }
     return false;
 }
-void UART_notify_ID_was_saved(){
+void UART_notify_ID_was_saved(char* rfid_content){
     UARTUsb.write("Saved ID\r\n",10);
+    UARTUsb.write(rfid_content,sizeof(rfid_content));
 }

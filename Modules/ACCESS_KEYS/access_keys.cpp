@@ -2,6 +2,7 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 #include "UART_comm.h"
+#include "string.h"
 
 char keypad_code[4] = {'1' ,'2' ,'3' ,'4'}; 
 char allowed_id[20] = "";  // ID permitido
@@ -25,10 +26,11 @@ access_state access_attempt_update(char* rfid_content, char* keypad_sequence_rea
     return NO_ACCESS_ATTEMPT;
     
 }
-void access_keys_save_id(char* rfid_content){
-    if(rfid_content!= nullptr){
-        strncpy(allowed_id, rfid_content,sizeof(allowed_id));
-    }
-    UART_notify_ID_was_saved();
+void access_keys_save_id(char* last_rfid_content){
+   
+    strncpy(allowed_id,last_rfid_content,sizeof(allowed_id));
+    UART_notify_ID_was_saved(last_rfid_content);
+    
+    
 }
 

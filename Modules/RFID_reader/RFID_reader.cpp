@@ -24,6 +24,8 @@ char* RFID_read(){
                 }
                 return id;
             }
+        }else{
+            return nullptr;
         }
     }
 

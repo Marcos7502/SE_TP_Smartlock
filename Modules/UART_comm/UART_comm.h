@@ -8,6 +8,6 @@ void UART_send_access_message(char* rfid_content, char* keypad_code);
 void UART_send_door_left_open_message(bool doorleftopen);
 void UART_send_wrong_id_message();
 bool UART_get_save_id_input();
-void UART_notify_ID_was_saved();
+void UART_notify_ID_was_saved(char* rfid_content);
 
 #endif
