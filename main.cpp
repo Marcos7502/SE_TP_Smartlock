@@ -18,6 +18,7 @@ int main(){
             case DOOR_OPENING:
                 main_door_state = system_door_opening_update();
                 
+
                 break;
             case DOOR_OPEN:
                 main_door_state = system_door_open_update();
