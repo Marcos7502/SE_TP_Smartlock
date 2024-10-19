@@ -12,14 +12,13 @@ int main(){
     while (true) {
         switch(main_door_state){
             case DOOR_CLOSED:
-                main_door_state = system_door_closed_update();
-                                
+                main_door_state = system_door_closed_update();          
                 break;
+            
             case DOOR_OPENING:
                 main_door_state = system_door_opening_update();
-                
-
                 break;
+            
             case DOOR_OPEN:
                 main_door_state = system_door_open_update();
                 break;
