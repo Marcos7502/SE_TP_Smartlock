@@ -13,7 +13,7 @@ int main(){
         switch(main_door_state){
             case DOOR_CLOSED:
                 main_door_state = system_door_closed_update();
-                                
+                  //Test              
                 break;
             case DOOR_OPENING:
                 main_door_state = system_door_opening_update();
