@@ -7,6 +7,9 @@
 #include "keypad.h"
 #include "UART_comm.h"
 #include "RFID_reader.h"
+#include "motors.h"
+#include "speaker.h"
+#include "global_defines"
 
 
 
@@ -38,6 +41,9 @@ DigitalOut doorblockedLED(PIN_LED_DOOR_BLOCKED);
 DigitalOut dooropenLED(PIN_LED_DOOR_OPEN);
 
 Keypad Keypad_door(keypadRowPins,keypadColPins);
+
+Motor lock_motor(PIN_MOTOR_LOCK);
+Speaker speaker(PIN_SPEAKER);
 
 door_state system_door_closed_update(){
     rfid_content = RFID_read();
@@ -72,9 +78,9 @@ door_state system_door_closed_update(){
     if(access_attempt == ACCESS_GRANTED){
         return DOOR_OPENING;
     }
+    speaker.update();
     return DOOR_CLOSED;
-    
-                
+             
                 
 }
 
@@ -88,10 +94,11 @@ door_state system_door_closing_update(){
             DoorOpenTimer.start();
             DoorOpenTimer.reset();
             UART_send_door_left_open_message(doorleftopen);
-            
+            speaker.play_alarm();   
         }
         if(doorleftopen == true){
             blink_leds();
+            speaker.alarm_update();
         }                                        
             
     }
@@ -105,8 +112,11 @@ door_state system_door_closing_update(){
         DoorOpenTimer.stop();
         DoorOpenTimer.reset();
         //activar cerradura
+        lock_motor.set_position(MOTOR_POS_LOCKED);
+        lock_motor.stop();
         return DOOR_CLOSED;
     }
+    speaker.update();
     return DOOR_CLOSING;
     
 }
@@ -121,6 +131,7 @@ door_state system_door_open_update(){
     if(time_door_open>=TIMEOUT_DOOR_OPEN){
         return DOOR_CLOSING; 
     }
+    speaker.update();
     return DOOR_OPEN;
     
 }
@@ -131,6 +142,9 @@ door_state system_door_opening_update(){
     if(doorblockbutton.read() == ON){
         return DOOR_CLOSING; 
     }
+    lock_motor.set_position(MOTOR_POS_OPEN);
+    speaker.play_music_welcome();
+    speaker.update();
     return DOOR_OPEN;
 }
 // Module: initialization -------------------------

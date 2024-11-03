@@ -29,16 +29,11 @@ char* Keypad::get_code(){
     //Returns ['\0', ..., '\0'] if no code is read
     //Returns ['\n', ...,'\n'] if timeout occured
     //Returns code if code length is right and no timeout occured
-    
+   
     char keyReleased = _matrixKeypadUpdate();
     static int key_counter = 0;
     if(keyReleased != '\0'){
-        // DEBUGGING
-        // UsbBuffer[0] = keyReleased;
-        // UsbBuffer[1] = '\r';
-        // UsbBuffer[2] = '\n';
-        // UARTUsb.write( "Read Key:", 9 );
-        // UARTUsb.write( UsbBuffer , 3);
+        speaker.play_note_button();
         if(key_counter == 0){
             CodeTimeoutTimer.start();
         }

@@ -24,7 +24,13 @@
 #define TIMEOUT_DOOR_OPEN           10000 
 #define LED_BLINK_INTERVAL          1000       
 
+//Motor
+#define PIN_MOTOR_LOCK   PB_11
+#define MOTOR_POS_LOCKED 0
+#define MOTOR_POS_OPEN 180
 
-
+//Speaker
+#define PIN_SPEAKER PE_13
 
 #define WRONG_ID_BLINKS 6
+#define TIME_RESTART_ALARM 10000
