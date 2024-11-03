@@ -1,5 +1,5 @@
 #include "mbed.h"
-
+#include "motors.h"
 Motor::Motor(PinName pwm_pin) : pwm(pwm_pin) {
     pwm.period(0.02f);  
     pwm.write(0.03f);    

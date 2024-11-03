@@ -9,7 +9,7 @@
 #include "RFID_reader.h"
 #include "motors.h"
 #include "speaker.h"
-#include "global_defines"
+#include "global_defines.h"
 
 
 
@@ -59,6 +59,9 @@ door_state system_door_closed_update(){
         save_id = false;
     }
     keypad_sequence_read = Keypad_door.get_code();
+    if(Keypad_door.button_pressed()==true){
+        speaker.play_note_button();
+    }
     access_attempt = access_attempt_update(rfid_content,keypad_sequence_read);
     
     if(access_attempt == ACCESS_DENIED){

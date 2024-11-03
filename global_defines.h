@@ -30,7 +30,7 @@
 #define MOTOR_POS_OPEN 180
 
 //Speaker
-#define PIN_SPEAKER PE_13
+#define PIN_SPEAKER PB_4
 
 #define WRONG_ID_BLINKS 6
-#define TIME_RESTART_ALARM 10000
+#define TIME_RESTART_ALARM 10000000 //us

@@ -1,5 +1,7 @@
 #ifndef MOTOR_H
 #define MOTOR_H
+#include "mbed.h"
+#include "global_defines.h"
 
 class Motor {
     public:

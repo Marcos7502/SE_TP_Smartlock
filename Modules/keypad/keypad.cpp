@@ -1,7 +1,7 @@
 #include "keypad.h"
 #include "mbed.h"
 #include "arm_book_lib.h"
-
+#include "speaker.h"
 
               
 Keypad::Keypad( PinName* rowPinslist, PinName* colPinslist){
@@ -33,7 +33,7 @@ char* Keypad::get_code(){
     char keyReleased = _matrixKeypadUpdate();
     static int key_counter = 0;
     if(keyReleased != '\0'){
-        speaker.play_note_button();
+        
         if(key_counter == 0){
             CodeTimeoutTimer.start();
         }
@@ -66,8 +66,9 @@ char* Keypad::get_code(){
 
 }
 char Keypad::_matrixKeypadUpdate(){
-    char keyDetected = '\0';
-    char keyReleased = '\0';
+    
+    keyDetected = '\0';
+    keyReleased = '\0';
     static char matrixKeypadLastkeyReleased = '\0';
     
 
@@ -141,4 +142,11 @@ void Keypad::_matrixKeypadInit() {
 }
 void Keypad::set_debounce(int ms) {
     DEBOUNCE_BUTTON_TIME_MS = ms;
+}
+bool Keypad::button_pressed(){
+    if(keyReleased!='\0'){
+        return true;
+    }else{
+        return false;
+    }
 }
