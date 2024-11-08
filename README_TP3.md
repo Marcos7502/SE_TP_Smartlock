@@ -38,7 +38,7 @@ El parlante es como el que se muestra debajo:
   
 
 ### Resultado
-El siguiente link muestra un video del funcionamiento.
+El siguiente link muestra un video del funcionamiento:
 
 https://drive.google.com/file/d/1m4aDb67fY_7gsR8zvAbPGWMtD4l36bGP/view?usp=sharing
 
