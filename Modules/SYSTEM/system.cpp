@@ -34,7 +34,7 @@ PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
 
 
 
-DigitalIn doorblockbutton(PIN_BUTTON_DOOR_BLOCK);
+
 DigitalIn magnetsensor(PIN_MAGNET_SENSOR_1);
 
 DigitalOut doorblockedLED(PIN_LED_DOOR_BLOCKED);
@@ -129,9 +129,7 @@ door_state system_door_open_update(){
     dooropenLED = ON;
 
     time_door_open = DoorOpenTimer.read_ms();
-    if(doorblockbutton.read() == ON){
-        return DOOR_CLOSING; 
-    }
+
     if(time_door_open>=TIMEOUT_DOOR_OPEN){
         return DOOR_CLOSING; 
     }
@@ -143,21 +141,20 @@ door_state system_door_opening_update(){
     UART_send_access_message(rfid_content,keypad_sequence_read);
     DoorOpenTimer.start();
     
-    if(doorblockbutton.read() == ON){
-        return DOOR_CLOSING; 
-    }
+ 
     lock_motor.set_position(MOTOR_POS_OPEN);
     speaker.play_music_welcome();
     speaker.update();
     return DOOR_OPEN;
 }
+
 // Module: initialization -------------------------
 void system_init(){
     set_time(1256729737);
  
     rfid_content = nullptr;
 
-    doorblockbutton.mode(PullDown);
+    
     magnetsensor.mode(PullDown);
 
     DoorOpenTimer.reset();
