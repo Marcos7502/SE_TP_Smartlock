@@ -26,8 +26,8 @@
 
 //Motor
 #define PIN_MOTOR_LOCK   PB_11
-#define MOTOR_POS_LOCKED 0
-#define MOTOR_POS_OPEN 180
+#define MOTOR_POS_LOCKED 45
+#define MOTOR_POS_OPEN 135
 
 //Speaker
 #define PIN_SPEAKER PB_4

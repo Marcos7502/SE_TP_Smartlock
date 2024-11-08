@@ -4,33 +4,40 @@
 
 // Define note durations and frequencies for melodies
 int welcome_msg_noteDurations[] = { 200, 250, 400 };
-int welcome_msg_melody[] = { 659, 698, 784 };  // E5, F5, G5
+float welcome_msg_melody[] = { 0.00191, 0.00143, 0.001275 };  // C5, F5, G5
 
-int alarm_noteDurations[] = { 200, 250, 1000 };
-int alarm_melody[] = { 659, 698, 784 };  // E5, F5, G5
+int alarm_noteDurations[] = { 250, 250, 250, 250, 250, 2000 };
+float alarm_melody[] = { 0.001275, 0.00143, 0.001275, 0.00143, 0.001275, 0.00143 };  // E5, F5, G5
 
-int button_noise_freq[] = { BUTTON_NOISE_FREQ };
+int incorrectcodeDurations[] = { 250, 250, 250, 250, 250, 250 };
+float incorrectcode_melody[] = { 0.001275, 0.00143, 0.001275, 0.00143, 0.001275, 0.00143 };  // E5, F5, G5
+
+
+float button_noise_period[] = { BUTTON_NOISE_PERIOD };
 int button_noise_duration[] = { BUTTON_NOISE_DURATION };
 
 Speaker::Speaker(PinName pwm_pin) : pwm_speaker(pwm_pin) {}
 
-// Play a short welcome sound
-void Speaker::play_music_welcome() {
-    this->play_melody(button_noise_freq, button_noise_duration, 1);
-}
 
-// Play a predefined melody for button press
-void Speaker::play_note_button() {
+void Speaker::play_music_welcome() {
     this->play_melody(welcome_msg_melody, welcome_msg_noteDurations, 3);
 }
-
-// Play an alarm melody
-void Speaker::play_alarm() {
-    alarmStartTime = us_ticker_read();
-    play_melody(alarm_melody, alarm_noteDurations, 3);
+void Speaker::play_incorrectcode() {
+    this->play_melody(incorrectcode_melody, incorrectcodeDurations, 6);
 }
 
-// Update the alarm playback
+
+void Speaker::play_note_button() {
+    this->play_melody(button_noise_period, button_noise_duration , 1);
+}
+
+
+void Speaker::play_alarm() {
+    alarmStartTime = us_ticker_read();
+    play_melody(alarm_melody, alarm_noteDurations, 6);
+}
+
+
 void Speaker::alarm_update(){
     uint64_t currentTime = us_ticker_read(); 
     if (currentTime - alarmStartTime >= TIME_RESTART_ALARM) {
@@ -39,8 +46,8 @@ void Speaker::alarm_update(){
     this->update();
 }
 
-// Main function to play a melody
-void Speaker::play_melody(int* melody_in, int* noteDurations_in, int length) {
+
+void Speaker::play_melody(float* melody_in, int* noteDurations_in, int length) {
     melody = melody_in;
     noteDurations = noteDurations_in;
     melodyLength = length; // Store the length of the melody
@@ -48,11 +55,10 @@ void Speaker::play_melody(int* melody_in, int* noteDurations_in, int length) {
     currentNoteIndex = 0;
     playing = true;
     currentnoteDuration = noteDurations[currentNoteIndex];
-    noteStartTime = us_ticker_read();
-
-    float period = 1.0 / melody[currentNoteIndex];
-    pwm_speaker.period(period);
-    pwm_speaker.write(0.5f);   
+ 
+    pwm_speaker.period( melody[currentNoteIndex]);
+    pwm_speaker.write(0.5f);
+    Speakertimer.start();   
 }
 
 // Update function to handle melody progression
@@ -61,13 +67,16 @@ void Speaker::update() {
         return;
     } 
 
-    uint64_t currentTime = us_ticker_read();
+    
 
-    if (currentTime - noteStartTime >= currentnoteDuration) {
+    if (Speakertimer.read_ms() >= currentnoteDuration) {
+        Speakertimer.reset();
         currentNoteIndex++;
 
         // Stop playing if we reach the end of the melody
         if (currentNoteIndex >= melodyLength) {
+            
+            Speakertimer.stop();
             pwm_speaker.write(0.0f); // Stop playing
             playing = false;
             return;
@@ -75,10 +84,8 @@ void Speaker::update() {
 
         // Move to the next note
         currentnoteDuration = noteDurations[currentNoteIndex];
-        noteStartTime = currentTime;
-
-        float period = 1.0 / melody[currentNoteIndex];
-        pwm_speaker.period(period);
+    
+        pwm_speaker.period(melody[currentNoteIndex]);
         pwm_speaker.write(0.5f); 
     }
 }

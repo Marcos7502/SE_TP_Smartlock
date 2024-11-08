@@ -68,6 +68,7 @@ door_state system_door_closed_update(){
         blinks_counter = WRONG_ID_BLINKS;
         BlinkingLedTimer.start();
         UART_send_wrong_id_message();
+        speaker.play_incorrectcode();
                                 
     }
     
@@ -116,7 +117,7 @@ door_state system_door_closing_update(){
         DoorOpenTimer.reset();
         //activar cerradura
         lock_motor.set_position(MOTOR_POS_LOCKED);
-        lock_motor.stop();
+       
         return DOOR_CLOSED;
     }
     speaker.update();
