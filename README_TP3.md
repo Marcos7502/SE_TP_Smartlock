@@ -32,6 +32,7 @@ En resumen, se necesitará:
   
 El Servomotor es el que se muestra debajo
 - [https://www.microelectronicash.com/tecla-2669f--det--TECLA-2669F](https://www.microelectronicash.com/arduino-ds04-nfc--det--ARDUINO-DS04-NFC)
+  
 El parlante es como el que se muestra debajo:
 -https://www.electronicasafg.com/MCO-491478423-mini-parlante-8-ohm-05w-speaker-arduino-_JM
   
@@ -39,6 +40,6 @@ El parlante es como el que se muestra debajo:
 ### Resultado
 El siguiente link muestra un video del funcionamiento.
 
-https://drive.google.com/file/d/1dUj6J2dgBfxXLpf9hEOSNfRaAek-ReON/view?usp=sharing
+https://drive.google.com/file/d/1m4aDb67fY_7gsR8zvAbPGWMtD4l36bGP/view?usp=sharing
 
 
