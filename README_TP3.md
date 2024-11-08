@@ -34,7 +34,7 @@ El Servomotor es el que se muestra debajo
 - [https://www.microelectronicash.com/tecla-2669f--det--TECLA-2669F](https://www.microelectronicash.com/arduino-ds04-nfc--det--ARDUINO-DS04-NFC)
   
 El parlante es como el que se muestra debajo:
--https://www.electronicasafg.com/MCO-491478423-mini-parlante-8-ohm-05w-speaker-arduino-_JM
+- https://www.electronicasafg.com/MCO-491478423-mini-parlante-8-ohm-05w-speaker-arduino-_JM
   
 
 ### Resultado
