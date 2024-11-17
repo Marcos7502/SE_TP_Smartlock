@@ -2,15 +2,18 @@
 #include "speaker.h"
 #include "global_defines.h"
 
-// Define note durations and frequencies for melodies
-int welcome_msg_noteDurations[] = { 200, 250, 400 };
-float welcome_msg_melody[] = { 0.00191, 0.00143, 0.001275 };  // C5, F5, G5
+// Define note durations and periods for melodies
+// The periods are calculated from the frecuencies of musical notes  (A5, E5, etc) (see the musical notes from a piano)
+// For example, C5 = 523,25 Hz -> C5 = 0.00191 s. 
+// The durations of the played musical notes are expressed in ms.
+int welcome_msg_noteDurations[] = { 200, 250, 400 };//in ms
+float welcome_msg_melody[] = { 0.00191, 0.00143, 0.001275 };  
 
 int alarm_noteDurations[] = { 250, 250, 250, 250, 250, 2000 };
-float alarm_melody[] = { 0.001275, 0.00143, 0.001275, 0.00143, 0.001275, 0.00143 };  // E5, F5, G5
+float alarm_melody[] = { 0.001275, 0.00143, 0.001275, 0.00143, 0.001275, 0.00143 }; 
 
 int incorrectcodeDurations[] = { 250, 250, 250, 250, 250, 250 };
-float incorrectcode_melody[] = { 0.001275, 0.00143, 0.001275, 0.00143, 0.001275, 0.00143 };  // E5, F5, G5
+float incorrectcode_melody[] = { 0.001275, 0.00143, 0.001275, 0.00143, 0.001275, 0.00143 };  
 
 
 float button_noise_period[] = { BUTTON_NOISE_PERIOD };
@@ -31,7 +34,6 @@ void Speaker::play_note_button() {
     this->play_melody(button_noise_period, button_noise_duration , 1);
 }
 
-
 void Speaker::play_alarm() {
     alarmStartTime = us_ticker_read();
     play_melody(alarm_melody, alarm_noteDurations, 6);
@@ -50,7 +52,7 @@ void Speaker::alarm_update(){
 void Speaker::play_melody(float* melody_in, int* noteDurations_in, int length) {
     melody = melody_in;
     noteDurations = noteDurations_in;
-    melodyLength = length; // Store the length of the melody
+    melodyLength = length; 
 
     currentNoteIndex = 0;
     playing = true;
@@ -66,8 +68,6 @@ void Speaker::update() {
     if (!playing) {
         return;
     } 
-
-    
 
     if (Speakertimer.read_ms() >= currentnoteDuration) {
         Speakertimer.reset();
