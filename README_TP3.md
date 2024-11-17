@@ -22,7 +22,7 @@ Los temas a incorporar para este trabajo práctico son:
 ## Descripción
 En este trabajo práctico se incorporará un Servomotor para accionar la apertura y cierre de la cerradura. 
 Adicionalmente, se incluiran interrupciones para detectar cuando se aprieta el boton de cerrar la puerta y se hara uso de los temporizadores implementados en trabajos practicos previos para controlar el tiempo de apertura de la puerta y el tiempo máximo para introducir el código en el teclado matricial.
-Por último, se utilizará un parlante para generar audio a partir de PWM. Elaudio indica cuando se detecta que se presiona una tecla, que notifique cuando el código ingresado es incorrecto y que avise cuando se deja la puerta abierta.
+Por último, se utilizará un parlante para generar audio a partir de PWM. El audio indica cuando se detecta que se presiona una tecla, notifica cuando el código ingresado es incorrecto y avisa cuando se deja la puerta abierta.
 En resumen, se necesitará:
 - Incorporar el periférico Servomotor 
 - Utilizar PWM para controlar las posiciones del servomotor (abierto y cerrado)
