@@ -20,7 +20,7 @@
 
 #### **1.1 Objetivo del proyecto y resultados esperados**
 
-	El objetivo de este proyecto es diseñar e implementar un mecanismo de seguridad para monitorear, habilitar o denegar y registrar el acceso de individuos a hogares y/o edificios corporativos. Se tiene como objetivo adicional asegurar que el acceso a la propiedad o sus compartimentos sea lo más fluido y natural posible, promoviendo un acceso rápido, seguro y robusto. Por último, se busca en este proyecto poder incorporar o remover individuos a la base de datos para administrar sus permisos de acceso al edificio o hogar.
+El objetivo de este proyecto es diseñar e implementar un mecanismo de seguridad para monitorear, habilitar o denegar y registrar el acceso de individuos a hogares y/o edificios corporativos. Se tiene como objetivo adicional asegurar que el acceso a la propiedad o sus compartimentos sea lo más fluido y natural posible, promoviendo un acceso rápido, seguro y robusto. Por último, se busca en este proyecto poder incorporar o remover individuos a la base de datos para administrar sus permisos de acceso al edificio o hogar.
 
 #### **1.2 Proyectos similares**
 
