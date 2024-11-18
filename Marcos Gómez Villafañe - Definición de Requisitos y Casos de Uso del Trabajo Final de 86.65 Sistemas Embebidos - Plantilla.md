@@ -57,17 +57,89 @@ La disponibilidad del hardware es fundamental ya que para este proyecto no se bu
 
 La siguiente tabla (Tabla 1.2.1) muestra los valores ponderados asignados a cada proyecto considerado
 
-| Proyecto | Cerradura con RFID y keypad |  | Cerradura solo con keypad |  | Cerradura con reconocimiento facial |  |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|  | Puntaje | Puntaje Ponderado | Puntaje | Puntaje Ponderado | Puntaje | Puntaje Ponderado |
-| **Disponibilidad de Hardware** <br> *(peso: 10)* | 10                          | 100     | 10                        | 100     | 4                           | 40      |
-| **Facilidad de Acceso** <br> *(peso: 8)*        | 8                           | 64      | 5                         | 40      | 10                          | 80      |
-| **Seguridad** <br> *(peso: 6)*                  | 8                           | 48      | 8                         | 48      | 6                           | 36      |
-| **Tiempo de Implementación** <br> *(peso: 8)*   | 8                           | 64      | 10                        | 80      | 2                           | 16      |
-| **Costo** <br> *(peso: 5)*                      | 8                           | 40      | 8                         | 40      | 6                           | 30      |
-| **Interés personal** <br> *(peso: 8)*           | 10                          | 80      | 4                         | 40      | 10                          | 80      |
-| **Puntaje Total**                               | -                           | **396** | -                         | **348** | -                           | **282** |
-
+<table>
+        <thead>
+            <tr>
+                <th rowspan="2">Proyecto</th>
+                <th colspan="2">Cerradura con RFID y keypad</th>
+                <th colspan="2">Cerradura solo con keypad</th>
+                <th colspan="2">Cerradura con reconocimiento facial</th>
+            </tr>
+            <tr>
+                <th>Puntaje</th>
+                <th>Puntaje Ponderado</th>
+                <th>Puntaje</th>
+                <th>Puntaje Ponderado</th>
+                <th>Puntaje</th>
+                <th>Puntaje Ponderado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="header-row">
+                <td align ="center">Disponibilidad de Hardware <br>(peso : 10)</td>
+                <td>10</td>
+                <td>100</td>
+                <td>10</td>
+                <td>100</td>
+                <td>4</td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td align ="center">Facilidad de Acceso <br>(peso : 8)</td>
+                <td>8</td>
+                <td>64</td>
+                <td>5</td>
+                <td>40</td>
+                <td>10</td>
+                <td>80</td>
+            </tr>
+            <tr class="header-row">
+                <td align ="center">Seguridad <br>(peso : 6)</td>
+                <td>8</td>
+                <td>48</td>
+                <td>8</td>
+                <td>48</td>
+                <td>6</td>
+                <td>36</td>
+            </tr>
+            <tr>
+                <td align ="center">Tiempo de Implementación <br>(peso : 8)</td>
+                <td>8</td>
+                <td>64</td>
+                <td>10</td>
+                <td>80</td>
+                <td>2</td>
+                <td>16</td>
+            </tr>
+            <tr class="header-row">
+                <td align ="center">Costo (peso : 5)</td>
+                <td>8</td>
+                <td>40</td>
+                <td>8</td>
+                <td>40</td>
+                <td>6</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td align ="center">Interés personal <br>(peso : 8)</td>
+                <td>10</td>
+                <td>80</td>
+                <td>4</td>
+                <td>40</td>
+                <td>10</td>
+                <td>80</td>
+            </tr>
+            <tr class="highlight-green">
+                <td>Puntaje Total</td>
+                <td>-</td>
+                <td>396</td>
+                <td>-</td>
+                <td class="highlight-red">348</td>
+                <td>-</td>
+                <td>282</td>
+            </tr>
+        </tbody>
+</table>
 <p align="center"><em>Tabla 1.2.1: Comparación de proyectos</em></p>
 
 #### **1.3 Selección de proyecto**
