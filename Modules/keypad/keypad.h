@@ -11,6 +11,7 @@ class Keypad{
         void set_debounce(int ms);
         void init();
         void reset();
+        bool button_pressed();
     private:
         DigitalOut keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
         DigitalIn keypadColPins[KEYPAD_NUMBER_OF_COLS] = {PB_12, PB_13, PB_15, PC_6};
@@ -29,6 +30,9 @@ class Keypad{
         char keypad_sequence_read[4];
         char default_incomplete_read_sequence[4]= {'\0', '\0', '\0' ,'\0'};
         
+        char keyDetected = '\0';
+        char keyReleased = '\0';
+
         char _matrixKeypadScan();
         void _matrixKeypadInit();
         char _matrixKeypadUpdate();
