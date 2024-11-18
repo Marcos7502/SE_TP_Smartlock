@@ -2,13 +2,11 @@
 
  
 
-**Autor**
+**Autor: Marcos Gómez Villafañe**
 
-**Marcos Gómez Villafañe \- Padrón 105.055**
+**Padrón: 105.055**
 
-**Fecha:**
-
-**2do cuatrimestre 2024**
+**Fecha: 2do cuatrimestre 2024**
 
  
 
