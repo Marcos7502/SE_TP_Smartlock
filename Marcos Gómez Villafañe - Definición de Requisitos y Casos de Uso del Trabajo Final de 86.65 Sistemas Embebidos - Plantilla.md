@@ -57,9 +57,9 @@ La disponibilidad del hardware es fundamental ya que para este proyecto no se bu
 
 La siguiente tabla (Tabla 1.2.1) muestra los valores ponderados asignados a cada proyecto considerado
 
-| Proyecto                                | Cerradura con RFID y keypad |         | Cerradura solo con keypad |         | Cerradura con reconocimiento facial |         |
-| :-------------------------------------: | :-------------------------: | :-----: | :-----------------------: | :-----: | :---------------------------------: | :-----: |
-|                                         | Puntaje                     | Puntaje Ponderado | Puntaje              | Puntaje Ponderado | Puntaje                      | Puntaje Ponderado |
+| Proyecto | Cerradura con RFID y keypad |  | Cerradura solo con keypad |  | Cerradura con reconocimiento facial |  |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|  | Puntaje | Puntaje Ponderado | Puntaje | Puntaje Ponderado | Puntaje | Puntaje Ponderado |
 | **Disponibilidad de Hardware** <br> *(peso: 10)* | 10                          | 100     | 10                        | 100     | 4                           | 40      |
 | **Facilidad de Acceso** <br> *(peso: 8)*        | 8                           | 64      | 5                         | 40      | 10                          | 80      |
 | **Seguridad** <br> *(peso: 6)*                  | 8                           | 48      | 8                         | 48      | 6                           | 36      |
