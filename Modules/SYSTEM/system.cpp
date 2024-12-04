@@ -10,10 +10,11 @@
 #include "motors.h"
 #include "speaker.h"
 #include "global_defines.h"
+#include "MQTT.h"
+#include "string.h"
 
 
-
-
+door_state main_door_state = DOOR_CLOSED;
 access_state access_attempt;
 
 char* rfid_content = nullptr;
@@ -21,7 +22,8 @@ char* keypad_sequence_read = nullptr;
 char last_rfid_read[20]="";
 
 bool save_id = false;
-bool doorleftopen = false;
+bool door_left_open = false;
+bool force_block_door = false;
 
 int blinks_counter = 0;
 int time_door_open;
@@ -34,15 +36,67 @@ PinName  keypadRowPins[KEYPAD_NUMBER_OF_ROWS] = {PB_3, PB_5, PC_7, PA_15};
 PinName  keypadColPins[KEYPAD_NUMBER_OF_COLS]  = {PB_12, PB_13, PB_15, PC_6};
 
 
-DigitalIn magnet_sensor(PIN_MAGNET_SENSOR_1);
+DigitalIn MagnetSensor(PIN_MAGNET_SENSOR_1);
+DigitalOut DoorBlockedLed(PIN_LED_DOOR_BLOCKED);
+DigitalOut DoorOpenLed(PIN_LED_DOOR_OPEN);
 
-DigitalOut door_blocked_led(PIN_LED_DOOR_BLOCKED);
-DigitalOut door_open_led(PIN_LED_DOOR_OPEN);
+static Keypad KeypadDoor(keypadRowPins,keypadColPins);
+static Motor LockMotor(PIN_MOTOR_LOCK);
+static Speaker SpeakerDoor(PIN_SPEAKER);
+static MQTT Mqtt(PIN_MQTT_TX, PIN_MQTT_RX, MQTT_BAUDRATE);
 
-Keypad keypad_door(keypadRowPins,keypadColPins);
 
-Motor lock_motor(PIN_MOTOR_LOCK);
-Speaker speaker(PIN_SPEAKER);
+InterruptIn  DoorBlockButton(PIN_BUTTON_DOOR_BLOCK);
+
+// Module: initialization -------------------------
+void system_init(){
+    set_time(1256729737);
+ 
+    rfid_content = nullptr;
+
+    MagnetSensor.mode(PullDown);
+
+    DoorOpenTimer.reset();
+    DoorOpenTimer.stop();
+
+    BlinkingLedTimer.reset();
+    BlinkingLedTimer.stop();
+    
+    RFID_reader_init();
+
+    DoorBlockButton.mode(PullDown);
+    DoorBlockButton.rise(&force_door_close);
+
+
+}
+
+void system_update(){
+    process_mqtt();
+    if(force_block_door){
+        force_door_close();
+    }
+    switch(main_door_state){
+        case DOOR_CLOSED:
+            main_door_state = system_door_closed_update();           
+            break;
+        
+        case DOOR_OPENING:
+            main_door_state = system_door_opening_update();
+            break;
+        
+        case DOOR_OPEN:
+            main_door_state = system_door_open_update();
+            break;
+
+        case DOOR_CLOSING:
+            main_door_state = system_door_closing_update();         
+            break;
+    }
+ 
+    
+}
+
+
 
 door_state system_door_closed_update(){
     rfid_content = RFID_read();
@@ -57,9 +111,9 @@ door_state system_door_closed_update(){
         access_keys_save_id(last_rfid_read);
         save_id = false;
     }
-    keypad_sequence_read = keypad_door.get_code();
-    if(keypad_door.button_pressed()==true){
-        speaker.play_note_button();
+    keypad_sequence_read = KeypadDoor.get_code();
+    if(KeypadDoor.button_pressed()==true){
+        SpeakerDoor.play_note_button();
     }
     access_attempt = access_attempt_update(rfid_content,keypad_sequence_read);
     
@@ -67,7 +121,7 @@ door_state system_door_closed_update(){
         blinks_counter = WRONG_ID_BLINKS;
         BlinkingLedTimer.start();
         UART_send_wrong_id_message();
-        speaker.play_incorrectcode();
+        SpeakerDoor.play_incorrectcode();
                                 
     }
     
@@ -75,64 +129,63 @@ door_state system_door_closed_update(){
         blink_leds();
     }
     else{
-        door_blocked_led = ON;
-        door_open_led = OFF;
+        DoorBlockedLed = ON;
+        DoorOpenLed = OFF;
     }
     if(access_attempt == ACCESS_GRANTED){
         return DOOR_OPENING;
     }
-    speaker.update();
+    SpeakerDoor.update();
     return DOOR_CLOSED;
              
                 
 }
-
 door_state system_door_closing_update(){
-    if(magnet_sensor == OFF){
-        door_open_led = ON;
-        if(doorleftopen == false){
+    if(MagnetSensor == OFF){
+        DoorOpenLed = ON;
+        if(door_left_open == false){
             blinks_counter = -1;
             BlinkingLedTimer.start();
-            doorleftopen = true;
+            door_left_open = true;
             DoorOpenTimer.start();
             DoorOpenTimer.reset();
-            UART_send_door_left_open_message(doorleftopen);
-            speaker.play_alarm();   
+            UART_send_door_left_open_message(door_left_open);
+            SpeakerDoor.play_alarm();   
         }
-        if(doorleftopen == true){
+        if(door_left_open == true){
             blink_leds();
-            speaker.alarm_update();
+            SpeakerDoor.alarm_update();
         }                                        
             
     }
 
-    if(magnet_sensor == ON){
+    if(MagnetSensor == ON){
         blinks_counter = 0;
-        if(doorleftopen == true){
-            doorleftopen = false;
-            UART_send_door_left_open_message(doorleftopen);
+        if(door_left_open == true){
+            door_left_open = false;
+            UART_send_door_left_open_message(door_left_open);
         }
         DoorOpenTimer.stop();
         DoorOpenTimer.reset();
         //activar cerradura
-        lock_motor.set_position(MOTOR_POS_LOCKED);
+        LockMotor.set_position(MOTOR_POS_LOCKED);
        
         return DOOR_CLOSED;
     }
-    speaker.update();
+    SpeakerDoor.update();
     return DOOR_CLOSING;
     
 }
 door_state system_door_open_update(){
-    door_blocked_led = OFF;
-    door_open_led = ON;
+    DoorBlockedLed = OFF;
+    DoorOpenLed = ON;
 
     time_door_open = DoorOpenTimer.read_ms();
 
     if(time_door_open>=TIMEOUT_DOOR_OPEN){
         return DOOR_CLOSING; 
     }
-    speaker.update();
+    SpeakerDoor.update();
     return DOOR_OPEN;
     
 }
@@ -141,37 +194,21 @@ door_state system_door_opening_update(){
     DoorOpenTimer.start();
     
  
-    lock_motor.set_position(MOTOR_POS_OPEN);
-    speaker.play_music_welcome();
-    speaker.update();
+    LockMotor.set_position(MOTOR_POS_OPEN);
+    SpeakerDoor.play_music_welcome();
+    SpeakerDoor.update();
     return DOOR_OPEN;
 }
 
-// Module: initialization -------------------------
-void system_init(){
-    set_time(1256729737);
- 
-    rfid_content = nullptr;
-
-    magnet_sensor.mode(PullDown);
-
-    DoorOpenTimer.reset();
-    DoorOpenTimer.stop();
-
-    BlinkingLedTimer.reset();
-    BlinkingLedTimer.stop();
-    
-    RFID_reader_init();
 
 
-}
 
 // Module: Blink Leds (wrong id, door open)  -------------------------
 void blink_leds(){
     if(blinks_counter != 0){
         
         if(BlinkingLedTimer.read_ms()>=LED_BLINK_INTERVAL){
-            door_blocked_led = !door_blocked_led;
+            DoorBlockedLed = !DoorBlockedLed;
             BlinkingLedTimer.reset();
             if(blinks_counter > 0){
                 blinks_counter = blinks_counter - 1;
@@ -184,4 +221,31 @@ void blink_leds(){
         BlinkingLedTimer.stop();
     }
     
+}
+void force_door_close(){
+    main_door_state = DOOR_CLOSING; 
+}
+
+void process_mqtt(){
+    //Mqtt.keepAlive
+    MQTTMessage mqtt_msg =  Mqtt.receive();
+    if(mqtt_msg.received){
+        if(strcmp(mqtt_msg.topic, "Smartlock/1/Control" ) == 0){
+            if(strcmp(mqtt_msg.message, "force_block_true")==0){
+                
+                force_block_door = true;
+            }
+            else if(strcmp(mqtt_msg.message, "force_block_false")==0){
+                force_block_door = false;
+            }
+            else if(strcmp(mqtt_msg.message, "manual_open_true")==0){
+                main_door_state=DOOR_OPENING;
+            }
+        }
+        else if(strcmp(mqtt_msg.topic, "Smartlock/1/Security" ) == 0){
+
+        }
+
+    }
+
 }

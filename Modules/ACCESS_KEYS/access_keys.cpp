@@ -3,6 +3,7 @@
 #include "arm_book_lib.h"
 #include "UART_comm.h"
 #include "string.h"
+#include <vector>
 
 char keypad_code[4] = {'1' ,'2' ,'3' ,'4'}; 
 char allowed_id[20] = "";  // ID permitido

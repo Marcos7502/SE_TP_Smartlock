@@ -34,3 +34,8 @@
 
 #define WRONG_ID_BLINKS 6
 #define TIME_RESTART_ALARM 10000000 //us
+
+//MQTT
+#define PIN_MQTT_TX PC_12
+#define PIN_MQTT_RX PD_2
+#define MQTT_BAUDRATE 115200
