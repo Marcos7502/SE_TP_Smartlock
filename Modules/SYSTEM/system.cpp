@@ -11,7 +11,6 @@
 #include "speaker.h"
 #include "global_defines.h"
 #include "MQTT.h"
-#include "string.h"
 
 
 door_state main_door_state = DOOR_CLOSED;
@@ -43,7 +42,7 @@ DigitalOut DoorOpenLed(PIN_LED_DOOR_OPEN);
 static Keypad KeypadDoor(keypadRowPins,keypadColPins);
 static Motor LockMotor(PIN_MOTOR_LOCK);
 static Speaker SpeakerDoor(PIN_SPEAKER);
-static MQTT Mqtt(PIN_MQTT_TX, PIN_MQTT_RX, MQTT_BAUDRATE);
+static MQTT Mqtt(PIN_MQTT_TX, PIN_MQTT_RX, MQTT_BAUDRATE, PIN_MQTT_LED);
 
 
 InterruptIn  DoorBlockButton(PIN_BUTTON_DOOR_BLOCK);
@@ -227,7 +226,7 @@ void force_door_close(){
 }
 
 void process_mqtt(){
-    //Mqtt.keepAlive
+    Mqtt.keepAlive();
     MQTTMessage mqtt_msg =  Mqtt.receive();
     if(mqtt_msg.received){
         if(strcmp(mqtt_msg.topic, "Smartlock/1/Control" ) == 0){

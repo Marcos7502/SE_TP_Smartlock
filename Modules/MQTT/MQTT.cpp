@@ -1,10 +1,11 @@
 #include "MQTT.h"
 
 
-MQTT::MQTT(PinName Tx, PinName Rx, int baudrate):
-    esp32UART(Tx,Rx,baudrate)
+MQTT::MQTT(PinName Tx, PinName Rx, int baudrate,PinName pin_led_mqtt):
+    esp32UART(Tx,Rx,baudrate),
+    LedMqtt(pin_led_mqtt)
 {
-   
+    LedMqtt = OFF;
     
 }
 
@@ -16,7 +17,10 @@ MQTTMessage MQTT::receive() {
     if (!this->esp32UART.readable()) {
         return result;
     }
-    
+    LedMqtt = ON;
+    delay(100);
+    LedMqtt = OFF;
+
     char buffer[256];
     int index = 0;
     char ch = '\0';
@@ -41,10 +45,18 @@ MQTTMessage MQTT::receive() {
 
     return result;
 }
-// void MQTT::keepAlive() {
-//   unsigned long currentMillis = millis();
-//   if (currentMillis - previousMillis >= KeepAliveInterval) {
-//       previousMillis = currentMillis; // Update the last keep-alive timestamp
-//       mqttClient.publish("Smartlock/1/Alive", "alive"); // Send keep-alive message
-//   }
-// }
+void MQTT::keepAlive() {
+  unsigned int currentMillis = Kernel::get_ms_count();
+  if (currentMillis - previousMillis >= KEEP_ALIVE_INTERVAL) {
+      previousMillis = currentMillis; // Update the last keep-alive timestamp
+      this-> write("Smartlock/1/Alive", "alive"); // Send keep-alive message
+  }
+}
+void MQTT::write(const char* topic, const char* message){
+    this->esp32UART.write(topic, strlen(topic));
+    this->esp32UART.write(":", 1);
+    this->esp32UART.write(message, strlen(message));
+    this->esp32UART.write("\n", 1);
+
+}
+    

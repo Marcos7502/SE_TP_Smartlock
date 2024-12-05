@@ -17,8 +17,17 @@ struct MQTTMessage {
 
 class MQTT{
     public:
+        // Conexión con el módulo esp32 que maneja MQTT
+        BufferedSerial esp32UART;
+
+        DigitalOut LedMqtt;
+
+
         // Crea el objeto
-        MQTT(PinName Tx, PinName Rx, int baudrate);
+        MQTT(PinName Tx, PinName Rx, int baudrate,PinName pin_led_mqtt);
+
+        // Keep alive
+        void keepAlive();
 
         // Se suscribe a un tópico
         void subscribe(const char * topic);
@@ -40,13 +49,12 @@ class MQTT{
 
         void processPendings();
 
-        void confirmSubscription(const char* topic);
-        void confirmUnsubscription(const char* topic);
+        // void confirmSubscription(const char* topic);
+        // void confirmUnsubscription(const char* topic);
 
 
     private:
-        // Conexión con el módulo esp32 que maneja MQTT
-        BufferedSerial esp32UART;
+        unsigned int previousMillis = 0;
 
         const char * subscribe_str = "subscribe";
         const char * unsubscribe_str = "unsubscribe";

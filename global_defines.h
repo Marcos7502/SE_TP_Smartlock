@@ -39,3 +39,7 @@
 #define PIN_MQTT_TX PC_12
 #define PIN_MQTT_RX PD_2
 #define MQTT_BAUDRATE 115200
+
+#define PIN_MQTT_LED D2
+
+#define KEEP_ALIVE_INTERVAL 9000 //ms
