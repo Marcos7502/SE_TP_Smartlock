@@ -5,7 +5,7 @@
 #include "arm_book_lib.h"
 #include "global_defines.h"
 #include "string.h"
-
+#include <iostream>
 
 
 
@@ -28,6 +28,9 @@ class MQTT{
 
         // Keep alive
         void keepAlive();
+
+        // Keep alive
+        void SendStatus(char* status_code);
 
         // Se suscribe a un tópico
         void subscribe(const char * topic);

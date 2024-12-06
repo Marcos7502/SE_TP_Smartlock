@@ -14,6 +14,7 @@
 
 
 door_state main_door_state = DOOR_CLOSED;
+door_state last_door_state = NONE;
 access_state access_attempt;
 
 char* rfid_content = nullptr;
@@ -65,6 +66,12 @@ void system_init(){
 
     DoorBlockButton.mode(PullDown);
     DoorBlockButton.rise(&force_door_close);
+    char status_code_init[2]; // Size 3 to include the null terminator
+    status_code_init[0] = '2';
+    status_code_init[1] = '\n';
+    
+
+    Mqtt.SendStatus(status_code_init);
 
 
 }
@@ -89,6 +96,8 @@ void system_update(){
 
         case DOOR_CLOSING:
             main_door_state = system_door_closing_update();         
+            break;
+        case NONE:
             break;
     }
  
@@ -222,11 +231,48 @@ void blink_leds(){
     
 }
 void force_door_close(){
-    main_door_state = DOOR_CLOSING; 
+    if(MagnetSensor == OFF){
+        main_door_state = DOOR_CLOSING; 
+    }
+    else{
+        main_door_state = DOOR_CLOSED; 
+    }
+    
 }
 
 void process_mqtt(){
     Mqtt.keepAlive();
+    if(last_door_state != main_door_state){
+        char status_code[2];
+        switch(main_door_state){
+            case DOOR_CLOSED:
+                status_code[0]='2';     
+                break;
+        
+            case DOOR_OPENING:
+                status_code[0]='1';  
+                break;
+            
+            case DOOR_OPEN:
+                status_code[0]='1'; 
+                break;
+
+            case DOOR_CLOSING:
+                status_code[0]='3';  
+                break;
+
+            case NONE:
+                break;
+
+        }
+       status_code[1]='\n'; 
+
+       Mqtt.SendStatus(status_code);
+
+       last_door_state = main_door_state;
+        
+    }
+    
     MQTTMessage mqtt_msg =  Mqtt.receive();
     if(mqtt_msg.received){
         if(strcmp(mqtt_msg.topic, "Smartlock/1/Control" ) == 0){
@@ -241,9 +287,9 @@ void process_mqtt(){
                 main_door_state=DOOR_OPENING;
             }
         }
-        else if(strcmp(mqtt_msg.topic, "Smartlock/1/Security" ) == 0){
-
-        }
+        // else if(strcmp(mqtt_msg.topic, "Smartlock/1/Security" ) == 0){
+            
+        // }
 
     }
 

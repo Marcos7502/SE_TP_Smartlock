@@ -4,7 +4,8 @@ typedef enum{
     DOOR_OPENING,
     DOOR_OPEN,
     DOOR_CLOSING,
-    DOOR_CLOSED
+    DOOR_CLOSED,
+    NONE
 }door_state;
 
 void force_door_close();

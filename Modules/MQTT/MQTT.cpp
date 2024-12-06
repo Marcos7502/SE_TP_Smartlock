@@ -59,4 +59,9 @@ void MQTT::write(const char* topic, const char* message){
     this->esp32UART.write("\n", 1);
 
 }
+void MQTT::SendStatus(char* status_code){
+ 
+    this -> write("Smartlock/1/Status",status_code);
+}
+
     
