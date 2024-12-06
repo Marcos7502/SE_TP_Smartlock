@@ -44,13 +44,17 @@ class MQTT{
         //
         MQTTMessage receive();
 
+        //Logger
+        void SendLogAccessMessage(char* rfid_content, char* keypad_code);
+        void SendLogDoorLeftOpenMessage(bool door_left_open);
+        void SendLogWrongIDMessage();
+
+        //Logger
+        void ShowRFID(char* buffer);
         
 
-        bool isSubscribed(const char* topic);
 
-        //std::vector<std::string> getSubscribedTopics();
 
-        void processPendings();
 
         // void confirmSubscription(const char* topic);
         // void confirmUnsubscription(const char* topic);

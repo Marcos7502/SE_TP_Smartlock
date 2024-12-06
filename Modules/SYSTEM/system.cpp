@@ -2,6 +2,7 @@
 #include "arm_book_lib.h"
 #include <SPI.h>
 #include "string.h"
+#include<cstring>
 #include "system.h"
 #include "access_keys.h"
 #include "keypad.h"
@@ -114,6 +115,8 @@ door_state system_door_closed_update(){
     
     
     UARTShowRFID(rfid_content); 
+    Mqtt.ShowRFID(rfid_content);
+
     save_id = UART_get_save_id_input();
     if(save_id == true){
         access_keys_save_id(last_rfid_read);
@@ -129,6 +132,7 @@ door_state system_door_closed_update(){
         blinks_counter = WRONG_ID_BLINKS;
         BlinkingLedTimer.start();
         UART_send_wrong_id_message();
+        Mqtt.SendLogWrongIDMessage();
         SpeakerDoor.play_incorrectcode();
                                 
     }
@@ -158,6 +162,7 @@ door_state system_door_closing_update(){
             DoorOpenTimer.start();
             DoorOpenTimer.reset();
             UART_send_door_left_open_message(door_left_open);
+            Mqtt.SendLogDoorLeftOpenMessage(door_left_open);
             SpeakerDoor.play_alarm();   
         }
         if(door_left_open == true){
@@ -172,6 +177,7 @@ door_state system_door_closing_update(){
         if(door_left_open == true){
             door_left_open = false;
             UART_send_door_left_open_message(door_left_open);
+            Mqtt.SendLogDoorLeftOpenMessage(door_left_open);
         }
         DoorOpenTimer.stop();
         DoorOpenTimer.reset();
@@ -199,6 +205,7 @@ door_state system_door_open_update(){
 }
 door_state system_door_opening_update(){
     UART_send_access_message(rfid_content,keypad_sequence_read);
+    Mqtt.SendLogAccessMessage(rfid_content, keypad_sequence_read);
     DoorOpenTimer.start();
     
  
@@ -287,9 +294,9 @@ void process_mqtt(){
                 main_door_state=DOOR_OPENING;
             }
         }
-        // else if(strcmp(mqtt_msg.topic, "Smartlock/1/Security" ) == 0){
-            
-        // }
+        else if(strcmp(mqtt_msg.topic, "Smartlock/1/Security" ) == 0){
+            ProcessSecurityMessage(mqtt_msg.message);
+        }
 
     }
 

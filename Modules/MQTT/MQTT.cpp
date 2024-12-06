@@ -48,10 +48,11 @@ MQTTMessage MQTT::receive() {
 void MQTT::keepAlive() {
   unsigned int currentMillis = Kernel::get_ms_count();
   if (currentMillis - previousMillis >= KEEP_ALIVE_INTERVAL) {
-      previousMillis = currentMillis; // Update the last keep-alive timestamp
-      this-> write("Smartlock/1/Alive", "alive"); // Send keep-alive message
+      previousMillis = currentMillis; 
+      this-> write("Smartlock/1/Alive", "alive"); 
   }
 }
+
 void MQTT::write(const char* topic, const char* message){
     this->esp32UART.write(topic, strlen(topic));
     this->esp32UART.write(":", 1);
@@ -64,4 +65,51 @@ void MQTT::SendStatus(char* status_code){
     this -> write("Smartlock/1/Status",status_code);
 }
 
+void MQTT::SendLogAccessMessage(char* rfid_content, char* keypad_code){
+    time_t seconds = time(NULL);
+    char Buffer[64]; 
+    strftime(Buffer, sizeof(Buffer), "%c", localtime(&seconds));
+
+    char FinalMessage[150];
+
+    if (rfid_content != nullptr) {
+        sprintf(FinalMessage, "%s : Door 1 accessed with RFID ID: %s", Buffer, rfid_content);
+    } else {
+        sprintf(FinalMessage, "%s : Door 1 accessed with Keypad Code: %.4s", Buffer, keypad_code);
+    }
+    this -> write("Smartlock/1/Logger",FinalMessage);
+}
+
+void MQTT::SendLogDoorLeftOpenMessage(bool door_left_open){
+    time_t seconds = time(NULL);
+    char Buffer[64]; 
+    strftime(Buffer, sizeof(Buffer), "%c", localtime(&seconds)); 
+
+    char FinalMessage[100]; 
+
+    if (door_left_open == true) {
+        sprintf(FinalMessage, "%s : Door 1 left open", Buffer);
+    } else {
+        sprintf(FinalMessage, "%s : Door 1 left open was closed", Buffer);
+    }
+
+    this -> write("Smartlock/1/Logger",FinalMessage);
+}
+
+void MQTT::SendLogWrongIDMessage(){
+    time_t seconds = time(NULL);
+    char Buffer[64]; 
+    strftime(Buffer, sizeof(Buffer), "%c", localtime(&seconds)); 
+    char FinalMessage[100]; 
+    sprintf(FinalMessage, "%s : Door 1 wrong ID introduced", Buffer); 
+
+    this -> write("Smartlock/1/Logger",FinalMessage);
+}
+
+
+
+void MQTT::ShowRFID(char* buffer){
+ 
+    this -> write("Smartlock/1/Security",buffer);
+}
     
