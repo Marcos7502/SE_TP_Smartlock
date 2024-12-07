@@ -108,8 +108,12 @@ void MQTT::SendLogWrongIDMessage(){
 
 
 
-void MQTT::ShowRFID(char* buffer){
- 
-    this -> write("Smartlock/1/Security",buffer);
+void MQTT::ShowRFID(char* rfid_content_send){
+    if(rfid_content_send != nullptr){
+        char FinalMessage[100]; 
+        sprintf(FinalMessage, "NewRFID_%s", rfid_content_send); 
+
+        this -> write("Smartlock/1/Security",FinalMessage);
+    }
 }
     

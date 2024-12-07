@@ -28,9 +28,9 @@ int my_strcmp(const char *str1, const char *str2) {
     // If both strings are of equal length and no difference found, return the difference of '\0' characters
     return (unsigned char)*str1 - (unsigned char)*str2;
 }
-access_state access_attempt_update(char* rfid_content, char* keypad_sequence_read){
-    if(rfid_content!= nullptr){
-        if(isRFIDPresent(rfid_content)){
+access_state access_attempt_update(char* rfid_content_read, char* keypad_sequence_read){
+    if(rfid_content_read!= nullptr){
+        if(isRFIDPresent(rfid_content_read)){
             return ACCESS_GRANTED;
         }else{
             return ACCESS_DENIED;
@@ -73,6 +73,9 @@ void ProcessSecurityMessage(char* message) {
         std::getline(ss, name, '_') &&
         std::getline(ss, code_str, '_') &&
         std::getline(ss, rfid)) {
+            if (rfid.empty()) {
+                rfid = "-1";
+            }
             // Convert id and code to integers
             int read_id = std::stoi(id_str);
             const char* operation_str = operation.c_str();
@@ -86,11 +89,14 @@ void ProcessSecurityMessage(char* message) {
                 StoredKeys.push_back(key);
             }
             else if(my_strcmp(operation_str, "delete") == 0){
-                for (auto it = StoredKeys.begin(); it != StoredKeys.end(); ++it) {
-                    if (it->id == read_id) {
-                        // If the id matches, erase the record
-                        StoredKeys.erase(it);
-                    }
+                // Find the element by id and erase it
+                auto it = std::find_if(StoredKeys.begin(), StoredKeys.end(), [&](const AccessKey& key) {
+                    return key.id == read_id;
+                });
+
+                if (it != StoredKeys.end()) {
+                    // If found, erase the element
+                    StoredKeys.erase(it);
                 }
 
             }
