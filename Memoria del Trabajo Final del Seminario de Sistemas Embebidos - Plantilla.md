@@ -17,51 +17,44 @@ Legajo: 105.055
 *Este trabajo fue realizado en las Ciudad Autónoma de Buenos Aires,*   
 *entre Agosto y Diciembre de 2024\.*
 
+  
 **RESUMEN**
 
-Acá va el resumen del trabajo. Debe ser lo más breve posible. No más de dos o tres párrafos, de unas cuatro o cinco oraciones cada uno. Leyendo esto debe quedar muy claro en qué consiste el trabajo realizado, por qué el trabajo es importante, por qué el trabajo muestra que el estudiante aplicó correctamente lo aprendido en la Carrera y qué información va a encontrar el lector en esta Memoria.
+En este trabajo se realiza el diseño e implementación de una cerradura inteligente con Wi-Fi para uso cotidiano en hogares, corporaciones o industrias. Este sistema tiene por objetivo registrar y administrar el acceso de los individuoas a las distintas instalaciones, facilitando al dueño de la instalación un manejo dinámico y en tiempo real de los permisos de acceso. Para la comodidad de los usuarios, la cerradura inteligente cuenta con dos métodos de acceso: mediante tarjetas RFID o mediante un pin. Adicionalmente, el sistema cuenta con sensores magnéticos que permiten registrar los estados de las puertas en todo momento. El trabajo presenta una solución práctica y escalable para la administración de accesos a una instalación, previniendo filtraciones de seguridad y promoviendo un monitoreo transparente a través de la aplicación móvil.
 
-No usar en este resumen ninguna referencia bibliográfica del tipo \[1\], ni tampoco notas a pie de página ni siglas que no estén aclaradas como parte de este texto, ni tipografía en negritas, subrayada o cursiva. Dicho de otra forma, el texto en este resumen debe ser escrito de forma tal que si se recorta el mismo y se lo pega en un archivo .txt entonces este conserve su formato y sea perfectamente entendible sin ningún agregado adicional, es decir, quede autocontenido.
+En esta memoria se presenta la motivación del proyecto, los diseños de las distintas partes, y se proponen futuras mejoras y ampliaciones.
 
-**ABSTRACT (resumen en inglés, es opcional)**
+**ABSTRACT**
 
-Quien lo desee puede poner en esta sección una traducción al idioma inglés del resumen presentado en la página anterior. Si no ponen un abstract en inglés, entonces borrar esta página.
+In this work, the design and implementation of a smart lock with Wi-Fi for everyday use in homes, corporations or industries is carried out. This system aims to register and manage the access of individuals to different facilities, providing the owner of the facility with a dynamic and real-time management of access permissions. For the comfortability of users, the smart lock has two access methods: RFID card or pin access. In addition, the system has magnetic sensors that allow the door statuses to be recorded at all times. The work presents a practical and scalable solution for managing access to a facility, preventing security leaks and promoting transparent monitoring through the mobile application.
 
-**Agradecimientos (esta sección es opcional)**
+This report presents the motivation of the project, the designs of the different parts, and proposes future improvements and extensions.
 
-Acá van los agradecimientos, que es la parte más personal de la memoria.
 
-# 
-
-# 
 
 **Índice General**
 
-[**Índice de figuras (esta sección es opcional)**](#índice-de-figuras-\(esta-sección-es-opcional\))	**[7](#índice-de-figuras-\(esta-sección-es-opcional\))**
 
-[**Índice de tablas (esta sección es opcional)**](#índice-de-tablas-\(esta-sección-es-opcional\))	**[8](#índice-de-tablas-\(esta-sección-es-opcional\))**
+[**Registro de versiones**](#registro-de-versiones)	
 
-[**Registro de versiones**](#registro-de-versiones)	**[9](#registro-de-versiones)**
+[**Introducción general**](#introducción-general)	
 
-[**Introducción general**](#introducción-general)	**[10](#introducción-general)**
+[1.1 Título de la sección con este uso de las mayúsculas](#1.1-título-de-la-sección-con-este-uso-de-las-mayúsculas)	
 
-[1.1 Título de la sección con este uso de las mayúsculas](#1.1-título-de-la-sección-con-este-uso-de-las-mayúsculas)	[10](#1.1-título-de-la-sección-con-este-uso-de-las-mayúsculas)
+[1.1.1 Este es el título de una subsección](#1.1.1-este-es-el-título-de-una-subsección)	
 
-[1.1.1 Este es el título de una subsección](#1.1.1-este-es-el-título-de-una-subsección)	[10](#1.1.1-este-es-el-título-de-una-subsección)
+[1.2 Figuras y tablas](#1.2-figuras-y-tablas)	
 
-[1.2 Figuras y tablas](#1.2-figuras-y-tablas)	[11](#1.2-figuras-y-tablas)
+[1.3 Ecuaciones](#1.3-ecuaciones)	
 
-[1.3 Ecuaciones](#1.3-ecuaciones)	[13](#1.3-ecuaciones)
+[1.4 “Trabajo vs. Proyecto” y tiempo verbal a utilizar](#1.4-trabajo-vs.-proyecto-y-tiempo-verbal-a-utilizar)	
 
-[1.4 “Trabajo vs. Proyecto” y tiempo verbal a utilizar](#1.4-trabajo-vs.-proyecto-y-tiempo-verbal-a-utilizar)	[13](#1.4-trabajo-vs.-proyecto-y-tiempo-verbal-a-utilizar)
+[1.5 Estado del arte o análisis de sistemas similares al desarrollado](#1.6-estado-del-arte-o-análisis-de-sistemas-similares-al-desarrollado)	
 
-[1.5 Estado del arte o análisis de sistemas similares al desarrollado](#1.6-estado-del-arte-o-análisis-de-sistemas-similares-al-desarrollado)	[14](#1.6-estado-del-arte-o-análisis-de-sistemas-similares-al-desarrollado)
+[**Introducción específica**](#introducción-específica)	
+[2.1 Descripción  de tal cosa](#heading=h.qt52d4use48v)	
 
-[**Introducción específica**](#introducción-específica)	**[15](#introducción-específica)**
-
-[2.1 Descripción  de tal cosa](#heading=h.qt52d4use48v)	[15](#heading=h.qt52d4use48v)
-
-[2.1.2 Módulo  Wi-Fi](#2.3.2-módulo-wi-fi)	[15](#2.3.2-módulo-wi-fi)
+[2.1.2 Módulo  Wi-Fi](#2.3.2-módulo-wi-fi)
 
 [**Diseño e implementación**](#diseño-e-implementación)	**[16](#diseño-e-implementación)**
 
@@ -91,15 +84,9 @@ Acá van los agradecimientos, que es la parte más personal de la memoria.
 
 [A. Primer Anexo](#a.-primer-anexo)	[20](#a.-primer-anexo)
 
-# **Índice de figuras (esta sección es opcional)** {#índice-de-figuras-(esta-sección-es-opcional)}
 
-# 
 
-# **Índice de tablas (esta sección es opcional)** {#índice-de-tablas-(esta-sección-es-opcional)}
-
-# 
-
-# **Registro de versiones**  {#registro-de-versiones}
+# Registro de versiones 
 
 | Revisión | Cambios realizados | Fecha |
 | :---: | ----- | ----- |
@@ -111,7 +98,7 @@ Acá van los agradecimientos, que es la parte más personal de la memoria.
 
 **CAPÍTULO 1** 
 
-# **Introducción general** {#introducción-general}
+# **Introducción general** 
 
 ## **1.1 Título de la sección con este uso de las mayúsculas** {#1.1-título-de-la-sección-con-este-uso-de-las-mayúsculas}
 
