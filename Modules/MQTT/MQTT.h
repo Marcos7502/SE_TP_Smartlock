@@ -20,6 +20,7 @@ class MQTT{
         // Conexión con el módulo esp32 que maneja MQTT
         BufferedSerial esp32UART;
 
+        // Led que muestra la conexion
         DigitalOut LedMqtt;
 
 
@@ -29,14 +30,9 @@ class MQTT{
         // Keep alive
         void keepAlive();
 
-        // Keep alive
+        // Status
         void SendStatus(char* status_code);
 
-        // Se suscribe a un tópico
-        void subscribe(const char * topic);
-
-        // Se desuscribe a un tópico
-        void unsubscribe(const char * topic);
 
         // Envía un mensaje a un tópico
         void publish(const char * topic, const char * message);
@@ -49,38 +45,16 @@ class MQTT{
         void SendLogDoorLeftOpenMessage(bool door_left_open);
         void SendLogWrongIDMessage();
 
-        //Logger
+        //RFID
         void ShowRFID(char* buffer);
         
-
-
-
-
-        // void confirmSubscription(const char* topic);
-        // void confirmUnsubscription(const char* topic);
+        void LedUpdate();
 
 
     private:
+        bool blink_mqtt_led = false;
         unsigned int previousMillis = 0;
-
-        const char * subscribe_str = "subscribe";
-        const char * unsubscribe_str = "unsubscribe";
-
-
-        // std::vector<std::string> subscribedTopics;
-        // std::vector<std::string> pendingSubscriptions;
-        // std::vector<std::string> pendingUnsubscriptions;
-        // std::vector<PendingMessage_t> pendingMessages;
-
-        bool reset_subscriptions = false;
-
-
-
-        void int_MQTT_status_callback_on();
-        void int_MQTT_status_callback_off();
-        void int_MQTT_mensaje_callback();
-
-        void delay_callback();
+        unsigned int LedOffTimeMillis = 0;
 
         void write(const char * topic, const char * message);
 

@@ -17,9 +17,7 @@ MQTTMessage MQTT::receive() {
     if (!this->esp32UART.readable()) {
         return result;
     }
-    LedMqtt = ON;
-    delay(100);
-    LedMqtt = OFF;
+    blink_mqtt_led = true;
 
     char buffer[256];
     int index = 0;
@@ -46,11 +44,12 @@ MQTTMessage MQTT::receive() {
     return result;
 }
 void MQTT::keepAlive() {
-  unsigned int currentMillis = Kernel::get_ms_count();
-  if (currentMillis - previousMillis >= KEEP_ALIVE_INTERVAL) {
-      previousMillis = currentMillis; 
-      this-> write("Smartlock/1/Alive", "alive"); 
-  }
+    unsigned int currentMillis = Kernel::get_ms_count();
+    if (currentMillis - previousMillis >= KEEP_ALIVE_INTERVAL) {
+        previousMillis = currentMillis; 
+        this-> write("Smartlock/1/Alive", "alive"); 
+        blink_mqtt_led = true;
+    }
 }
 
 void MQTT::write(const char* topic, const char* message){
@@ -117,3 +116,17 @@ void MQTT::ShowRFID(char* rfid_content_send){
     }
 }
     
+
+void MQTT::LedUpdate(){
+    unsigned int currentMillis = Kernel::get_ms_count();
+    if(blink_mqtt_led == true){
+        LedMqtt = ON;
+        blink_mqtt_led = false;
+        LedOffTimeMillis = currentMillis + PIN_MQTT_LED_BLINK_TIME;
+    }
+    if(LedOffTimeMillis <= currentMillis){
+        LedMqtt = OFF;
+    }
+    
+}
+   

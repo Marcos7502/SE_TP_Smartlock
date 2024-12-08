@@ -17,6 +17,7 @@
 door_state main_door_state = DOOR_CLOSED;
 door_state last_door_state = NONE;
 access_state access_attempt;
+delay_motor motor_delay = IDLE;
 
 char* rfid_content = nullptr;
 char* keypad_sequence_read = nullptr;
@@ -28,6 +29,8 @@ bool force_block_door = false;
 
 int blinks_counter = 0;
 int time_door_open;
+
+unsigned int time_start_motor_delay;
 
 Timer DoorOpenTimer;
 Timer BlinkingLedTimer; //No es el mejor uso de un timer pero no se me ocurre otra forma
@@ -48,10 +51,11 @@ static MQTT Mqtt(PIN_MQTT_TX, PIN_MQTT_RX, MQTT_BAUDRATE, PIN_MQTT_LED);
 
 
 InterruptIn  DoorBlockButton(PIN_BUTTON_DOOR_BLOCK);
+InterruptIn  BellButton(PIN_BUTTON_DOORBELL);
 
 // Module: initialization -------------------------
 void system_init(){
-    set_time(1256729737);
+    set_time(1733530644);
  
     rfid_content = nullptr;
 
@@ -67,11 +71,16 @@ void system_init(){
 
     DoorBlockButton.mode(PullDown);
     DoorBlockButton.rise(&force_door_close);
+
+    BellButton.mode(PullDown);
+    BellButton.rise(&ringbell);
+    BellButton.fall(&stopringbell);
     char status_code_init[2]; // Size 3 to include the null terminator
     status_code_init[0] = '2';
     status_code_init[1] = '\n';
     
 
+    LockMotor.set_position(MOTOR_POS_LOCKED);
     Mqtt.SendStatus(status_code_init);
 
 
@@ -181,10 +190,24 @@ door_state system_door_closing_update(){
         }
         DoorOpenTimer.stop();
         DoorOpenTimer.reset();
-        //activar cerradura
-        LockMotor.set_position(MOTOR_POS_LOCKED);
+
+
+        if(motor_delay == IDLE){
+            motor_delay = WAITING;
+            time_start_motor_delay = Kernel::get_ms_count();
+        }
+        if(motor_delay == WAITING){
+            unsigned int currentTime = Kernel::get_ms_count();
+            if(currentTime-time_start_motor_delay>=MOTOR_CLOSE_DELAY){
+                motor_delay = IDLE;
+                //activar cerradura
+                LockMotor.set_position(MOTOR_POS_LOCKED);
+                return DOOR_CLOSED;
+            }
+        }
+    
        
-        return DOOR_CLOSED;
+       
     }
     SpeakerDoor.update();
     return DOOR_CLOSING;
@@ -246,7 +269,12 @@ void force_door_close(){
     }
     
 }
-
+void ringbell(){
+    SpeakerDoor.ringbell=true;
+}
+void stopringbell(){
+    SpeakerDoor.ringbell=false;
+}
 void process_mqtt(){
     Mqtt.keepAlive();
     if(last_door_state != main_door_state){
@@ -299,5 +327,5 @@ void process_mqtt(){
         }
 
     }
-
+    Mqtt.LedUpdate();
 }

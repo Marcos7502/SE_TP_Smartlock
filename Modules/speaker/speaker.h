@@ -16,6 +16,8 @@ class Speaker {
         void play_melody(float* melody, int* noteDurations, int melody_length);
         void alarm_update();
         void update(); 
+
+        bool ringbell=false;
     private:
         float* melody;
         int* noteDurations;
