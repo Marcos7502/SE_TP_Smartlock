@@ -6,7 +6,7 @@
 
 Memoria del Trabajo Final:
 
-**Acá va el título del trabajo en este formato**
+**Smartlock - Cerradura Inteligente con Wi-Fi -**
 
 **Autor:**
 
