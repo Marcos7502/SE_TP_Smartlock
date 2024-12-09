@@ -130,8 +130,8 @@ En resumen, el mercado es sumamente competitivo y las características y funcion
 
 El presente proyecto se destaca especialmente por incorporar un módulo Wi-Fi que permite configurar los permisos de acceso de los individuos y un parlante y micrófono. Esto lo diferencia de otros sistemas similares en que permite seleccionar de forma remota los permisos de acceso y visualizar los intentos de acceso de forma remota. Adicionalmente, permite monitorear y regsitrar el ingreso y egreso de las visitas a la instalacion a traves de la aplicación. Una última característica especial es la presencia de un sensor magnético, el cual indica cuando se deja abierta la puerta accidentalmente, lo cual previene filtraciones de seguridad.
 
-### **1.2 Módulos y funcionalidades de *Smartlock*** 
-El sistema Smartlock consta dos subsistemas principales: el sistema montado en la cerradura y el sistema de interfaz para el ususario.
+### **1.2 Módulos e Interfaces de *Smartlock*** 
+El sistema Smartlock consta dos subsistemas principales: el sistema montado en la cerradura y el sistema de interfaz virtual para el ususario.
 
  <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
 
@@ -144,10 +144,13 @@ El sistema *Smartlock* cuenta con dos métodos de acceso, mediante tarjetas RFID
  
 **Figura 1.2.2**: Tarjeta RFID y lector RFID.
 
-Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El largo del pin esta fijo en 4 dígitos pero es modificable. La Figura 
+Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El largo del pin esta fijo en 4 dígitos pero es modificable. La Figura 1.2.3 muestra el teclado matricial en el que se introducen los códigos de acceso
 
- <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/67fca740-727b-4869-a861-af216d65048b alt="image2" width="40%">
+ 
 **Figura 1.2.3**: Teclado Matricial.
+
+La interfaz virtual se muestra en al figura
 
 En las próximas secciones se describira con mayor detalle los módulos utilizados y sus características.
 
