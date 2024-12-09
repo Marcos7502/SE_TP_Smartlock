@@ -1,4 +1,4 @@
-
+ <img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
 
 **UNIVERSIDAD DE BUENOS AIRES**  
 **Facultad de Ingeniería**  
@@ -6,7 +6,7 @@
 
 Memoria del Trabajo Final:
 
-**Smartlock - Cerradura Inteligente con Wi-Fi -**
+***Smartlock* - Cerradura Inteligente con Wi-Fi -**
 
 **Autor:**
 
@@ -56,6 +56,7 @@ This report presents the motivation of the project, the designs of the different
 [1.5 Estado del arte o análisis de sistemas similares al desarrollado](#1.6-estado-del-arte-o-análisis-de-sistemas-similares-al-desarrollado)	
 
 [**Introducción específica**](#introducción-específica)	
+
 [2.1 Descripción  de tal cosa](#heading=h.qt52d4use48v)	
 
 [2.1.2 Módulo  Wi-Fi](#2.3.2-módulo-wi-fi)
@@ -100,13 +101,13 @@ This report presents the motivation of the project, the designs of the different
 
 ### 
 
-**CAPÍTULO 1** 
+# **CAPÍTULO 1** 
 
 # **Introducción general** 
 
 ## **1.1 Análisis de necesidad y objetivos** 
 
-La creciente urbanización, las permanentes tasas de criminalidad y el acceso no autorizado a instalaciones han generado una necesidad de reinventar el tradicional mecanismo de acceso con llaves. Las cerraduras tradicionales, aunque ampliamente utilizadas, presentan limitaciones críticas, como la vulnerabilidad al robo de llaves, su duplicación no autorizada y la falta de registros de acceso. El auge de las tecnologías IoT promueven la implementación de sistemas de acceso más seguros, transparentes e ilimitadamente escalables y adaptables. A través de protocolos de Wi-Fi, una cerradura convencional puede controlarse de forma remota, otorgando flexibilidad en las entregas a domicilio y el permiso de acceso para visitas.
+La creciente urbanización, las permanentes tasas de criminalidad y el acceso no autorizado a instalaciones han generado una necesidad de reinventar el tradicional mecanismo de acceso con llaves. Las cerraduras tradicionales, aunque ampliamente utilizadas, presentan limitaciones críticas, como la vulnerabilidad al robo de llaves, su duplicación no autorizada y la falta de registros de acceso. El auge de las tecnologías IoT promueven la implementación de sistemas de acceso más seguros, transparentes e ilimitadamente escalables y adaptables. A través de protocolos de Wi-Fi, una cerradura convencional puede controlarse de forma remota, otorgando flexibilidad en las entregas a domicilio y el permiso de acceso para visitas. En la Figura 1.1 se puede ver un modelo de cerradura inteligente con Wi-Fi y una apliación de celular para controlarla.
 
 La implementación de las tecnologías IoT en el ámbito de las cerraduras y la seguridad presenta los siguientes beneficios:
 - Seguridad Avanzada: El método de acceso convencional (llave) es susceptible a robo y plagios, pero con las cerraduras inteligentes se puede utilizar pines, RFID o huellas dactilares o reconocimiento facial, eliminando los riesgos de seguridad de las llaves físicas.
@@ -114,110 +115,45 @@ La implementación de las tecnologías IoT en el ámbito de las cerraduras y la 
 - Flexibilidad y comodidad de acceso: Se pueden crear claves de acceso de forma dinámica, tanto permanentes como temporales, lo cual es cómodo tanto para el dueño como para el visitante.
 - Monitoreo: Las llaves convencionales no permiten identificar quien accede al edificio ni cuando accede. Estos dos problemas se solucionan con los sistemas inteligentes, que notifican y registran los accesos.
 
-Una vez comprendidas las dificultades que atraviesan los productores dedicados a la industria de la ganadería intensiva, se realizó un estudio de mercado de posibles soluciones existentes, y se observó que no hay muchas opciones en el mercado. Tomando como punto de partida un proyecto nacional, se decidió por la implementación de un sistema de “Cerco virtual para Pastoreo Intensivo”, el cuál permite conocer la ubicación en tiempo real de los animales y mantener mediante diferentes estímulos a los animales dentro del cerco activo, sin la necesidad de costos de infraestructura y mano de obra.
+ <img src="https://github.com/user-attachments/assets/9d2beedb-58af-48eb-bad7-87d907b22b32" alt="image2" width="50%">
+ 
+**Figura 1.1**: Modelo de cerradura inteligente con Wi-Fi .
 
 
+En Argentina existen varios productos de características similares a las del proyecto, cada producto diferenciándose de otro con detalles, como por ejemplo huellas digitales, llaves, etc. Sin embargo, parecería que no hay un producto en Argentina que cumpla exactamente la misma función que el proyecto desarrollado.
+
+Como primer competidor del mercado se puede mencionar a Yale, la cual ofrece una amplia gama de cerraduras digitales inteligentes para seguridad del hogar. Los precios de sus productos orbitan desde los 45.000 hasta los 600.000 pesos y sus productos incluyen desde cerraduras con teclado matricial hasta cerraduras con huellas digitales, todas con una aplicación para el celular. El proyecto tiene similitudes en el teclado matricial y en la aplicación, pero se diferencia en la oferta de los sensores magnéticos, del lector RFID y de la comunicación con parlante y micrófono.
+
+Un segundo competidor es Philips, la cual tiene productos con reconocimiento facial y video portero. Esta tecnología es considerablemente superior al igual que sus precios, los cuales rondan el 1.000.000 de pesos. Sin embargo, la empresa no cuenta con lectores RFID ni sensores magnéticos, lo cual diferencia a nuestro proyecto.
+
+En resumen, el mercado es sumamente competitivo y las características y funcionalidades de la cerradura pueden ser modificadas y ampliadas fácilmente, permitiendo desarrollar productos únicos y distintos de la competencia que encuentren un lugar en el mercado.
+
+El presente proyecto se destaca especialmente por incorporar un módulo Wi-Fi que permite configurar los permisos de acceso de los individuos y un parlante y micrófono. Esto lo diferencia de otros sistemas similares en que permite seleccionar de forma remota los permisos de acceso y visualizar los intentos de acceso de forma remota. Adicionalmente, permite monitorear y regsitrar el ingreso y egreso de las visitas a la instalacion a traves de la aplicación. Una última característica especial es la presencia de un sensor magnético, el cual indica cuando se deja abierta la puerta accidentalmente, lo cual previene filtraciones de seguridad.
+
+### **1.2 Módulos y funcionalidades de *Smartlock*** 
+El sistema Smartlock consta dos subsistemas principales: el sistema montado en la cerradura y el sistema de interfaz para el ususario.
+
+ <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
+
+**Figura 1.2.1**: Diagrama en bloques del proyecto *Smartlock*.
 
 
+El sistema *Smartlock* cuenta con dos métodos de acceso, mediante tarjetas RFID o mediante un pin de identificación. La tarjeta RFID es un identificador pasivo que al acercarse a un lector RFID, éste induce una corriente sobre ella para retransmitir una respuesta al lector. Estas tarjetas tienen un código de identificación unico que puede ocultarse para prevenir filtraciones de seguridad. La Figura 1.2.1 muestra la tarjeta y un lector RFID.
 
+ <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
+ 
+**Figura 1.2.2**: Tarjeta RFID y lector RFID.
 
+Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El largo del pin esta fijo en 4 dígitos pero es modificable. La Figura 
 
-La idea de esta sección es presentar el tema de modo que cualquier persona que no conoce el tema pueda entender de qué se trata y por qué es importante realizar este trabajo y cuál es su impacto. 
+ <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
+**Figura 1.2.3**: Teclado Matricial.
 
-Se recomienda reutilizar partes de lo escrito previamente en la sección 1 del documento “Definición de Requisitos y Casos de Uso del Trabajo Final de 86.65 Sistemas Embebidos”. En particular se recomienda reutilizar lo escrito en la sección 1\. Selección del proyecto a implementar, en lo que se refiere a “En relación con el proyecto que resulte seleccionado sería deseable que quede claro de qué se trata el proyecto y cuáles son sus desafíos, su motivación y su importancia.” 
+En las próximas secciones se describira con mayor detalle los módulos utilizados y sus características.
 
-También se recomienda aprovechar lo escrito en relación a “Se debe destacar claramente cuál es el valor que agrega el proyecto a realizar. Por ejemplo escribir: “El presente proyecto se destaca especialmente por incorporar tal cosa… Esto lo diferencia de otros sistemas similares en que ...””
+# **CAPÍTULO 2** 
 
-Además se puede incluir como parte de este Capítulo 1 lo que se haya escrito en ese documento en relación a “Se debe incluir al menos un diagrama en bloques del sistema”. En todo caso la idea es incluir acá un diagrama en bloques general, que sirva a los fines de explicar la idea general, y luego en todo caso en el Capítulo 3, Diseño e implementación, de este documento incluir un diagrama más detallado si fuera necesario.
-
-Si en el texto se hace alusión a diferentes partes del trabajo entonces referirse a ellas como Capítulo, Sección o subsección según corresponda. Por ejemplo: “En el Capítulo 1 se explica tal cosa”, o “En la Sección 1.1 se presenta lo que sea”, o “En la la subsección 1.1.1 se discute otra cosa”.
-
-Entre párrafos sucesivos dejar un espacio, como el que se observa entre este párrafo y el anterior. Pero las oraciones de un mismo párrafo van en forma consecutiva, como se observa acá. Luego, cuando se quiere poner una lista tabulada se hace así:
-
-* Este es el primer elemento de la lista.  
-* Este es el segundo elemento de la lista.  
-* Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-Si se desea poner una lista numerada el formato es este:
-
-1. Este es el primer elemento de la lista.  
-2. Este es el segundo elemento de la lista.  
-3. Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-### **1.1.1 Este es el título de una subsección** 
-
-Se recomienda no utilizar **texto en negritas** en ningún párrafo, ni tampoco texto subrayado. En cambio sí se sugiere utilizar *texto en itálicas* donde se considere apropiado, por ejemplo para palabras en idioma inglés.
-
-Se sugiere que la escritura sea impersonal. Por ejemplo, no utilizar “el diseño del firmware lo hice de acuerdo con tal principio”, sino “el firmware fue diseñado utilizando tal principio”. En lo posible hablar en tiempo pasado, ya que la memoria describe un trabajo que ya fue realizado. Y emplear oraciones cortas y bien concretas.
-
-Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (*Real Time Operating System*, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página[^1].
-
-Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \[1\]. Por ejemplo, “el presente trabajo se basa en la plataforma EDU-CIAA-NXP, la cual se describe en detalle en \[2\]”. 
-
-## **1.2 Figuras y tablas** 
-
-Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que es incorrecto escribir por ejemplo esto: “El diseño elegido es un cuadrado,  como se ve en la siguiente figura:”
-
-La forma correcta de utilizar una figura es la siguiente: “Se eligió utilizar un cuadrado azul para el logo, el cual se ilustra en la figura 1.1”.
-
-**Figura 1.1:** Ilustración del cuadrado azul que se eligió para el diseño del logo.
-
-El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura 1.2.
-
-**Figura 1.2:** Imagen  ilustrativa de tal cosa, tomada de la página oficial del fabricante del procesador[^2].
-
-La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
-
-**Figura 1.3:** El lector no sabe por qué de pronto aparece esta figura.
-
-Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura 1.3,  porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
-
-Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla 1.1. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.
-
-**Tabla 1.1:** Resumen de los primeros dos campeonatos mundiales de fútbol 
-
-| Año | Sede | Campeón |
-| :---- | :---- | :---- |
-| 1930 | Uruguay | Uruguay |
-| 1934 | Italia | Italia |
-
-En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, Fig. 2.1 o Tabla 2.1, pero no se debe reiniciar el conteo en cada sección. 
-
-## **1.3 Ecuaciones** 
-
-Al insertar ecuaciones en la memoria estas se deben numerar de la siguiente forma:
-
-xy                                                                        (1.1)
-
-Es importante tener presente que en el caso de las ecuaciones estas pueden ser referidas por su número, como por ejemplo “tal como describe la ecuación (1.1)”, pero también es correcto utilizar los dos puntos, como por ejemplo “la expresión matemática que describe este comportamiento es la siguiente:”
-
-xy                                                                        (1.2)
-
-Para las ecuaciones se debe utilizar un tamaño de letra equivalente al utilizado para el texto del trabajo, en tipografía cursiva y preferentemente del tipo Times New Roman o similar. El espaciado antes y después de cada ecuación es de aproximadamente el doble que entre párrafos consecutivos del cuerpo principal del texto.
-
-## **1.4 Trabajo vs. proyecto y tiempo verbal a utilizar** {#1.4-trabajo-vs.-proyecto-y-tiempo-verbal-a-utilizar}
-
-Cuando en la planificación se habló de algo que todavía no estaba hecho nos referimos a eso como "el proyecto". En cambio, en este informe, como ya finalizó el desarrollo, para referinos a lo que se hizo hablamos en términos de "el trabajo". 
-
-Para hacer la descripción utilizamos en general tiempo pasado, porque nos referimos a algo que ya se hizo. Por ejemplo, decimos "se utilizó la placa EDU-CIAA". 
-
-Para describir que se incluye en tal capítulo o sección se usa tiempo presente, porque es lo que está en ese lugar al momento en que el lector lo está leyendo. 
-
-## **1.5 Magnitudes y unidades**
-
-En español las magnitudes se deben escribir de la siguiente forma: 20,5 cm, 41,7 °C, 2,4 GHz, 3,3 V, 20 mA, 60 km/h, etc. Es decir, se debe utilizar la coma como separador decimal, se debe dejar espacio entre la magnitud y las unidades, y se debe respetar el hecho de que algunos prefijos del sistema internacional se escriben en minúsculas (por ejemplo, k, m, µ, n, p) y otros en mayúsculas (por ejemplo, M, G).
-
-## **1.6 Estado del arte o análisis de sistemas similares al desarrollado** {#1.6-estado-del-arte-o-análisis-de-sistemas-similares-al-desarrollado}
-
-En el Capítulo 1 es recomendable incluir una sección que podría llamarse “Análisis del estado del arte” o quizás más sencillo “Análisis de sistemas similares al desarrollado”. De esa forma el lector entiende mejor el contexto en el cual se hace el desarrollo. 
-
-Se recomienda aprovechar acá lo escrito en la sección “2. Elicitación de requisitos y casos de uso” del documento “Definición de Requisitos y Casos de Uso del Trabajo Final de 86.65 Sistemas Embebidos” en lo referido a “Se espera que se presente una tabla con el análisis de productos disponibles en el mercado similar a la Tabla 12.5, y una discusión respecto a las principales características de esos productos. Agregar un link a cada uno de los productos disponibles en el mercado que se analicen.”
-
-En el Capítulo 4 podría agregarse una sección “Comparación con sistemas similares”. Así el lector podría entender qué ventajas y desventajas presenta el trabajo realizado respecto a los sistemas similares tomados como referencia. No se recomienda poner en el Capítulo 1 esta comparación con sistemas similares ya que el Capítulo 1 se escribe como si el sistema aún no estuviera implementado.
-
-**CAPÍTULO 2** 
-
-# **Introducción específica** {#introducción-específica}
+# **Introducción específica** 
 
 ## **2.1 Requisitos**
 
