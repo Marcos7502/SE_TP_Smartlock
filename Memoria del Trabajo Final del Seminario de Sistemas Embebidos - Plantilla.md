@@ -22,11 +22,15 @@ Legajo: 105.055
 
 En este trabajo se realiza el diseño e implementación de una cerradura inteligente con Wi-Fi para uso cotidiano en hogares, corporaciones o industrias. Este sistema tiene por objetivo registrar y administrar el acceso de los individuoas a las distintas instalaciones, facilitando al dueño de la instalación un manejo dinámico y en tiempo real de los permisos de acceso. Para la comodidad de los usuarios, la cerradura inteligente cuenta con dos métodos de acceso: mediante tarjetas RFID o mediante un pin. Adicionalmente, el sistema cuenta con sensores magnéticos que permiten registrar los estados de las puertas en todo momento. El trabajo presenta una solución práctica y escalable para la administración de accesos a una instalación, previniendo filtraciones de seguridad y promoviendo un monitoreo transparente a través de la aplicación móvil.
 
+La implementación del mismo se realizó utilizando los lenguajes de código C++ y Python mediante el uso del entorno de desarrollo de Mbed en una placa Núcleo-F429ZI proporcionada por la cátedra de Sistemas Embebidos de la Facultad de Ingeniería de la Universidad de Buenos Aires, y se utilizaron además diferentes módulos para el desarrollo del proyecto.
+
 En esta memoria se presenta la motivación del proyecto, los diseños de las distintas partes, y se proponen futuras mejoras y ampliaciones.
 
 **ABSTRACT**
 
 In this work, the design and implementation of a smart lock with Wi-Fi for everyday use in homes, corporations or industries is carried out. This system aims to register and manage the access of individuals to different facilities, providing the owner of the facility with a dynamic and real-time management of access permissions. For the comfortability of users, the smart lock has two access methods: RFID card or pin access. In addition, the system has magnetic sensors that allow the door statuses to be recorded at all times. The work presents a practical and scalable solution for managing access to a facility, preventing security leaks and promoting transparent monitoring through the mobile application.
+
+The implementation was carried out using C++ and Python code languages through the use of the Mbed development environment on a Núcleo-F429ZI board provided by the Embedded Systems Department of the School of Engineering of the University of Buenos Aires, and different modules were also used for the development of the project.
 
 This report presents the motivation of the project, the designs of the different parts, and proposes future improvements and extensions.
 
@@ -78,7 +82,7 @@ This report presents the motivation of the project, the designs of the different
 
 [5.2 Próximos pasos](#5.2-próximos-pasos)	[18](#5.2-próximos-pasos)
 
-[**Bibliografía**](#bibliografía)	**[19](#bibliografía)**
+[**Bibliografía**](#bibliografía)	
 
 [**Anexos (sólo en caso de ser necesarios)**](#anexos-\(sólo-en-caso-de-ser-necesarios\))	**[20](#anexos-\(sólo-en-caso-de-ser-necesarios\))**
 
@@ -90,8 +94,8 @@ This report presents the motivation of the project, the designs of the different
 
 | Revisión | Cambios realizados | Fecha |
 | :---: | ----- | ----- |
-| 1.0 | Creación del documento |  |
-| 1.1 |  |  |
+| 1.0 | Creación del documento | 9/12/2024 |
+| 1.1 | Redacción del primer capítulo | 9/12/2024 |
 | 1.2 |  |  |
 
 ### 
@@ -100,7 +104,23 @@ This report presents the motivation of the project, the designs of the different
 
 # **Introducción general** 
 
-## **1.1 Título de la sección con este uso de las mayúsculas** {#1.1-título-de-la-sección-con-este-uso-de-las-mayúsculas}
+## **1.1 Análisis de necesidad y objetivos** 
+
+La creciente urbanización, las permanentes tasas de criminalidad y el acceso no autorizado a instalaciones han generado una necesidad de reinventar el tradicional mecanismo de acceso con llaves. Las cerraduras tradicionales, aunque ampliamente utilizadas, presentan limitaciones críticas, como la vulnerabilidad al robo de llaves, su duplicación no autorizada y la falta de registros de acceso. El auge de las tecnologías IoT promueven la implementación de sistemas de acceso más seguros, transparentes e ilimitadamente escalables y adaptables. A través de protocolos de Wi-Fi, una cerradura convencional puede controlarse de forma remota, otorgando flexibilidad en las entregas a domicilio y el permiso de acceso para visitas.
+
+La implementación de las tecnologías IoT en el ámbito de las cerraduras y la seguridad presenta los siguientes beneficios:
+- Seguridad Avanzada: El método de acceso convencional (llave) es susceptible a robo y plagios, pero con las cerraduras inteligentes se puede utilizar pines, RFID o huellas dactilares o reconocimiento facial, eliminando los riesgos de seguridad de las llaves físicas.
+- Acceso remoto: A través de una conexión Wi-Fi, se puede acceder a la instalación desde cualquier lugar.
+- Flexibilidad y comodidad de acceso: Se pueden crear claves de acceso de forma dinámica, tanto permanentes como temporales, lo cual es cómodo tanto para el dueño como para el visitante.
+- Monitoreo: Las llaves convencionales no permiten identificar quien accede al edificio ni cuando accede. Estos dos problemas se solucionan con los sistemas inteligentes, que notifican y registran los accesos.
+
+Una vez comprendidas las dificultades que atraviesan los productores dedicados a la industria de la ganadería intensiva, se realizó un estudio de mercado de posibles soluciones existentes, y se observó que no hay muchas opciones en el mercado. Tomando como punto de partida un proyecto nacional, se decidió por la implementación de un sistema de “Cerco virtual para Pastoreo Intensivo”, el cuál permite conocer la ubicación en tiempo real de los animales y mantener mediante diferentes estímulos a los animales dentro del cerco activo, sin la necesidad de costos de infraestructura y mano de obra.
+
+
+
+
+
+
 
 La idea de esta sección es presentar el tema de modo que cualquier persona que no conoce el tema pueda entender de qué se trata y por qué es importante realizar este trabajo y cuál es su impacto. 
 
@@ -124,7 +144,7 @@ Si se desea poner una lista numerada el formato es este:
 2. Este es el segundo elemento de la lista.  
 3. Notar el uso de las mayúsculas y el punto al final de cada elemento.
 
-### **1.1.1 Este es el título de una subsección** {#1.1.1-este-es-el-título-de-una-subsección}
+### **1.1.1 Este es el título de una subsección** 
 
 Se recomienda no utilizar **texto en negritas** en ningún párrafo, ni tampoco texto subrayado. En cambio sí se sugiere utilizar *texto en itálicas* donde se considere apropiado, por ejemplo para palabras en idioma inglés.
 
@@ -134,7 +154,7 @@ Se recomienda no utilizar una sección de glosario sino colocar la descripción 
 
 Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \[1\]. Por ejemplo, “el presente trabajo se basa en la plataforma EDU-CIAA-NXP, la cual se describe en detalle en \[2\]”. 
 
-## **1.2 Figuras y tablas** {#1.2-figuras-y-tablas}
+## **1.2 Figuras y tablas** 
 
 Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que es incorrecto escribir por ejemplo esto: “El diseño elegido es un cuadrado,  como se ve en la siguiente figura:”
 
@@ -163,7 +183,7 @@ Para las tablas utilizar el mismo formato que para las figuras, sólo que el ep�
 
 En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, Fig. 2.1 o Tabla 2.1, pero no se debe reiniciar el conteo en cada sección. 
 
-## **1.3 Ecuaciones** {#1.3-ecuaciones}
+## **1.3 Ecuaciones** 
 
 Al insertar ecuaciones en la memoria estas se deben numerar de la siguiente forma:
 
