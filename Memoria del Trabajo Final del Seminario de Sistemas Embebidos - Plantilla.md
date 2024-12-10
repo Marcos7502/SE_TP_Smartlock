@@ -97,7 +97,7 @@ This report presents the motivation of the project, the designs of the different
 | :---: | ----- | ----- |
 | 1.0 | Creación del documento | 9/12/2024 |
 | 1.1 | Redacción del primer capítulo | 9/12/2024 |
-| 1.2 |  |  |
+| 1.2 | Redacción del segundo capítulo | 10/12/2024 |
 
 ### 
 
@@ -132,14 +132,15 @@ En resumen, el mercado es sumamente competitivo y las características y funcion
 El presente proyecto se destaca especialmente por incorporar un módulo Wi-Fi que permite configurar los permisos de acceso de los individuos y un parlante y micrófono. Esto lo diferencia de otros sistemas similares en que permite seleccionar de forma remota los permisos de acceso y visualizar los intentos de acceso de forma remota. Adicionalmente, permite monitorear y regsitrar el ingreso y egreso de las visitas a la instalacion a traves de la aplicación. Una última característica especial es la presencia de un sensor magnético, el cual indica cuando se deja abierta la puerta accidentalmente, lo cual previene filtraciones de seguridad.
 
 ### **1.2 Módulos e Interfaces de *Smartlock*** 
-El sistema Smartlock consta dos subsistemas principales: el sistema montado en la cerradura y el sistema de interfaz virtual para el ususario.
+El sistema *Smartlock* consta dos subsistemas principales: el sistema montado en la cerradura y el sistema de interfaz virtual para el ususario. En la Figura 1.2.1 se muestra el diagrama en bloques del proyecto.
 
- <img src="https://github.com/user-attachments/assets/54470de0-882c-4329-aed6-d6e38e0a0185" alt="image2" width="50%">
+ <img src="https://github.com/user-attachments/assets/54470de0-882c-4329-aed6-d6e38e0a0185" alt="image2" width="80%">
 
 **Figura 1.2.1**: Diagrama en bloques del proyecto *Smartlock*.
 
+En la Fiugra 1.2.1 se observa por un lado el subsistema de la cerradura con los periféricos que se encapsulan juntos como son el motor, el lector RFID y otros, y por el otro lado, el segundo susbsistema se encarga de mostrar los datos de la cerradura y enviar los comandos desde la aplicacion, interconectando los subsistemas por Wi-Fi.
 
-El sistema *Smartlock* cuenta con dos métodos de acceso, mediante tarjetas RFID o mediante un pin de identificación. La tarjeta RFID es un identificador pasivo que al acercarse a un lector RFID, éste induce una corriente sobre ella para retransmitir una respuesta al lector. Estas tarjetas tienen un código de identificación unico que puede ocultarse para prevenir filtraciones de seguridad. La Figura 1.2.1 muestra la tarjeta y un lector RFID.
+La cerradura cuenta con dos métodos de acceso, mediante tarjetas RFID o mediante un pin de identificación. La tarjeta RFID es un identificador pasivo que al acercarse a un lector RFID, éste induce una corriente sobre ella para retransmitir una respuesta al lector. Estas tarjetas tienen un código de identificación unico que puede ocultarse para prevenir filtraciones de seguridad. La Figura 1.2.2 muestra la tarjeta y un lector RFID.
 
  <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
  
@@ -151,7 +152,7 @@ Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El
  
 **Figura 1.2.3**: Teclado Matricial.
 
-La interfaz virtual se muestra en al figura
+La interfaz virtual se muestra en al Figura 1.2.4.
 
 En las próximas secciones se describira con mayor detalle los módulos utilizados y sus características.
 
@@ -161,11 +162,73 @@ En las próximas secciones se describira con mayor detalle los módulos utilizad
 
 ## **2.1 Requisitos**
 
-En esta sección se recomienda aprovechar lo escrito en el documento “Definición de Requisitos y Casos de Uso del Trabajo Final de 86.65 Sistemas Embebidos” en la sección “2. Elicitación de requisitos y casos de uso”. 
+Habiendo analizado las características principales de la cerradura, se definieron los principales requisitos para que el sistema cumpla con su función de forma correcta y resulte útil para su propósito. Para esto, se realizó una tabla definiendo los principales requisitos a implementar, mostrado en la Tabla 1.2.
+
+| Grupo | ID | Descripción |
+| :---- | :---- | :---- |
+| Acceso | 1.1 | El sistema permitirá el acceso a la instalación mediante RFID |
+|  | 1.2 | El sistema permitirá el acceso a la instalación mediante un teclado matricial |
+|  | 1.3 | En caso de acceso permitido, el  sistema abrirá la puerta durante un periodo de tiempo fijado |
+| Indicadores | 2.1 | El sistema contará con un indicador luminoso para indicar que la puerta está cerrada |
+|  | 2.2 | El sistema contará con un indicador luminoso para indicar que la puerta está abierta |
+|  | 2.3 | El sistema contará con un parlante que indique mediante sonido cuando se abre la puerta |
+|  | 2.4 | El sistema contará con un parlante que indique mediante sonido cuando se introduce un código incorrecto |
+|  | 2.5 | El sistema contará con un parlante que indique mediante sonido cuando se presiona una tecla |
+|  | 2.6 | El sistema notificará con el parlante cuando se deja la puerta abierta |
+|  | 2.7 | El sistema notificará mediante el titileo de leds cuando la puerta se deja abierta o cuando se introduce un código/RFID erróneo |
+|  | 2.8 | El sistema notifica con audio y luz cuando se deja un código sin introducir completamente |
+| Motor | 3.1  | El sistema contará con un motor para abrir y cerrar la cerradura |
+|  | 3.2 | El sistema solo podrá cerrar la puerta cuando esta se halla contra el marco |
+| Comunicación Audio  | 4.1 | El sistema deberá contar con un parlante para transmitir señales de audio |
+| Comunicación Wi-Fi | 5.1 | El sistema se comunicará mediante Wi-Fi con la aplicación de celular |
+|  | 5.2 | El sistema deberá enviar a la aplicación la información de acceso a la instalación |
+|  | 5.3 | El sistema deberá enviar a la aplicación la información de acceso denegado a la instalación |
+|  | 5.4 | En caso de lectura RFID, el sistema deberá comunicar la lectura de RFIDs desconocidos, junto con su ID (para poder guardarlo posteriormente) |
+|  | 5.4 | El sistema deberá comunicarle a la aplicación el estado de la puerta y el numero de puerta |
+| Aplicación | 6.1 | La aplicación tendrá la base de datos de los individuos habilitados con sus IDs |
+|  | 6.2 | La aplicación deberá permitirle al usuario configurar los permisos de acceso de los individuos |
+|  | 6.3 | La aplicación deberá poder mostrar la información de los accesos e intentos de acceso |
+|  | 6.4 | La aplicación deberá poder controlar manualmente la apertura o cerradura de la puerta |
+|  | 6.5 | La aplicación deberá permitirle al usuario configurar añadir nuevos individuos a la base de datos mediante codigo o RFID |
+|  | 6.6 | La aplicación deberá mostrarle al usuario el estado de la puerta |
+| Interruptores/ Botones | 7.1 | El sistema contará con botones para abrir o cerrar la puerta de forma manual |
+|  | 7.2 | El sistema contará con un botón de timbre |
+| Sensores | 8.1 | El sistema contará con un sensor magnético que detectará cuando la puerta se halla contra el marco |
+
+<p align="center"><em>Tabla 2.1: Requisitos del proyecto</em></p>
+
 
 ## **2.2 Casos de uso**
+En las tablas 2.2 a 2.4 se presentan 3 casos de uso para ejemplificar el uso del sistema.
 
-En esta sección se recomienda aprovechar lo escrito en el documento “Definición de Requisitos y Casos de Uso del Trabajo Final de 86.65 Sistemas Embebidos” en la sección “2. Elicitación de requisitos y casos de uso”.
+| Elemento | Definición |
+| :---- | :---- |
+| Disparador | Se quiere acceder a la instalación con permiso de acceso y con código en el teclado matricial. |
+| Precondiciones | El sistema está encendido La puerta está cerrada, con la  cerradura cerrada. La aplicación está conectada al sistema. El indicador de puerta cerrada está encendido  |
+| Flujo principal | El individuo introduce su código en el teclado matricial. Por cada tecla que presione recibe una melodía indicando la recepción del carácter introducido. Una vez introducido todo el código, el motor abre la cerradura y se notifica con una melodía el acceso habilitado. Además, con un led se notifica la habilitación del acceso. El módulo Wi-Fi comunica a la aplicación el acceso a la instalación, mostrando el estado de la puerta, la identificación del ingresante, la hora y el número de puerta. El individuo cierra la puerta una vez adentro. |
+| Flujos alternativos | a. El individuo introduce erróneamente el código, con lo cual se notifica auditiva y visualmente al usuario y se notifica mediante Wi-Fi que se intentó acceder sin permiso a la instalación.  b. El individuo deja de introducir el código a mitad de camino. Luego de un tiempo preestablecido, el código a medias se descarta y se notifica que el intento fue incorrecto tanto al individuo como al propietario mediante Wi-Fi.. c. El individuo olvida la puerta abierta, entonces se suena una “alarma” y se notifica al propietario mediante Wi-Fi d. Un usuario dentro de la instalación presiona el botón de cerrar la puerta antes de que se introduzca el código. La puerta permanece cerrada. e. El usuario acerca su tarjeta en vez de terminar el código. La puerta se abre y se indica que la puerta está abierta. |
+
+<p align="center"><em>Tabla 2.2: Caso de uso 1: El usuario quiere acceder con código</em></p>
+
+
+| Elemento | Definición |
+| :---- | :---- |
+| Disparador | Se quiere acceder a la instalación con permiso de acceso y con RFID. |
+| Precondiciones | El sistema está encendido La puerta está cerrada, con la  cerradura cerrada. La aplicación está conectada al sistema. El indicador de puerta cerrada está encendido  |
+| Flujo principal | El individuo acerca su tarjeta al lector. El ID de la tarjeta es correcto, el motor abre la cerradura y se notifica con una melodía el acceso habilitado. Además, con un led se notifica la habilitación del acceso. El módulo Wi-Fi comunica a la aplicación el acceso a la instalación, mostrando el estado de la puerta, la identificación del ingresante, la hora y el número de puerta. El individuo cierra la puerta una vez adentro. |
+| Flujos alternativos | a. El individuo usa una tarjeta no habilitada, con lo cual se notifica auditiva y visualmente al usuario y se notifica mediante Wi-Fi que se intentó acceder sin permiso a la instalación.  b. El individuo olvida la puerta abierta, entonces se suena una “alarma” y se notifica al propietario mediante Wi-Fi |
+
+<p align="center"><em>Tabla 2.3: Caso de uso 2: El usuario quiere acceder con RFID</em></p>
+
+
+| Elemento | Definición |
+| :---- | :---- |
+| Disparador | Se quiere añadir una nueva tarjeta RFID |
+| Precondiciones | El sistema está encendido La puerta está cerrada, con la  cerradura cerrada. La aplicación está conectada al sistema. El indicador de puerta cerrada está encendido |
+| Flujo principal | Se acerca una tarjeta desconocida al lector RFID. El sistema indica que el intento de acceso es incorrecto. El sistema muestra el ID de la tarjeta e indica si se quiere guardar la tarjeta mediante comunicación Wi-Fi con la aplicación. |
+| Flujos alternativos | a. Se pierde la conexión Wi-Fi. El sistema no puede continuar con el guardado de la tarjeta. Se indica que se perdió la conexión b. Se apaga el sistema. El sistema no puede continuar con el guardado de la tarjeta.  |
+
+<p align="center"><em>Tabla 2.4: Caso de uso 3: El usuario quiere guardar una tarjeta RFID</em></p>
 
 ## **2.3 Descripción  de tal cosa**
 
