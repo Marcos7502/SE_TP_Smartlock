@@ -115,6 +115,7 @@ La implementación de las tecnologías IoT en el ámbito de las cerraduras y la 
 - Flexibilidad y comodidad de acceso: Se pueden crear claves de acceso de forma dinámica, tanto permanentes como temporales, lo cual es cómodo tanto para el dueño como para el visitante.
 - Monitoreo: Las llaves convencionales no permiten identificar quien accede al edificio ni cuando accede. Estos dos problemas se solucionan con los sistemas inteligentes, que notifican y registran los accesos.
 
+
  <img src="https://github.com/user-attachments/assets/9d2beedb-58af-48eb-bad7-87d907b22b32" alt="image2" width="50%">
  
 **Figura 1.1**: Modelo de cerradura inteligente con Wi-Fi .
@@ -133,7 +134,7 @@ El presente proyecto se destaca especialmente por incorporar un módulo Wi-Fi qu
 ### **1.2 Módulos e Interfaces de *Smartlock*** 
 El sistema Smartlock consta dos subsistemas principales: el sistema montado en la cerradura y el sistema de interfaz virtual para el ususario.
 
- <img src="https://github.com/user-attachments/assets/46be1b4e-dd71-4adf-a30a-cbd49e53a733" alt="image2" width="40%">
+ <img src="https://github.com/user-attachments/assets/54470de0-882c-4329-aed6-d6e38e0a0185" alt="image2" width="50%">
 
 **Figura 1.2.1**: Diagrama en bloques del proyecto *Smartlock*.
 
