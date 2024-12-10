@@ -1,4 +1,4 @@
- <img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
+<img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
 
 **UNIVERSIDAD DE BUENOS AIRES**  
 **Facultad de Ingeniería**  
@@ -59,7 +59,7 @@ This report presents the motivation of the project, the designs of the different
 
 [2.1 Descripción  de tal cosa](#heading=h.qt52d4use48v)	
 
-[2.1.2 Módulo  Wi-Fi](#2.3.2-módulo-wi-fi)
+[2.3.1 Alimentación](#2.3.1-alimentacion)
 
 [**Diseño e implementación**](#diseño-e-implementación)	**[16](#diseño-e-implementación)**
 
@@ -230,19 +230,57 @@ En las tablas 2.2 a 2.4 se presentan 3 casos de uso para ejemplificar el uso del
 
 <p align="center"><em>Tabla 2.4: Caso de uso 3: El usuario quiere guardar una tarjeta RFID</em></p>
 
-## **2.3 Descripción  de tal cosa**
+## **2.3 Descripción de los Módulos del sitema**
+## **2.3.1 Alimentación**
+El sistema se alimenta con 3 sistemas de alimentación que pueden reemplazarse posteriormente por un solo sistema de alimentación. Se menciona que se tiene muchos sistemas de alimentación debido a la etapa de desarrollo inicial. La primer alimentación se encarga de alimentar la placa Nucleo-F429ZI y es la alimentación proveniente de la computadora portatil mediante USB, la cual permite comunicación UART. 
 
-La idea de esta sección es explicar los detalles que el lector debe conocer para entender las decisiones de diseño adoptadas. Son cosas que utilizan pero que ustedes no diseñaron ni implementaron, como por ejemplo una biblioteca de código hecha por otro, o un módulo de hardware, o un protocolo de red, etc.
+El segundo sistema de alimentación es una fuente transformadora marca HAMA modelo 00201644 con 5V de salida y hasta 1.2 A de corriente. Esta alimentación es para el esp32, encargado de la comunicación Wi-Fi. Una tercera fuente transformadora 220 VAC a 12 VDC con 2000 mA modelo FJ-SW102 se utiliza para alimentar una fuente modelo Mb-102 capaz de entregar a la salida 5 V o 3,3 V seleccionables, y hasta 700 mA. A través del Mb-102 se alimenta a todos los otros periféricos como el lector RFID, el motor y otros. Se muestra la fuente Mb-102 en la Figura
 
-En el documento “Listado de Trabajos Finales de 86.65 Sistemas Embebidos de la FI-UBA” ([link](https://docs.google.com/spreadsheets/d/1HHX6xDGCmE2Ik0R4_lFpznHdhz-nmtidWsVnde-cacI/edit#gid=0&range=G:G)) se pueden ver muchos ejemplos de cómo escribir esta sección. A modo de ejemplo a continuación se muestra cómo podría ser la presentación de un módulo Wi-Fi (de paso, recordar que Wi-Fi se escribe con guión en el medio).
+<img src=https://github.com/user-attachments/assets/036b1989-56ed-49ab-b803-4aeecc3f1c3f alt="image2" width="40%">
 
-## **2.3.2 Módulo Wi-Fi** {#2.3.2-módulo-wi-fi}
+**Figura 2.3.1**: Fuente de alimentación Mb-102.
 
-En el trabajo realizado se empleó el módulo Wi-Fi ESP8266 \[3\], que se muestra en la figura 2.1. El mismo se comunica por puerto serie a la plataforma de desarrollo NUCLEO F429ZI para acceder a los datos y luego en función de esos actualiza la información en una página web. Su elección se basó en...
 
-![][image2] 
+## **2.3.2 Microcontrolador** 
+Como controlador principal del sistema se utiliza la placa NUCLEO-F429ZI. La elección de esta placa recayó exclusivamente en la disponibilidad, teniendo además como requerimiento la cantidad de memoria, pines y periféricos de la placa. La placa se programó en C++ a través de la plataforma *Keil Studio Cloud* y se muestra en la Figura 2.3.2 .
 
-**Figura 2.1:** Módulo Wi-Fi
+<img src=https://github.com/user-attachments/assets/14a92d96-6aab-463f-b4e8-22d7dc2e253b alt="image2" width="40%">
+
+**Figura 2.3.2**: Placa NUCLEO-F429ZI.
+
+## **2.3.3 Motor** 
+El acceso a la instalación se habilita con el accionamiento de un servomotor. El servomotor utilizado en este proyecto es el microservo de 9g de TOWERPRO modelo SG90, mostrado en la Figura 2.3.3. Para el control de este servomotor se usa PWM, identificando mediante experimentos las frecuencias correspondientes a los ángulos máximos de operación del servomotor.
+
+<img src=https://github.com/user-attachments/assets/ee3fd32b-8d09-45cc-870d-dcbe58f827f3 alt="image2" width="40%">
+
+
+
+**Figura 2.3.3**: Servomotor SG90.
+
+Este servomotor se reemplazaría para puertas grandes por otro motor con mas potencia para poder mover la perilla más pesada.
+
+## **2.3.4 Lector RFID** 
+Para este proyecto se buscó un lector RFID de bajo costo y compacitibilidad, eligiendo el modelo RC522 mostrado en la Figura 2.3.4.Este módulo cuenta con el circuito integrado MFRC522, que es un lector inalámbrico que trabaja a 13,56 MHz con la cual se leen las tarjetas de acceso.
+
+<img src=https://github.com/user-attachments/assets/83078155-b70e-44d6-9eb2-d634a3e11e06  alt="image2" width="40%">
+
+
+**Figura 2.3.4**: Lector RFID RC522.
+
+Para comunicarse con este módulo se utiliza el protocolo SPI, y para la programación de la placa NUCLEO se utilizó una librería de software escrita por Martin Olejar y publicado en la página oficial de MBED.
+
+## **2.3.5 Teclado Matricial** 
+El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestra en la Figura 2.3.5. La selección de este teclado se hizo en base a su disponibilidad en el mercado local y su bajo costo.
+
+<img src=https://github.com/user-attachments/assets/6c647715-ff55-45e0-8941-e491e28d6c11  alt="image2" width="40%">
+
+**Figura 2.3.5**: Teclado matricial
+
+Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg.
+
+## **2.3.5 Sensor Magnetico** 
+<img src=https://github.com/user-attachments/assets/41ace232-ff76-4d27-9861-f1221cc78199  alt="image2" width="40%">
+
 
 **CAPÍTULO 3** 
 
