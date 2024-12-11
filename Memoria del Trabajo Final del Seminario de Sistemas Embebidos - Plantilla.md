@@ -195,7 +195,7 @@ Habiendo analizado las características principales de la cerradura, se definier
 |  | 7.2 | El sistema contará con un botón de timbre |
 | Sensores | 8.1 | El sistema contará con un sensor magnético que detectará cuando la puerta se halla contra el marco |
 
-<p align="center"><em>Tabla 2.1: Requisitos del proyecto</em></p>
+<p align="center"><em>Tabla 2.1: Requisitos del proyecto.</em></p>
 
 
 ## **2.2 Casos de uso**
@@ -208,7 +208,7 @@ En las tablas 2.2 a 2.4 se presentan 3 casos de uso para ejemplificar el uso del
 | Flujo principal | El individuo introduce su código en el teclado matricial. Por cada tecla que presione recibe una melodía indicando la recepción del carácter introducido. Una vez introducido todo el código, el motor abre la cerradura y se notifica con una melodía el acceso habilitado. Además, con un led se notifica la habilitación del acceso. El módulo Wi-Fi comunica a la aplicación el acceso a la instalación, mostrando el estado de la puerta, la identificación del ingresante, la hora y el número de puerta. El individuo cierra la puerta una vez adentro. |
 | Flujos alternativos | a. El individuo introduce erróneamente el código, con lo cual se notifica auditiva y visualmente al usuario y se notifica mediante Wi-Fi que se intentó acceder sin permiso a la instalación.  b. El individuo deja de introducir el código a mitad de camino. Luego de un tiempo preestablecido, el código a medias se descarta y se notifica que el intento fue incorrecto tanto al individuo como al propietario mediante Wi-Fi.. c. El individuo olvida la puerta abierta, entonces se suena una “alarma” y se notifica al propietario mediante Wi-Fi d. Un usuario dentro de la instalación presiona el botón de cerrar la puerta antes de que se introduzca el código. La puerta permanece cerrada. e. El usuario acerca su tarjeta en vez de terminar el código. La puerta se abre y se indica que la puerta está abierta. |
 
-<p align="center"><em>Tabla 2.2: Caso de uso 1: El usuario quiere acceder con código</em></p>
+<p align="center"><em>Tabla 2.2: Caso de uso 1: El usuario quiere acceder con código.</em></p>
 
 
 | Elemento | Definición |
@@ -218,7 +218,7 @@ En las tablas 2.2 a 2.4 se presentan 3 casos de uso para ejemplificar el uso del
 | Flujo principal | El individuo acerca su tarjeta al lector. El ID de la tarjeta es correcto, el motor abre la cerradura y se notifica con una melodía el acceso habilitado. Además, con un led se notifica la habilitación del acceso. El módulo Wi-Fi comunica a la aplicación el acceso a la instalación, mostrando el estado de la puerta, la identificación del ingresante, la hora y el número de puerta. El individuo cierra la puerta una vez adentro. |
 | Flujos alternativos | a. El individuo usa una tarjeta no habilitada, con lo cual se notifica auditiva y visualmente al usuario y se notifica mediante Wi-Fi que se intentó acceder sin permiso a la instalación.  b. El individuo olvida la puerta abierta, entonces se suena una “alarma” y se notifica al propietario mediante Wi-Fi |
 
-<p align="center"><em>Tabla 2.3: Caso de uso 2: El usuario quiere acceder con RFID</em></p>
+<p align="center"><em>Tabla 2.3: Caso de uso 2: El usuario quiere acceder con RFID.</em></p>
 
 
 | Elemento | Definición |
@@ -228,7 +228,7 @@ En las tablas 2.2 a 2.4 se presentan 3 casos de uso para ejemplificar el uso del
 | Flujo principal | Se acerca una tarjeta desconocida al lector RFID. El sistema indica que el intento de acceso es incorrecto. El sistema muestra el ID de la tarjeta e indica si se quiere guardar la tarjeta mediante comunicación Wi-Fi con la aplicación. |
 | Flujos alternativos | a. Se pierde la conexión Wi-Fi. El sistema no puede continuar con el guardado de la tarjeta. Se indica que se perdió la conexión b. Se apaga el sistema. El sistema no puede continuar con el guardado de la tarjeta.  |
 
-<p align="center"><em>Tabla 2.4: Caso de uso 3: El usuario quiere guardar una tarjeta RFID</em></p>
+<p align="center"><em>Tabla 2.4: Caso de uso 3: El usuario quiere guardar una tarjeta RFID.</em></p>
 
 ## **2.3 Descripción de los Módulos del sitema**
 ## **2.3.1 Alimentación**
@@ -264,7 +264,6 @@ Para este proyecto se buscó un lector RFID de bajo costo y compacitibilidad, el
 
 <img src=https://github.com/user-attachments/assets/83078155-b70e-44d6-9eb2-d634a3e11e06  alt="image2" width="40%">
 
-
 **Figura 2.3.4**: Lector RFID RC522.
 
 Para comunicarse con este módulo se utiliza el protocolo SPI, y para la programación de la placa NUCLEO se utilizó una librería de software escrita por Martin Olejar y publicado en la página oficial de MBED.
@@ -274,13 +273,23 @@ El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestr
 
 <img src=https://github.com/user-attachments/assets/6c647715-ff55-45e0-8941-e491e28d6c11  alt="image2" width="40%">
 
-**Figura 2.3.5**: Teclado matricial
+**Figura 2.3.5**: Teclado matricial.
 
 Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg.
 
-## **2.3.5 Sensor Magnetico** 
+## **2.3.6 Sensor Magnetico** 
+El sensor magnetico utilizado consta de dos componentes: un imán y una llave magnetica (se muestra ambos en la Figura 2.3.6). La llave magnética son hilos finos que al acercar un imán hace un contacto.
+
 <img src=https://github.com/user-attachments/assets/41ace232-ff76-4d27-9861-f1221cc78199  alt="image2" width="40%">
 
+**Figura 2.3.6**: Sensor magnético.
+
+## **2.3.5 Parlante** 
+Para la comunicación por audio se usa un parlante de 8 ohms y 2 Watts como se muestra en la Figura 2.3.7 .
+
+<img src= https://github.com/user-attachments/assets/59824229-6f30-46c4-aadc-45b2e2f2f51d alt="image2" width="40%">
+
+**Figura 2.3.7**: Parlante 8 Ohms 2 Watts.
 
 **CAPÍTULO 3** 
 
