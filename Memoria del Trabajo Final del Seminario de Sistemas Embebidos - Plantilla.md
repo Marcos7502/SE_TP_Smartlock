@@ -98,6 +98,7 @@ This report presents the motivation of the project, the designs of the different
 | 1.0 | Creación del documento | 9/12/2024 |
 | 1.1 | Redacción del primer capítulo | 9/12/2024 |
 | 1.2 | Redacción del segundo capítulo | 10/12/2024 |
+| 1.2 | Redacción del tercer capítulo | 10/12/2024 |
 
 ### 
 
@@ -154,7 +155,11 @@ Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El
 
 La interfaz virtual se muestra en al Figura 1.2.4.
 
-En las próximas secciones se describira con mayor detalle los módulos utilizados y sus características.
+<img src=https://github.com/user-attachments/assets/67fca740-727b-4869-a861-af216d65048b alt="image2" width="40%">
+
+**Figura 1.2.4**: Interfaz virtual para el usuario.
+
+En las próximas secciones se describirá con mayor detalle los módulos utilizados y sus características.
 
 # **CAPÍTULO 2** 
 
@@ -253,8 +258,6 @@ El acceso a la instalación se habilita con el accionamiento de un servomotor. E
 
 <img src=https://github.com/user-attachments/assets/ee3fd32b-8d09-45cc-870d-dcbe58f827f3 alt="image2" width="40%">
 
-
-
 **Figura 2.3.3**: Servomotor SG90.
 
 Este servomotor se reemplazaría para puertas grandes por otro motor con mas potencia para poder mover la perilla más pesada.
@@ -284,43 +287,85 @@ El sensor magnetico utilizado consta de dos componentes: un imán y una llave ma
 
 **Figura 2.3.6**: Sensor magnético.
 
-## **2.3.5 Parlante** 
+## **2.3.7 Parlante** 
 Para la comunicación por audio se usa un parlante de 8 ohms y 2 Watts como se muestra en la Figura 2.3.7 .
 
 <img src= https://github.com/user-attachments/assets/59824229-6f30-46c4-aadc-45b2e2f2f51d alt="image2" width="40%">
 
 **Figura 2.3.7**: Parlante 8 Ohms 2 Watts.
 
-**CAPÍTULO 3** 
+## **2.3.8 Comunicación Wi-Fi** 
+Para la comunicación por audio se usa un parlante de 8 ohms y 2 Watts como se muestra en la Figura 2.3.7 .
+<img src= https://github.com/user-attachments/assets/ac1e1a22-ae50-4a56-801a-45ebbec1cbdc alt="image2" width="40%">
 
-# **Diseño e implementación** {#diseño-e-implementación}
 
-## **3.1 Hardware del… (completar)** {#3.1-hardware-del…-(completar)}
+**Figura 2.3.8**: Parlante 8 Ohms 2 Watts.
 
-Se espera que se incluya un desarrollo similar al presentado en el Example 12-3 del libro. A modo de ejemplo se sugiere considerar la Figura 12.1 y el análisis que se realiza en el libro a partir de ella. Este análisis incluye por ejemplo a las Tablas 12.10 y 12.11 y a la Figura 12.2.
 
-Es deseable encontrar también un diagrama como el de la Figura 12.3 y un conjunto de tablas similar al de las Tablas 12.2 a 12.7. 
 
-También se considera importante incluir una tabla similar a la Tabla 12.8.
+# **CAPÍTULO 3** 
 
-En definitiva, la idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones. 
+# **Diseño e implementación** 
 
-## **3.2 Firmware del… (completar)** {#3.2-firmware-del…-(completar)}
+## **3.1 Diseño del Hardware** 
 
-Se espera que se incluya un desarrollo similar al presentado en el Example 12-4 del libro. A modo de ejemplo se sugiere considerar las Figuras 12.4, 12.5 y 12.6, y el análisis que se realiza en el libro a partir de ellas, lo que incluye por ejemplo una tabla similar a la Tabla 12.19.
+Para el diseño del prototipo se construyó una maqueta de madera haciendo los agujeros correspondientes para pasar los cables y conectándolos al protoboard de forma prolija y ordenada. La figura 3.1 muestra el montaje final del prototipo.
 
-A partir de esto sería bueno incluir un detalle similar al presentado en las Tablas 12.20 a 12.32.
+<img src= https://github.com/user-attachments/assets/59824229-6f30-46c4-aadc-45b2e2f2f51d alt="image2" width="40%">
 
-También se espera encontrar diagramas de las máquinas de estado en forma similar a la Figura 12.7, junto con la explicación correspondiente, tal como se hace en el libro.
+**Figura 3.1**: Montaje final del prototipo.
 
-Si se realizó el diseño de pantallas se recomienda incluir el detalle correspondiente, tal como en las Figuras 12.8 a 12.11.
+Los esquemáticos se muestran en las secciones posteriores.
 
-La idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones.
+## **3.1.1 Diseño de la alimentación** 
+En la figura 3.1.1 se muestra el circuito esquemático del hardware de alimentación con sus debidos capacitores a la salida para estabilizar la salida ante picos de corriente.
 
-Es esperable que haya fragmentos del código que sean relevantes. Para eso se recomienda utilizar un formato como el del Código 12.1, con las líneas numeradas y con una explicación en donde se haga uso de la numeración de las líneas. Por ejemplo: “en las líneas 1 a 3 tal cosa, mientras que en las líneas 5 a 9 tal otra”. Es importante que quede claro que no es necesario presentar en este documento todas las líneas de código, sino solamente aquellas que sea de interés explicar por alguna razón en particular.
+<img src=https://github.com/user-attachments/assets/a7625bac-d907-4369-8133-8f78a38716eb alt="image2" width="40%">
 
-Finalmente, se recomienda incluir el link al repositorio del proyecto, en el que se espera que haya un archivo Readme.md en el que se incluyan algunos fragmentos de este informe tal que permitan al usuario del repositorio entender en qué consiste el proyecto. Incluso se puede dejar este informe completo como anexo en el repositorio.
+**Figura 3.1.1**: Alimentación del sistema.
 
+## **3.1.2 Diseño de los indicadores e interruptores** 
+
+<img src=https://github.com/user-attachments/assets/37805a98-bcfc-4c11-983b-6d91c570b76e  alt="image2" width="40%">
+
+**Figura 3.1.2**: Conexionado de los indicadores e interruptores del sistema.
+
+## **3.1.3 Diseño del lector RFID** 
+
+<img src=https://github.com/user-attachments/assets/a2770d18-31b0-4e5b-81f5-ed92d74112ae  alt="image2" width="40%">
+
+**Figura 3.1.3**: Conexionado del lector RFID del sistema.
+
+## **3.1.4 Diseño del parlante** 
+
+<img src=https://github.com/user-attachments/assets/cf5e304f-a75d-4c79-8a84-3961b2433360  alt="image2" width="40%">
+
+**Figura 3.1.4**: Diseño del parlante del sistema.
+
+## **3.1.5 Diseño del motor** 
+<img src=https://github.com/user-attachments/assets/4ce16d1c-2db0-4873-8110-544dd7427657  alt="image2" width="40%">
+
+**Figura 3.1.5**: Diseño del motor del sistema.
+
+## **3.1.6 Diseño del teclado matricial** 
+<img src=https://github.com/user-attachments/assets/ffb93399-ce71-42b2-83dc-5e8bec9a9624  alt="image2" width="40%">
+
+**Figura 3.1.6**: Diseño del teclado matricial del sistema.
+
+## **3.1.7 Diseño del Modulo Wi-Fi** 
+<img src=https://github.com/user-attachments/assets/66cd0279-c347-494b-bb1c-3e01c6b74f6f alt="image2" width="40%">
+
+**Figura 3.1.7**: Diseño del Módulo Wi-Fi.
+
+## **3.1.8 Diseño del hardware con la placa NUCLEO-F429ZI** 
+
+<img src= https://github.com/user-attachments/assets/2ddeee79-c87c-4892-9026-08ff3395c338 alt="image2" width="40%">
+
+**Figura 3.1.9**: Circuito esquemático del conexionado del NUCLEO-F429ZI.
+
+## **3.2 Firmware del *Smartlock*** 
+
+SLa implementación del trabajo se realizó en lenguaje C++ utilizando Mbed y bajo el paradigma de la programación orientada a objetos. El firmware está conformado por un archivo main.cpp que inicializa al sistema y luego convoca repetidamente a la función system_update(), las librerías arm_book_lib.h, global_defines.h, el archivo mbed_app.json y una carpeta con modulos que contienen un archivo .cpp y otro .h. Las librerias mencionadas y el archivo json contienen, respectivamente, la función main del programa, numerosas definiciones y algunas configuraciones.
 **CAPÍTULO 4** 
 
 # **Ensayos y resultados** {#ensayos-y-resultados}
