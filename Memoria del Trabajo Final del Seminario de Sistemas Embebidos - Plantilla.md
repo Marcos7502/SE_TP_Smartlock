@@ -365,7 +365,24 @@ En la figura 3.1.1 se muestra el circuito esquemático del hardware de alimentac
 
 ## **3.2 Firmware del *Smartlock*** 
 
-SLa implementación del trabajo se realizó en lenguaje C++ utilizando Mbed y bajo el paradigma de la programación orientada a objetos. El firmware está conformado por un archivo main.cpp que inicializa al sistema y luego convoca repetidamente a la función system_update(), las librerías arm_book_lib.h, global_defines.h, el archivo mbed_app.json y una carpeta con modulos que contienen un archivo .cpp y otro .h. Las librerias mencionadas y el archivo json contienen, respectivamente, la función main del programa, numerosas definiciones y algunas configuraciones.
+La implementación del trabajo se realizó en lenguaje C++ utilizando Mbed y bajo el paradigma de la programación orientada a objetos. El firmware está conformado por un archivo main.cpp que inicializa al sistema con *system_init()* y luego convoca repetidamente a la función *system_update()*, las librerías arm_book_lib.h, global_defines.h, el archivo mbed_app.json y una carpeta con modulos que contienen un archivo .cpp y otro .h. Las librerias mencionadas y el archivo json contienen, respectivamente, la función main del programa, numerosas definiciones y algunas configuraciones. La Figura 3.2.1 muestra un diagrama de archivos del sistema.
+
+<img src= https://github.com/user-attachments/assets/95144be5-f9d5-4684-866b-590c30889119 alt="image2" width="40%">
+
+**Figura 3.2.1**: Diagrama de archivos del *Smartlock*.
+
+Como se mencionaba, el archivo main.cpp solamente se encarga de inicializar el sistema y actualizar el estado, como se muestra en la Figura . En el archivo  *global_defines.h* se encuentran muchas definiciones constantes de pins y valores necesarios para el funcionamiento del sistema. Solo fueron definidos los pines para la placa que se usa en este trabajo, pero se tomó esta decisión para simplificar el trabajo si en un futuro se decide utilizar otra placa. La Figura 3.2.1 muestra el archivo main.cpp.
+
+<img src=https://github.com/user-attachments/assets/96ef8f41-0467-491d-a9cd-02f5e88e5a65 alt="image2" width="20%">
+
+**Figura 3.2.2**: Archivo Main.cpp.
+
+## **3.2.1 Módulo Keypad** 
+Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura
+
+![image](https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6)
+
+
 **CAPÍTULO 4** 
 
 # **Ensayos y resultados** {#ensayos-y-resultados}
