@@ -377,11 +377,91 @@ Como se mencionaba, el archivo main.cpp solamente se encarga de inicializar el s
 
 **Figura 3.2.2**: Archivo Main.cpp.
 
-## **3.2.1 Módulo Keypad** 
-Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura
+## **3.2.2 Módulo Access Keys** 
+Este módulo se encarga de comparar los intentos de acceso con las llaves de acceso, perimitiendo acceder cuando un intento de acceso coincide con una llave de acceso (RFID o Keypad) y denegando el acceso cuando el intento de acceso no coincide con ninguna llave. La función responsable de esto se llama *access_attempt_update()* y devuelve 3 estados: ACCESS_GRANTED cuando se concede el acceso, ACCESS_DENIED cuando no se lo concede y NO_ACCESS_ATTEMPT cuando no hay ningun intento de acceso. La Figura 3.2.3 muestra la función *access_attempt_update()*.
 
-![image](https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6)
+<img src=https://github.com/user-attachments/assets/93a97b01-2636-4409-b7d9-b468e6e90b7b alt="image2" width="40%">
 
+**Figura 3.2.2**: Función *access_attempt_update()* del módulo Access Keys.
+
+Otra funcionalidad de este módulo es la de gestionar la base de datos interna de la placa NUCLEO-F429ZI, permitiendo recibir códigos nuevos ingresados por el dueño y guardandolos para permitir el acceso o recibiendo ordenes de borrar códigos viejos. Esta funcionalidad la realiza con la función *ProcessSecurityMessage()*, haciendo uso de memoria dinámica a través de vectores para guardar y eliminar datos estructurados.
+
+## **3.2.3 Módulo Keypad** 
+Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura 3.2.4.
+
+<img src=https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6 alt="image2" width="40%">
+
+**Figura 3.2.4**: Máquina de estados del módulo Keypad [1].
+
+Se tiene un tiempo de debounce ajustable para prevenir lecturas falsas.
+
+## **3.2.4 Módulo Motors** 
+Crea objetos llamados Motor que traducen el angulo requerido a una señal PWM que controla la posición del motor. Los valores máximos y mínimos de duty cycle se encontraron de forma experimental en la facultad de ingeniería. El código es relativamente simple y se muestra en la Figura 3.2.5.
+
+<img src=https://github.com/user-attachments/assets/98299e92-b497-4de2-9530-17c7f3baa440 alt="image2" width="40%">
+
+**Figura 3.2.5**: Archivo Motors.cpp.
+
+## **3.2.5 Módulo MQTT** 
+En este módulo se maneja toda la comunicación del protocolo MQTT, que en realidad es una comunicación por UART con el módulo de hardware ESP32.Esta clase cuenta con un objeto de la clase BufferedSerial para manejar la comunicación con la placa ESP32 y un objeto DigitalOut para indicar con un led cuando se recibe o envía un mensaje. Entre los métodos públicos con los que cuenta esta clase están: *keepAlive()* que manda un mensaje periodicamente para indicar que la placa NUCLEO-F429ZI está activa, *SendStatus()* que recibe el estado de la puerta y lo envía, *publish()* y *receive()* que se encargan de publicar y recibir mensajes MQTT respectivamente y *ShowRFID()* que muestra el RFID una vez se lee. Además, posee una estructura de datos *MQTTMessage* donde describe si se recibió un mensaje, el tópico y el mensaje. También cuanta con métodos para enviar mensajes de logger a la aplicación cuando sea necesario. Para más detalle sobre los métodos, se invia al lector a visitar el módulo MQTT en este repositorio. Los tópicos a suscribirse estan predefinidos en el ESP32.
+
+## **3.2.6 Módulo RFID** 
+El módulo contiene el código de la libreria creada por un tercero, como se mencionó previamente, que define la clase MFRC522. Adicionalmente, contiene las funciones para leer el RFID e inicializarlo. Las funciones son simples y hacen uso de las funciones de la librería que estan muy bien modularizadas. Se menciona que la librería de MFRC522 tuvo que incorporarse en los archivos, con lo cual se puede ver el archivo MFRC522.cpp y MFRC522.h correspondientes a la librería del autor indicado. Las funciones más importantes del Módulo RFID son *RFID_read()* que devuelve el ID leido (si se lee) o el puntero a null (si no se lee) y la función *RFID_reader_init()* que inicializa el módulo. La Figura 3.2.6 muestra parte de la función *RFID_read()*.
+
+<img src=https://github.com/user-attachments/assets/c2434444-42d2-4b6f-ab14-b281a0d248ff alt="image2" width="40%">
+
+**Figura 3.2.6**: Función *RFID_read()* del archivo RFID_reader.cpp.
+
+No se introdujo una máquina de estados para el lector RFID porque no se consideró necesario. Se introduce además una funcionalidad para restringir el tiempo entre lecturas del lector RFID, con este tiempo entre lecturas definido en el archivo *global_defines.h*.
+
+## **3.2.7 Módulo Speaker** 
+En este módulo se define una clase *Speaker* que se encarga de tocar las notas musicales para los accesos correctos, accesos incorrectos, alarma de puerta olvidada, introduccion de botones y timbre. Para cada uno de esos tonos hay un método especial que dice que melodía se tocará (Figura 3.2.7). El método *play_melody()* se encarga de tomar una secuencia de periodos de notas musicales (C5, E6, etc), una secuencia de duraciones para cada nota y producir una señal PWM para cada nota con la duración indicada. A la salida, se obtiene sobre el parlante una señal que intenta parecerse a una señal con la frecuencia indicada (hardware).
+
+<img src=https://github.com/user-attachments/assets/68ce7c65-a95a-4fa2-8776-9a0be4f04224 alt="image2" width="40%">
+
+**Figura 3.2.7**: Métodos de la clase *Speaker* en el archivo *Speaker.h*.
+
+Adicionalmente, se tienen los métodos update y alarm_update que actualizan el cambio de notas musicales. La variable ringbell es una comodidad para tocar una única nota musical cuando se toca el timbre.
+
+## **3.2.8 Módulo System** 
+El módulo System se encarga de orquestrar el funcionamiento de varios módulos. Se definen dos funciones públicas, system_init y system_update, que se llaman desde el archivo main.cpp, funciones para cada estado de la puerta con el sufijo _update() y otras funciones miscelaneas que no se contemplan en los módulos mencionados pero se requieren para controlar el funcionamiento del sistema. En la Figura 3.2.8 se peuden ver los objetos creados así como los parámetros necesarios en cada caso, y que fueron definidos en el archivo global_defines.h. 
+
+<img src=https://github.com/user-attachments/assets/929cfece-d981-42e6-ad05-cb604bd3ce30 alt="image2" width="40%">
+
+**Figura 3.2.8**: Objetos creados de otros módulos en el archivo *System.cpp*.
+
+La función de actualización principal *system_update()* se muestra en la Figura 3.2.9.
+
+<img src=https://github.com/user-attachments/assets/403e5de7-70c1-4707-b60e-a3309f802c04 alt="image2" width="40%">
+
+**Figura 3.2.9**: Función *system_update()* del  archivo *System.cpp*.
+
+Notar que cada estado de la puerta tiene su propia funcion de actualización. Los estados de la puerta on 4: DOOR_CLOSED, DOOR_OPENING, DOOR_OPEN y DOOR_CLOSING. La función *process_mqtt()* se encarga de procesar los mensajes mqtt y generar los cambios necesarios en las variables del sistema para actuar los controladores o para modificar la base de datos. El control de *force_block_door* es un comando que se recibe por MQTT para mantener la puerta cerrada.
+## **3.2.9 Módulo UART Communications** 
+Por último, el módulo de comunicaciones UART permite notificar mediante UART el estado de la puerta y los accesos. Este módulo es unicamente útil si se decide leer los estados del sistema de la placa NUCLEO-F429ZI a través de UART. Además, permite recibir comandos para guardar un único ID de RFID de forma manual y sin contar con la apliación. La Figura 3.2.10 meustra las funciones de este módulo
+
+<img src=https://github.com/user-attachments/assets/48a3698f-224e-4990-a563-29d1defdeaee alt="image2" width="40%">
+
+**Figura 3.2.10**: Funciones utilizadas para la comunicación UART en el archivo *UART_comm.h*.
+
+## **3.3 Firmware del *ESP32 DEVKIT V1*** 
+El desarrollo de este firmware se realizó con el entorno de desarrollo de Arduino, que permite programar la placa ESP32 directamente mediante la definición de la placa ESP32 como la placa objetivo. En este caso todo el firmware se implementó en un único archivo, cuyo desarrollo se basó e la implementación de MQTT hecha por Augusto Villacampa. Al comienzo del programa, luego de incluir las librerías de código necesarias, lo primero que hace es definir objetos y variables necesarias. Esto incluye los objetos que manejan la conexión Wi-Fi y MQTT, y variables como la red Wi-Fi y la contraseña, la IP del servidor MQTT y el puerto usado, o los pines que se usarán. Esto se muestra en la figura 3.3.1. 
+
+<img src=https://github.com/user-attachments/assets/8e5fd336-1061-415f-a30a-6638186b97df alt="image2" width="40%">
+
+**Figura 3.3.1**: Objetos declarados en la placa *ESP32*.
+
+De todas las funciones definidas en el archivo del ESP32, la más importante es la función *callback()* y la función *reconnect()*. La función callback se encarga de reenviar los mensajes recibidos por Wi-Fi con MQTT a la placa NUCLEO-F429ZI a través de UART. La Figura 3.3.2 muestra el código de la función callback. También se envían a la computadora, en caso de estar conectada por computadora. La función reconnect se encarga de conectar al ESP32 al broker de MQTT, el cual es un broker Mosquitto (broker sin licencia), y posteriormente se suscribe a los tópicos necesarios para el funcionamiento del sistema.
+
+<img src=https://github.com/user-attachments/assets/af775709-4cfe-42c9-854c-86305e8d7294 alt="image2" width="40%">
+
+**Figura 3.3.2**: Función *callback()* en el firmware del ESP32.
+
+Finalmente, todo mensaje MQTT que se reciba de la placa NUCLEO-F429ZI a través de UART se reenvía por Wi-Fi con empaquetamiento MQTT como se muestra en la Figura 3.3.3.
+
+<img src=https://github.com/user-attachments/assets/f230aaeb-0cb2-47a8-bf4e-a1fd049410c5 alt="image2" width="40%">
+
+**Figura 3.3.2**: Main Loop del firmware del ESP32.
 
 **CAPÍTULO 4** 
 
