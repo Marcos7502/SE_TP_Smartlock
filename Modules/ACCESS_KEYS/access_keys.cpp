@@ -10,7 +10,6 @@ struct AccessKey{
     std::string rfid;
 };
 std::vector<AccessKey> StoredKeys;
-char keypad_code[4] = {'1' ,'2' ,'3' ,'4'}; 
 char allowed_id[20] = "";  // ID permitido
 
 
