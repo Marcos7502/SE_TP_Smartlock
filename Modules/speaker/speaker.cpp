@@ -65,7 +65,16 @@ void Speaker::play_melody(float* melody_in, int* noteDurations_in, int length) {
 
 // Update function to handle melody progression
 void Speaker::update() {
+    if(ringbell == true){
+        pwm_speaker.period(0.00227);
+        pwm_speaker.write(0.5f);
+
+        return;
+    }
     if (!playing) {
+        if(ringbell == false){
+            pwm_speaker.write(0.0f);
+        }
         return;
     } 
 

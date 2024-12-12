@@ -22,15 +22,13 @@ void UART_send_access_message(char* rfid_content, char* keypad_code){
     time_t seconds = time(NULL);
     strftime(UsbBuffer, 24, "%c", localtime(&seconds));
     if(rfid_content !=nullptr){
-        UARTUsb.write( "Door 1 accessed on ", 19);
         UARTUsb.write(UsbBuffer, 24);
-        UARTUsb.write(" with RFID ID: ",15);
+        UARTUsb.write( " : Door 1 accessed with RFID ID: ", 33);
         UARTUsb.write(rfid_content, strlen(rfid_content));
         UARTUsb.write( "\r\n ", 2 );
     }else{
-        UARTUsb.write( "Door 1 accessed on ", 19);
         UARTUsb.write(UsbBuffer, 24);
-        UARTUsb.write(" with Keypad Code: ",19);
+        UARTUsb.write( " : Door 1 accessed with Keypad Code: ", 37);
         UARTUsb.write(keypad_code, 4);
 
         UARTUsb.write( "\r\n ", 2 );
@@ -44,14 +42,14 @@ void UART_send_door_left_open_message(bool doorleftopen){
     strftime(UsbBuffer, 24, "%c", localtime(&seconds));
     if(doorleftopen == true){
         
-        
-        UARTUsb.write("Door 1 left open on ", 20);
         UARTUsb.write(UsbBuffer, 24);
+        UARTUsb.write(" : Door 1 left open ", 20);
         UARTUsb.write("\r\n ", 2);
     }
     if(doorleftopen == false){
-        UARTUsb.write("Door 1 left open was closed on ", 31);
         UARTUsb.write(UsbBuffer, 24);
+        UARTUsb.write(" : Door 1 left open was closed ", 31);
+        
         UARTUsb.write("\r\n ", 2);
     }
     
@@ -60,9 +58,9 @@ void UART_send_door_left_open_message(bool doorleftopen){
 void UART_send_wrong_id_message(){
     
     time_t seconds = time(NULL);
-    UARTUsb.write("Door 1 wrong ID introduced on ",30);
     strftime(UsbBuffer, 24, "%c", localtime(&seconds));
     UARTUsb.write(UsbBuffer,24);
+    UARTUsb.write(" : Door 1 wrong ID introduced ",30);
     UARTUsb.write("\r\n",2);
 
 }
