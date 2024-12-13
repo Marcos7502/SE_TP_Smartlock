@@ -534,17 +534,63 @@ Cada etapa tiene un video con una prueba funcional de los módulos agregados. Ad
 ## **4.2 Cumplimiento de requisitos**  
 
 Una vez finalizado el trabajo, se realizó una tabla con los requisitos iniciales, agregando el estado de los mismos. Esto se observa en la tabla 4.2.
+| Grupo | ID | Descripción | Estado |
+| :---- | :---- | :---- | :---- |
+| Acceso | 1.1 | El sistema permitirá el acceso a la instalación mediante RFID | COMPLETADO |
+|  | 1.2 | El sistema permitirá el acceso a la instalación mediante un teclado matricial | COMPLETADO |
+|  | 1.3 | En caso de acceso permitido, el sistema abrirá la puerta durante un periodo de tiempo fijado | COMPLETADO |
+| Indicadores | 2.1 | El sistema contará con un indicador luminoso para indicar que la puerta está cerrada | COMPLETADO |
+|  | 2.2 | El sistema contará con un indicador luminoso para indicar que la puerta está abierta | COMPLETADO |
+|  | 2.3 | El sistema contará con un parlante que indique mediante sonido cuando se abre la puerta | COMPLETADO |
+|  | 2.4 | El sistema contará con un parlante que indique mediante sonido cuando se introduce un código incorrecto | COMPLETADO |
+|  | 2.5 | El sistema contará con un parlante que indique mediante sonido cuando se presiona una tecla | COMPLETADO |
+|  | 2.6 | El sistema notificará con el parlante cuando se deja la puerta abierta | COMPLETADO |
+|  | 2.7 | El sistema notificará mediante el titileo de leds cuando la puerta se deja abierta o cuando se introduce un código/RFID erróneo | COMPLETADO |
+|  | 2.8 | El sistema notifica con audio y luz cuando se deja un código sin introducir completamente | COMPLETADO |
+| Motor | 3.1 | El sistema contará con un motor para abrir y cerrar la cerradura | COMPLETADO |
+|  | 3.2 | El sistema solo podrá cerrar la puerta cuando esta se halla contra el marco | COMPLETADO |
+| Comunicación Audio | 4.1 | El sistema deberá contar con un parlante para transmitir señales de audio | COMPLETADO |
+|  | 4.2 | El sistema deberá contar con un micrófono para recibir señales de audio | INCOMPLETO |
+| Comunicación Wi-Fi | 5.1 | El sistema se comunicará mediante Wi-Fi con la aplicación de celular | COMPLETADO |
+|  | 5.2 | El sistema deberá enviar a la aplicación la información de acceso a la instalación | COMPLETADO |
+|  | 5.3 | El sistema deberá enviar a la aplicación la información de acceso denegado a la instalación | COMPLETADO |
+|  | 5.4 | En caso de lectura RFID, el sistema deberá comunicar la lectura de RFIDs desconocidos, junto con su ID (para poder guardarlo posteriormente) | COMPLETADO |
+|  | 5.4 | El sistema deberá comunicarle a la aplicación el estado de la puerta y el número de puerta | COMPLETADO |
+|  | 5.5 | El sistema deberá poder recibir señales de audio de la aplicación | INCOMPLETO |
+|  | 5.6 | El sistema deberá poder transmitir señales de audio a la aplicación | INCOMPLETO |
+| Aplicación | 6.1 | La aplicación tendrá la base de datos de los individuos habilitados con sus IDs | COMPLETADO |
+|  | 6.2 | La aplicación deberá permitirle al usuario configurar los permisos de acceso de los individuos | COMPLETADO |
+|  | 6.3 | La aplicación deberá poder mostrar la información de los accesos e intentos de acceso | COMPLETADO |
+|  | 6.4 | La aplicación deberá poder controlar manualmente la apertura o cerradura de la puerta | COMPLETADO |
+|  | 6.5 | La aplicación deberá permitirle al usuario configurar añadir nuevos individuos a la base de datos mediante código o RFID | COMPLETADO |
+|  | 6.6 | La aplicación deberá mostrarle al usuario el estado de la puerta | COMPLETADO |
+| Interruptores/ Botones | 7.1 | El sistema contará con botones para abrir o cerrar la puerta de forma manual | COMPLETADO |
+|  | 7.2 | El sistema contará con un botón de timbre | COMPLETADO |
+| Sensores | 8.1 | El sistema contará con un sensor magnético que detectará cuando la puerta se halla contra el marco | COMPLETADO |
 
+**Tabla 4.2**: Requisitos del proyecto y estados de cumplimiento.
 
-## **4.5 Comparación con otros sistemas similares**   {#4.5-comparación-con-otros-sistemas-similares}
+Se observa que la gran mayoría de los requisitos se cumplieron para este proyecto. Solamente resta agregar el micrófono y procesar el audio por la aplicación.
 
-Esta sección sería la continuación del análisis de sistemas similares presentados en el Capítulo 1\. La diferencia es que en este caso se incluye en la comparación al desarrollo realizado. Esta comparación se recomienda que se haga mediante una tabla.
+## **4.3 Comparación con otros sistemas similares**   
 
-## **4.6 Documentación del desarrollo realizado**
+Como se mencionaba en el incio del documento, el mercado actual tiene productos desarrollados con características muy similares a las de este proyecto. En Argentina no esta muy normalizado el uso de estas cerraduras y es por esto que el uso de un lector RFID y un sensor magnético puede diferenciar a este proyecto del resto. Sin embargo, se reitera que el mercado es grande y hay muchas variantes de cerraduras inteligentes, imposibilitando una comparación justa entre nuestro producto y otros.
 
-En esta sección se espera encontrar una tabla similar a la Tabla 12.37 que se presenta en el libro. 
+## **4.4 Documentación del desarrollo realizado**
 
-**CAPÍTULO 5** 
+La tabla 4.4 muestra la documentación del desarrollo de este proyecto.
+| Nombre                 | Fecha de Finalización     | Referencia         |
+|------------------------|---------------------------|--------------------|
+| Trabajo Práctico 1    | 11 de Octubre del 2024    | README_TP1.md      |
+| Trabajo Práctico 2    | 17 de Octubre del 2024    | README_TP2.md      |
+| Trabajo Práctico 3    | 17 de Noviembre del 2024  | README_TP3.md      |
+| Requisitos y casos   | 18 de Noviembre del 2024  | Readme_requisitos_y_casos.md      |
+| Informe de Avance   | 29 de Noviembre del 2024  | Informe de Avance del Trabajo Final.md      |
+| Trabajo Práctico Final | 9 de Diciembre del 2024   | README_TP_FINAL.md |
+| Memoria del trabajo | 13 de Diciembre del 2024   | Memoria del trabajo final.md |
+**Tabla 4.4**: Desarrollo del proyecto.
+
+# **CAPÍTULO 5** 
 
 # **Conclusiones** {#conclusiones}
 
