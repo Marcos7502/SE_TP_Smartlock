@@ -36,58 +36,56 @@ This report presents the motivation of the project, the designs of the different
 
 
 
-**Índice General**
+# Índice General
+
+- [**Registro de versiones**](#registro-de-versiones)
+- [**Introducción general**](#introducción-general)
+  - [1.1 Análisis de necesidad y objetivos](#11-análisis-de-necesidad-y-objetivos)
+  - [1.2 Módulos e Interfaces de Smartlock](#12-módulos-e-interfaces-de-smartlock)
+- [**Introducción específica**](#introducción-específica)
+  - [2.1 Requisitos](#21-requisitos)
+  - [2.2 Casos de uso](#22-casos-de-uso)
+  - [2.3 Descripción de los Módulos del sistema](#23-descripción-de-los-módulos-del-sistema)
+    - [2.3.1 Alimentación](#231-alimentación)
+    - [2.3.2 Microcontrolador](#232-microcontrolador)
+    - [2.3.3 Motor](#233-motor)
+    - [2.3.4 Lector RFID](#234-lector-rfid)
+    - [2.3.5 Teclado Matricial](#235-teclado-matricial)
+    - [2.3.6 Sensor Magnético](#236-sensor-magnético)
+    - [2.3.7 Parlante](#237-parlante)
+    - [2.3.8 Comunicación Wi-Fi](#238-comunicación-wi-fi)
+- [**Diseño e Implementación**](#diseño-e-implementación)
+  - [3.1 Diseño del Hardware](#31-diseño-del-hardware)
+    - [3.1.1 Diseño de la alimentación](#311-diseño-de-la-alimentación)
+    - [3.1.2 Diseño de los indicadores e interruptores](#312-diseño-de-los-indicadores-e-interruptores)
+    - [3.1.3 Diseño del lector RFID](#313-diseño-del-lector-rfid)
+    - [3.1.5 Diseño del motor](#315-diseño-del-motor)
+    - [3.1.6 Diseño del teclado matricial](#316-diseño-del-teclado-matricial)
+    - [3.1.7 Diseño del Módulo Wi-Fi](#317-diseño-del-módulo-wi-fi)
+    - [3.1.8 Diseño del hardware con la placa NUCLEO-F429ZI](#318-diseño-del-hardware-con-la-placa-nucleo-f429zi)
+  - [3.2 Firmware del Smartlock](#32-firmware-del-smartlock)
+    - [3.2.1 Módulo Access Keys](#321-módulo-access-keys)
+    - [3.2.2 Módulo Keypad](#322-módulo-keypad)
+    - [3.2.3 Módulo Motors](#323-módulo-motors)
+    - [3.2.4 Módulo MQTT](#324-módulo-mqtt)
+    - [3.2.5 Módulo RFID](#325-módulo-rfid)
+    - [3.2.6 Módulo Speaker](#326-módulo-speaker)
+    - [3.2.7 Módulo System](#327-módulo-system)
+    - [3.2.8 Módulo UART Communications](#328-módulo-uart-communications)
+  - [3.3 Firmware del ESP32 DEVKIT V1](#33-firmware-del-esp32-devkit-v1)
+  - [3.4 MOSQUITTO broker](#34-mosquitto-broker)
+  - [3.5 Diseño de la aplicación y manejo de paquetes](#35-diseño-de-la-aplicación-y-manejo-de-paquetes)
+- [**Ensayos y Resultados**](#ensayos-y-resultados)
+  - [4.1 Pruebas funcionales de funcionamiento](#41-pruebas-funcionales-de-funcionamiento)
+  - [4.2 Cumplimiento de requisitos](#42-cumplimiento-de-requisitos)
+  - [4.3 Comparación con otros sistemas similares](#43-comparación-con-otros-sistemas-similares)
+  - [4.4 Documentación del desarrollo realizado](#44-documentación-del-desarrollo-realizado)
+- [**Conclusiones**](#conclusiones)
+  - [5.1 Resultados obtenidos](#51-resultados-obtenidos)
+  - [5.2 Próximos pasos](#52-próximos-pasos)
+- [**Bibliografía**](#bibliografía)
 
 
-[**Registro de versiones**](#registro-de-versiones)	
-
-[**Introducción general**](#introducción-general)	
-
-[1.1 Título de la sección con este uso de las mayúsculas](#1.1-título-de-la-sección-con-este-uso-de-las-mayúsculas)	
-
-[1.1.1 Este es el título de una subsección](#1.1.1-este-es-el-título-de-una-subsección)	
-
-[1.2 Figuras y tablas](#1.2-figuras-y-tablas)	
-
-[1.3 Ecuaciones](#1.3-ecuaciones)	
-
-[1.4 “Trabajo vs. Proyecto” y tiempo verbal a utilizar](#1.4-trabajo-vs.-proyecto-y-tiempo-verbal-a-utilizar)	
-
-[1.5 Estado del arte o análisis de sistemas similares al desarrollado](#1.6-estado-del-arte-o-análisis-de-sistemas-similares-al-desarrollado)	
-
-[**Introducción específica**](#introducción-específica)	
-
-[2.1 Descripción  de tal cosa](#heading=h.qt52d4use48v)	
-
-[2.3.1 Alimentación](#2.3.1-alimentacion)
-
-[**Diseño e implementación**](#diseño-e-implementación)	**[16](#diseño-e-implementación)**
-
-[3.1 Hardware del… (completar)](#3.1-hardware-del…-\(completar\))	[16](#3.1-hardware-del…-\(completar\))
-
-[3.2 Firmware del… (completar)](#3.2-firmware-del…-\(completar\))	[16](#3.2-firmware-del…-\(completar\))
-
-[**Ensayos y resultados**](#ensayos-y-resultados)	**[17](#ensayos-y-resultados)**
-
-[4.1 Pruebas funcionales del hardware](#4.1-pruebas-funcionales-del-hardware)	[17](#4.1-pruebas-funcionales-del-hardware)
-
-[4.2 Pruebas funcionales del firmware](#4.2-pruebas-funcionales-del-firmware)	[17](#4.2-pruebas-funcionales-del-firmware)
-
-[4.3 Pruebas de integración](#4.3-pruebas-de-integración)	[17](#4.3-pruebas-de-integración)
-
-[4.4 Comparación con otros sistemas similares](#4.5-comparación-con-otros-sistemas-similares)	[17](#4.5-comparación-con-otros-sistemas-similares)
-
-[**Conclusiones**](#conclusiones)	**[18](#conclusiones)**
-
-[5.1 Resultados obtenidos](#5.1-resultados-obtenidos)	[18](#5.1-resultados-obtenidos)
-
-[5.2 Próximos pasos](#5.2-próximos-pasos)	[18](#5.2-próximos-pasos)
-
-[**Bibliografía**](#bibliografía)	
-
-[**Anexos (sólo en caso de ser necesarios)**](#anexos-\(sólo-en-caso-de-ser-necesarios\))	**[20](#anexos-\(sólo-en-caso-de-ser-necesarios\))**
-
-[A. Primer Anexo](#a.-primer-anexo)	[20](#a.-primer-anexo)
 
 
 
@@ -98,7 +96,8 @@ This report presents the motivation of the project, the designs of the different
 | 1.0 | Creación del documento | 9/12/2024 |
 | 1.1 | Redacción del primer capítulo | 9/12/2024 |
 | 1.2 | Redacción del segundo capítulo | 10/12/2024 |
-| 1.2 | Redacción del tercer capítulo | 10/12/2024 |
+| 1.3 | Redacción del tercer capítulo | 10/12/2024 |
+| 1.4 | Redacción final | 13/12/2024 |
 
 ### 
 
