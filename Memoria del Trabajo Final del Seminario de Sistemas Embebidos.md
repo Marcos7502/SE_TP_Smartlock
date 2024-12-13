@@ -280,7 +280,7 @@ El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestr
 
 Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg \[1\].
 
-## **2.3.6 Sensor Magnetico** 
+## **2.3.6 Sensor Magnético** 
 El sensor magnetico utilizado consta de dos componentes: un imán y una llave magnetica (se muestra ambos en la Figura 2.3.6). La llave magnética son hilos finos que al acercar un imán hace un contacto.
 
 <img src=https://github.com/user-attachments/assets/41ace232-ff76-4d27-9861-f1221cc78199  alt="image2" width="40%">
