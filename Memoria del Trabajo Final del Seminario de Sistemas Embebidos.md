@@ -588,6 +588,7 @@ La tabla 4.4 muestra la documentación del desarrollo de este proyecto.
 | Informe de Avance   | 29 de Noviembre del 2024  | Informe de Avance del Trabajo Final.md      |
 | Trabajo Práctico Final | 9 de Diciembre del 2024   | README_TP_FINAL.md |
 | Memoria del trabajo | 13 de Diciembre del 2024   | Memoria del trabajo final.md |
+
 **Tabla 4.4**: Desarrollo del proyecto.
 
 # **CAPÍTULO 5** 
