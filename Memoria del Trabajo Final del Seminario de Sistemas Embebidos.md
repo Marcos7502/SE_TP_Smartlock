@@ -295,11 +295,11 @@ Para la comunicación por audio se usa un parlante de 8 ohms y 2 Watts como se m
 **Figura 2.3.7**: Parlante 8 Ohms 2 Watts.
 
 ## **2.3.8 Comunicación Wi-Fi** 
-Para la comunicación por audio se usa un parlante de 8 ohms y 2 Watts como se muestra en la Figura 2.3.7 .
+Para la comunicación por Wi-Fi se usa el ESP32-DEVKIT por su módulo Wi-Fi incorporado de 2.4 GHz. El módulo se muestra en la Figura 2.3.8.
 <img src= https://github.com/user-attachments/assets/ac1e1a22-ae50-4a56-801a-45ebbec1cbdc alt="image2" width="40%">
 
 
-**Figura 2.3.8**: Parlante 8 Ohms 2 Watts.
+**Figura 2.3.8**: ESP32-DEVKIT.
 
 
 
