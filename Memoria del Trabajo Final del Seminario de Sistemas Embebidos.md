@@ -1,4 +1,4 @@
-![Montaje_atras](https://github.com/user-attachments/assets/3b759882-b7de-4a2f-a718-8f013ffa872a)<img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
+<img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
 
 **UNIVERSIDAD DE BUENOS AIRES**  
 **Facultad de Ingeniería**  
@@ -154,7 +154,7 @@ Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El
 
 La interfaz virtual se muestra en al Figura 1.2.4. Esta permitido el acceso a la interfáz únicamente con usuario y contraseña por razones de seguridad.
 
-<img src=https://github.com/user-attachments/assets/ec4eb17f-931d-4d5d-add4-48fec88283c6 alt="image2" width="60%">
+<img src=https://github.com/user-attachments/assets/ec4eb17f-931d-4d5d-add4-48fec88283c6 alt="image2" width="40%">
 
 **Figura 1.2.4**: Interfaz virtual para el usuario.
 
@@ -240,7 +240,7 @@ El sistema se alimenta con 3 sistemas de alimentación que pueden reemplazarse p
 
 El segundo sistema de alimentación es una fuente transformadora marca HAMA modelo 00201644 con 5V de salida y hasta 1.2 A de corriente. Esta alimentación es para el esp32, encargado de la comunicación Wi-Fi. Una tercera fuente transformadora 220 VAC a 12 VDC con 2000 mA modelo FJ-SW102 se utiliza para alimentar una fuente modelo Mb-102 capaz de entregar a la salida 5 V o 3,3 V seleccionables, y hasta 700 mA. A través del Mb-102 se alimenta a todos los otros periféricos como el lector RFID, el motor y otros. Se muestra la fuente Mb-102 en la Figura
 
-<img src=https://github.com/user-attachments/assets/036b1989-56ed-49ab-b803-4aeecc3f1c3f alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/036b1989-56ed-49ab-b803-4aeecc3f1c3f alt="image2" width="30%">
 
 **Figura 2.3.1**: Fuente de alimentación Mb-102.
 
@@ -255,7 +255,7 @@ Como controlador principal del sistema se utiliza la placa NUCLEO-F429ZI \[4\]. 
 ## **2.3.3 Motor** 
 El acceso a la instalación se habilita con el accionamiento de un servomotor. El servomotor utilizado en este proyecto es el microservo de 9g de TOWERPRO modelo SG90, mostrado en la Figura 2.3.3. Para el control de este servomotor se usa PWM, identificando mediante experimentos las frecuencias correspondientes a los ángulos máximos de operación del servomotor.
 
-<img src=https://github.com/user-attachments/assets/ee3fd32b-8d09-45cc-870d-dcbe58f827f3 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/ee3fd32b-8d09-45cc-870d-dcbe58f827f3 alt="image2" width="30%">
 
 **Figura 2.3.3**: Servomotor SG90.
 
@@ -264,7 +264,7 @@ Este servomotor se reemplazaría para puertas grandes por otro motor con mas pot
 ## **2.3.4 Lector RFID** 
 Para este proyecto se buscó un lector RFID de bajo costo y compacitibilidad, eligiendo el modelo RC522 mostrado en la Figura 2.3.4.Este módulo cuenta con el circuito integrado MFRC522, que es un lector inalámbrico que trabaja a 13,56 MHz con la cual se leen las tarjetas de acceso.
 
-<img src=https://github.com/user-attachments/assets/83078155-b70e-44d6-9eb2-d634a3e11e06  alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/83078155-b70e-44d6-9eb2-d634a3e11e06  alt="image2" width="30%">
 
 **Figura 2.3.4**: Lector RFID RC522.
 
@@ -273,7 +273,7 @@ Para comunicarse con este módulo se utiliza el protocolo SPI, y para la program
 ## **2.3.5 Teclado Matricial** 
 El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestra en la Figura 2.3.5. La selección de este teclado se hizo en base a su disponibilidad en el mercado local y su bajo costo.
 
-<img src=https://github.com/user-attachments/assets/6c647715-ff55-45e0-8941-e491e28d6c11  alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/6c647715-ff55-45e0-8941-e491e28d6c11  alt="image2" width="30%">
 
 **Figura 2.3.5**: Teclado matricial.
 
@@ -282,20 +282,20 @@ Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue ob
 ## **2.3.6 Sensor Magnético** 
 El sensor magnetico utilizado consta de dos componentes: un imán y una llave magnetica (se muestra ambos en la Figura 2.3.6). La llave magnética son hilos finos que al acercar un imán hace un contacto.
 
-<img src=https://github.com/user-attachments/assets/41ace232-ff76-4d27-9861-f1221cc78199  alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/41ace232-ff76-4d27-9861-f1221cc78199  alt="image2" width="30%">
 
 **Figura 2.3.6**: Sensor magnético.
 
 ## **2.3.7 Parlante** 
 Para la comunicación por audio se usa un parlante de 8 ohms y 2 Watts como se muestra en la Figura 2.3.7 .
 
-<img src= https://github.com/user-attachments/assets/59824229-6f30-46c4-aadc-45b2e2f2f51d alt="image2" width="40%">
+<img src= https://github.com/user-attachments/assets/59824229-6f30-46c4-aadc-45b2e2f2f51d alt="image2" width="30%">
 
 **Figura 2.3.7**: Parlante 8 Ohms 2 Watts.
 
 ## **2.3.8 Comunicación Wi-Fi** 
 Para la comunicación por Wi-Fi se usa el ESP32-DEVKIT por su módulo Wi-Fi incorporado de 2.4 GHz. El módulo se muestra en la Figura 2.3.8.
-<img src= https://github.com/user-attachments/assets/ac1e1a22-ae50-4a56-801a-45ebbec1cbdc alt="image2" width="40%">
+<img src= https://github.com/user-attachments/assets/ac1e1a22-ae50-4a56-801a-45ebbec1cbdc alt="image2" width="30%">
 
 
 **Figura 2.3.8**: ESP32-DEVKIT.
@@ -310,13 +310,13 @@ Para la comunicación por Wi-Fi se usa el ESP32-DEVKIT por su módulo Wi-Fi inco
 
 Para el diseño del prototipo se construyó una maqueta de madera haciendo los agujeros correspondientes para pasar los cables y conectándolos al protoboard de forma prolija y ordenada. Las Figuras 3.1a y 3.1b muestran el montaje final del prototipo para una maqueta de una puerta.
 
-<img src=https://github.com/user-attachments/assets/6c80e61d-8d8d-4d6c-a643-738eeee609c2 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/6c80e61d-8d8d-4d6c-a643-738eeee609c2 alt="image2" width="60%">
 
 **Figura 3.1a**: Montaje final del prototipo, parte delantera.
 
-<img src=https://github.com/user-attachments/assets/4eee60df-88e1-4a73-8e30-01146b2f9be2 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/4eee60df-88e1-4a73-8e30-01146b2f9be2 alt="image2" width="60%">
 
-**Figura 3.1a**: Montaje final del prototipo, parte trasera.
+**Figura 3.1b**: Montaje final del prototipo, parte trasera.
 
 Los esquemáticos se muestran en las secciones posteriores.
 
@@ -363,7 +363,7 @@ La Figura 3.1.6 muestra la conexión del teclado matricial. Se observa la conexi
 
 **Figura 3.1.6**:  Circuito esquemático del teclado matricial del sistema.
 
-## **3.1.7 Diseño del Modulo Wi-Fi** 
+## **3.1.7 Diseño del Módulo Wi-Fi** 
 En la Figura 3.1.7 se muestra el circuito esquemático del hardware para el ESP32. Notar que únicamente se hace uso de los pines UART2 (GPIO16 y GPIO17) del módulo para comunicarse con la placa NUCLEO-F429ZI.
 
 <img src=https://github.com/user-attachments/assets/66cd0279-c347-494b-bb1c-3e01c6b74f6f alt="image2" width="40%">
@@ -387,14 +387,14 @@ La implementación del trabajo se realizó en lenguaje C++ utilizando Mbed y baj
 
 Como se mencionaba, el archivo main.cpp solamente se encarga de inicializar el sistema y actualizar el estado, como se muestra en la Figura . En el archivo  *global_defines.h* se encuentran muchas definiciones constantes de pins y valores necesarios para el funcionamiento del sistema. Solo fueron definidos los pines para la placa que se usa en este trabajo, pero se tomó esta decisión para simplificar el trabajo si en un futuro se decide utilizar otra placa. La Figura 3.2.1 muestra el archivo main.cpp.
 
-<img src=https://github.com/user-attachments/assets/96ef8f41-0467-491d-a9cd-02f5e88e5a65 alt="image2" width="20%">
+<img src=https://github.com/user-attachments/assets/96ef8f41-0467-491d-a9cd-02f5e88e5a65 alt="image2" width="30%">
 
 **Figura 3.2.2**: Archivo Main.cpp.
 
 ## **3.2.1 Módulo Access Keys** 
 Este módulo se encarga de comparar los intentos de acceso con las llaves de acceso, perimitiendo acceder cuando un intento de acceso coincide con una llave de acceso (RFID o Keypad) y denegando el acceso cuando el intento de acceso no coincide con ninguna llave. La función responsable de esto se llama *access_attempt_update()* y devuelve 3 estados: ACCESS_GRANTED cuando se concede el acceso, ACCESS_DENIED cuando no se lo concede y NO_ACCESS_ATTEMPT cuando no hay ningun intento de acceso. La Figura 3.2.3 muestra la función *access_attempt_update()*.
 
-<img src=https://github.com/user-attachments/assets/93a97b01-2636-4409-b7d9-b468e6e90b7b alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/93a97b01-2636-4409-b7d9-b468e6e90b7b alt="image2" width="60%">
 
 **Figura 3.2.2**: Función *access_attempt_update()* del módulo Access Keys.
 
@@ -403,7 +403,7 @@ Otra funcionalidad de este módulo es la de gestionar la base de datos interna d
 ## **3.2.2 Módulo Keypad** 
 Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura 3.2.4.
 
-<img src=https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6 alt="image2" width="50%">
 
 **Figura 3.2.4**: Máquina de estados del módulo Keypad [1].
 
@@ -412,7 +412,7 @@ Se tiene un tiempo de debounce ajustable para prevenir lecturas falsas.
 ## **3.2.3 Módulo Motors** 
 Crea objetos llamados Motor que traducen el angulo requerido a una señal PWM que controla la posición del motor. Los valores máximos y mínimos de duty cycle se encontraron de forma experimental en la facultad de ingeniería. El código es relativamente simple y se muestra en la Figura 3.2.5.
 
-<img src=https://github.com/user-attachments/assets/98299e92-b497-4de2-9530-17c7f3baa440 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/98299e92-b497-4de2-9530-17c7f3baa440 alt="image2" width="60%">
 
 **Figura 3.2.5**: Archivo Motors.cpp.
 
@@ -422,7 +422,7 @@ En este módulo se maneja toda la comunicación del protocolo MQTT, que en reali
 ## **3.2.5 Módulo RFID** 
 El módulo contiene el código de la libreria creada por un tercero, como se mencionó previamente, que define la clase MFRC522. Adicionalmente, contiene las funciones para leer el RFID e inicializarlo. Las funciones son simples y hacen uso de las funciones de la librería que estan muy bien modularizadas. Se menciona que la librería de MFRC522 tuvo que incorporarse en los archivos, con lo cual se puede ver el archivo MFRC522.cpp y MFRC522.h correspondientes a la librería del autor indicado. Las funciones más importantes del Módulo RFID son *RFID_read()* que devuelve el ID leido (si se lee) o el puntero a null (si no se lee) y la función *RFID_reader_init()* que inicializa el módulo. La Figura 3.2.6 muestra parte de la función *RFID_read()*.
 
-<img src=https://github.com/user-attachments/assets/c2434444-42d2-4b6f-ab14-b281a0d248ff alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/c2434444-42d2-4b6f-ab14-b281a0d248ff alt="image2" width="60%">
 
 **Figura 3.2.6**: Función *RFID_read()* del archivo RFID_reader.cpp.
 
@@ -431,7 +431,7 @@ No se introdujo una máquina de estados para el lector RFID porque no se conside
 ## **3.2.6 Módulo Speaker** 
 En este módulo se define una clase *Speaker* que se encarga de tocar las notas musicales para los accesos correctos, accesos incorrectos, alarma de puerta olvidada, introduccion de botones y timbre. Para cada uno de esos tonos hay un método especial que dice que melodía se tocará (Figura 3.2.7). El método *play_melody()* se encarga de tomar una secuencia de periodos de notas musicales (C5, E6, etc), una secuencia de duraciones para cada nota y producir una señal PWM para cada nota con la duración indicada. A la salida, se obtiene sobre el parlante una señal que intenta parecerse a una señal con la frecuencia indicada (hardware).
 
-<img src=https://github.com/user-attachments/assets/68ce7c65-a95a-4fa2-8776-9a0be4f04224 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/68ce7c65-a95a-4fa2-8776-9a0be4f04224 alt="image2" width="60%">
 
 **Figura 3.2.7**: Métodos de la clase *Speaker* en el archivo *Speaker.h*.
 
@@ -440,13 +440,13 @@ Adicionalmente, se tienen los métodos update y alarm_update que actualizan el c
 ## **3.2.7 Módulo System** 
 El módulo System se encarga de orquestrar el funcionamiento de varios módulos. Se definen dos funciones públicas, system_init y system_update, que se llaman desde el archivo main.cpp, funciones para cada estado de la puerta con el sufijo _update() y otras funciones miscelaneas que no se contemplan en los módulos mencionados pero se requieren para controlar el funcionamiento del sistema. En la Figura 3.2.8 se peuden ver los objetos creados así como los parámetros necesarios en cada caso, y que fueron definidos en el archivo global_defines.h. 
 
-<img src=https://github.com/user-attachments/assets/929cfece-d981-42e6-ad05-cb604bd3ce30 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/929cfece-d981-42e6-ad05-cb604bd3ce30 alt="image2" width="60%">
 
 **Figura 3.2.8**: Objetos creados de otros módulos en el archivo *System.cpp*.
 
 La función de actualización principal *system_update()* se muestra en la Figura 3.2.9.
 
-<img src=https://github.com/user-attachments/assets/403e5de7-70c1-4707-b60e-a3309f802c04 alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/403e5de7-70c1-4707-b60e-a3309f802c04 alt="image2" width="60%">
 
 **Figura 3.2.9**: Función *system_update()* del  archivo *System.cpp*.
 
@@ -454,7 +454,7 @@ Notar que cada estado de la puerta tiene su propia funcion de actualización. Lo
 ## **3.2.8 Módulo UART Communications** 
 Por último, el módulo de comunicaciones UART permite notificar mediante UART el estado de la puerta y los accesos. Este módulo es unicamente útil si se decide leer los estados del sistema de la placa NUCLEO-F429ZI a través de UART. Además, permite recibir comandos para guardar un único ID de RFID de forma manual y sin contar con la apliación. La Figura 3.2.10 meustra las funciones de este módulo
 
-<img src=https://github.com/user-attachments/assets/48a3698f-224e-4990-a563-29d1defdeaee alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/48a3698f-224e-4990-a563-29d1defdeaee alt="image2" width="60%">
 
 **Figura 3.2.10**: Funciones utilizadas para la comunicación UART en el archivo *UART_comm.h*.
 
