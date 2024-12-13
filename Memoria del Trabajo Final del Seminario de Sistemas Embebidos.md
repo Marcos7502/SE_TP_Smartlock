@@ -325,45 +325,54 @@ En la figura 3.1.1 se muestra el circuito esquemático del hardware de alimentac
 **Figura 3.1.1**: Alimentación del sistema.
 
 ## **3.1.2 Diseño de los indicadores e interruptores** 
+La Figura 3.1.2 muestra el esquemático de los indicadores e interruptores. Para todos los indicadores se utiliza un transistor que activa la corriente en el led. La corriente máxima estimada es 4mA para cada led. EL transistor que se usa es siempre el mismo: transistor NPN BC545. La corriente de salida necesitada para encender el LED es muy baja. Los botones y sensores magnéticos se conectan a 3.3 volts y se configuran las entradas de la placa NUCLEO-F429ZI en modo Pull Down. 
 
 <img src=https://github.com/user-attachments/assets/37805a98-bcfc-4c11-983b-6d91c570b76e  alt="image2" width="40%">
 
-**Figura 3.1.2**: Conexionado de los indicadores e interruptores del sistema.
+**Figura 3.1.2**: Circuito esquemático de los indicadores e interruptores del sistema.
 
 ## **3.1.3 Diseño del lector RFID** 
+En la Figura 3.1.2 se muestra el circuito esquemático del hardware del módulo RFID. Se observa la utilización de los pines de MISO, MOSI, SCK y CS para la comunicación SPI, además del conexionado del pin de Reset para la correcta configuración del módulo. 
 
 <img src=https://github.com/user-attachments/assets/a2770d18-31b0-4e5b-81f5-ed92d74112ae  alt="image2" width="40%">
 
-**Figura 3.1.3**: Conexionado del lector RFID del sistema.
+**Figura 3.1.3**:  Circuito esquemático del lector RFID del sistema.
 
-## **3.1.4 Diseño del parlante** 
+## **3.1.4 Diseño del parlante**
+
+Para el parlante se diseña un amplificador de audio clase A con los componentes que se tienen (Figura 3.1.4). El capacitor C3 y la resistencia R11 actuan como filtro pasabajos para hacer la señal PWM mas suave y más parecida a una senoidal. El capacitor C4 actua junto con el parlante como un filtro pasa-altos e interrupe el flujo de corriente continua, dando una mejor señal de salida en el parlante.
 
 <img src=https://github.com/user-attachments/assets/cf5e304f-a75d-4c79-8a84-3961b2433360  alt="image2" width="40%">
 
-**Figura 3.1.4**: Diseño del parlante del sistema.
+**Figura 3.1.4**:  Circuito esquemático del parlante del sistema.
 
 ## **3.1.5 Diseño del motor** 
+El esquemático del motor se muestra en la Figura 3.1.5. Se tiene una resistencia de 1kohms para restringir la corriente que puede llegar a entregar el servomotor al pin del PWM, cuando se selecciona un angulo no disponible o se traba el servomotor. El fin de la resistencia d 1kohm es proteger la placa F429ZI. La resistencia de 10 ohms en la alimentación cumple la función de limitar corrientes muy altas y picos de corriente.
+
 <img src=https://github.com/user-attachments/assets/4ce16d1c-2db0-4873-8110-544dd7427657  alt="image2" width="40%">
 
-**Figura 3.1.5**: Diseño del motor del sistema.
+**Figura 3.1.5**:  Circuito esquemático del motor del sistema.
 
 ## **3.1.6 Diseño del teclado matricial** 
+La Figura 3.1.6 muestra la conexión del teclado matricial. Se observa la conexión directa de los 8 pines a la placa NUCLEO-F429ZI, de los cuales 4 son configurados en la placa NUCLEO-F429ZI como entrada en modo Pull Down (C1, C2, C3, C4) y los otros 4 como salida. La idea es barrer el teclado matricial con los outputs (filas), detectar activaciones en los inputs (columnas) y así leer el caracter introducido.
+
 <img src=https://github.com/user-attachments/assets/ffb93399-ce71-42b2-83dc-5e8bec9a9624  alt="image2" width="40%">
 
-**Figura 3.1.6**: Diseño del teclado matricial del sistema.
+**Figura 3.1.6**:  Circuito esquemático del teclado matricial del sistema.
 
 ## **3.1.7 Diseño del Modulo Wi-Fi** 
+En la Figura 3.1.7 se muestra el circuito esquemático del hardware para el ESP32. Notar que únicamente se hace uso de los pines UART2 (GPIO16 y GPIO17) del módulo para comunicarse con la placa NUCLEO-F429ZI.
+
 <img src=https://github.com/user-attachments/assets/66cd0279-c347-494b-bb1c-3e01c6b74f6f alt="image2" width="40%">
 
-**Figura 3.1.7**: Diseño del Módulo Wi-Fi.
+**Figura 3.1.7**:  Circuito esquemático del Módulo Wi-Fi.
 
 ## **3.1.8 Diseño del hardware con la placa NUCLEO-F429ZI** 
-
-
+En la Figura 3.1.9 se muestra el circuito esquemático del conexionado de la placa NUCLEO-F429ZI. Para esta implementación se buscó utilizar únicamente pines a los que se pudiera acceder a través de alguno de los zócalos, de modo de no necesitar realizar soldaduras. Es importante mencionar la conexión a tierra de todos los módulos (tierra compartida) para que sea posible la comunicación entre módulos.
 
 <img src= https://github.com/user-attachments/assets/2ddeee79-c87c-4892-9026-08ff3395c338 alt="image2" width="40%">
 
-**Figura 3.1.9**: Circuito esquemático del conexionado del NUCLEO-F429ZI.
+**Figura 3.1.9**:  Circuito esquemático del NUCLEO-F429ZI.
 
 ## **3.2 Firmware del *Smartlock*** 
 
@@ -514,7 +523,7 @@ Finalmente, se incorporaron mecanismos de seguridad para que solamente las perso
 
 **Figura 3.5.5**: Acceso a la interfaz.
 
-#**CAPÍTULO 4** 
+# **CAPÍTULO 4** 
 
 # **Ensayos y resultados** 
 
