@@ -1,4 +1,4 @@
-<img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
+![Montaje_atras](https://github.com/user-attachments/assets/3b759882-b7de-4a2f-a718-8f013ffa872a)<img src="https://github.com/user-attachments/assets/15600b18-f73b-4ba3-a959-47f0048a1ab6" alt="image2" width="30%">
 
 **UNIVERSIDAD DE BUENOS AIRES**  
 **Facultad de Ingeniería**  
@@ -146,18 +146,17 @@ La cerradura cuenta con dos métodos de acceso, mediante tarjetas RFID o mediant
  
 **Figura 1.2.2**: Tarjeta RFID y lector RFID.
 
-Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El largo del pin esta fijo en 4 dígitos pero es modificable. La Figura 1.2.3 muestra el teclado matricial en el que se introducen los códigos de acceso
+Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El largo del pin esta fijo en 4 dígitos pero es modificable. La Figura 1.2.3 muestra el teclado matricial en el que se introducen los códigos de acceso.
 
 <img src=https://github.com/user-attachments/assets/67fca740-727b-4869-a861-af216d65048b alt="image2" width="40%">
  
 **Figura 1.2.3**: Teclado Matricial.
 
-La interfaz virtual se muestra en al Figura 1.2.4.
+La interfaz virtual se muestra en al Figura 1.2.4. Esta permitido el acceso a la interfáz únicamente con usuario y contraseña por razones de seguridad.
 
 <img src=https://github.com/user-attachments/assets/ec4eb17f-931d-4d5d-add4-48fec88283c6 alt="image2" width="60%">
 
 **Figura 1.2.4**: Interfaz virtual para el usuario.
-
 
 En las próximas secciones se describirá con mayor detalle los módulos utilizados y sus características.
 
@@ -309,11 +308,15 @@ Para la comunicación por Wi-Fi se usa el ESP32-DEVKIT por su módulo Wi-Fi inco
 
 ## **3.1 Diseño del Hardware** 
 
-Para el diseño del prototipo se construyó una maqueta de madera haciendo los agujeros correspondientes para pasar los cables y conectándolos al protoboard de forma prolija y ordenada. La figura 3.1 muestra el montaje final del prototipo.
+Para el diseño del prototipo se construyó una maqueta de madera haciendo los agujeros correspondientes para pasar los cables y conectándolos al protoboard de forma prolija y ordenada. Las Figuras 3.1a y 3.1b muestran el montaje final del prototipo para una maqueta de una puerta.
 
-<img src= https://github.com/user-attachments/assets/59824229-6f30-46c4-aadc-45b2e2f2f51d alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/6c80e61d-8d8d-4d6c-a643-738eeee609c2 alt="image2" width="40%">
 
-**Figura 3.1**: Montaje final del prototipo.
+**Figura 3.1a**: Montaje final del prototipo, parte delantera.
+
+<img src=https://github.com/user-attachments/assets/4eee60df-88e1-4a73-8e30-01146b2f9be2 alt="image2" width="40%">
+
+**Figura 3.1a**: Montaje final del prototipo, parte trasera.
 
 Los esquemáticos se muestran en las secciones posteriores.
 
