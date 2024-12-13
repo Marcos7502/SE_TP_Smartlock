@@ -155,9 +155,10 @@ Por otro lado, el pin se introduce en un teclado matricial de 4x4 caracteres. El
 
 La interfaz virtual se muestra en al Figura 1.2.4.
 
-<img src=https://github.com/user-attachments/assets/67fca740-727b-4869-a861-af216d65048b alt="image2" width="40%">
+<img src=https://github.com/user-attachments/assets/ec4eb17f-931d-4d5d-add4-48fec88283c6 alt="image2" width="60%">
 
 **Figura 1.2.4**: Interfaz virtual para el usuario.
+
 
 En las próximas secciones se describirá con mayor detalle los módulos utilizados y sus características.
 
@@ -451,7 +452,7 @@ El desarrollo de este firmware se realizó con el entorno de desarrollo de Ardui
 
 **Figura 3.3.1**: Objetos declarados en la placa *ESP32*.
 
-De todas las funciones definidas en el archivo del ESP32, la más importante es la función *callback()* y la función *reconnect()*. La función callback se encarga de reenviar los mensajes recibidos por Wi-Fi con MQTT a la placa NUCLEO-F429ZI a través de UART. La Figura 3.3.2 muestra el código de la función callback. También se envían a la computadora, en caso de estar conectada por computadora. La función reconnect se encarga de conectar al ESP32 al broker de MQTT, el cual es un broker Mosquitto (broker sin licencia), y posteriormente se suscribe a los tópicos necesarios para el funcionamiento del sistema.
+De todas las funciones definidas en el archivo del ESP32, la más importante es la función *callback()* y la función *reconnect()*. La función callback se encarga de reenviar los mensajes recibidos por Wi-Fi con MQTT a la placa NUCLEO-F429ZI a través de UART. La Figura 3.3.2 muestra el código de la función callback. También se envían a la computadora, en caso de estar conectada por computadora. La función reconnect se encarga de conectar al ESP32 al broker de MQTT, el cual es un broker Mosquitto (broker sin necesidad de licencia), y posteriormente se suscribe a los tópicos necesarios para el funcionamiento del sistema.
 
 <img src=https://github.com/user-attachments/assets/af775709-4cfe-42c9-854c-86305e8d7294 alt="image2" width="40%">
 
@@ -463,35 +464,77 @@ Finalmente, todo mensaje MQTT que se reciba de la placa NUCLEO-F429ZI a través 
 
 **Figura 3.3.2**: Main Loop del firmware del ESP32.
 
-**CAPÍTULO 4** 
+## **3.4 MOSQUITTO broker*** 
 
-# **Ensayos y resultados** {#ensayos-y-resultados}
+Mosquitto es un broker de mensajes que implementa el protocolo MQTT (Message Queuing Telemetry Transport), diseñado para facilitar la comunicación ligera y eficiente entre dispositivos en redes IoT (logo en la Figura 3.4.1). MQTT utiliza un modelo de publicación-suscripción, donde el broker actúa como intermediario para distribuir mensajes entre clientes.
 
-## **4.1 Pruebas funcionales del hardware**  {#4.1-pruebas-funcionales-del-hardware}
+<img src=https://github.com/user-attachments/assets/dcd16b06-05dd-4b17-9ab9-b6bb010c72a7 alt="image2" width="40%">
 
-La idea de esta sección es explicar cómo se hicieron los ensayos, qué resultados se obtuvieron y analizarlos.
+**Figura 3.4.1**: Logo Mosquitto.
 
-Es muy importante que haya fotografías que sirvan de evidencia de que los ensayos realmente se hicieron.
+En este proyecto, se configuró un broker Mosquitto en el puerto 1883, que es el puerto estándar para conexiones MQTT sin encriptación. En términos de seguridad, Mosquitto soporta encriptación mediante TLS (Transport Layer Security), lo que asegura que la transmisión de datos esté protegida contra accesos no autorizados o interceptaciones. Para este prototipo no se configuró pero se sentaron las bases para configurarlo.
 
-También es esperable que haya tablas o gráficos que presenten los resultados obtenidos.
+## **3.5 Diseño de la aplicación y manejo de paquetes*** 
+Para el diseño de la interfaz virtual y el manejo de paquetes se utilizó Node-RED (logo en la Figura 3.5.1). Node-RED es una herramienta de desarrollo basada en flujo diseñada para conectar dispositivos, servicios y API de manera sencilla. Está construida sobre Node.js y proporciona una interfaz visual donde los usuarios pueden arrastrar y soltar nodos (representando funcionalidades o dispositivos) para crear flujos de trabajo que ejecuten tareas específicas. Cada nodo tiene un propósito particular, como procesar datos, interactuar con servicios externos, o controlar hardware. Los flujos se configuran gráficamente y pueden incluir lógica, transformaciones de datos o integraciones con protocolos como MQTT, HTTP, WebSocket y más.
 
-## **4.2 Pruebas funcionales del firmware**  {#4.2-pruebas-funcionales-del-firmware}
+El uso de Node-RED facilita el escalamiento de los proyectos y la cómoda adaptabilidad para incporporar nuevos módulos. Es por esto que Node-RED es ampliamente utilizado en proyectos de IoT (Internet de las Cosas) para integrar sensores, dispositivos inteligentes y sistemas en tiempo real, permitiendo una gestión eficiente y personalizable sin requerir habilidades avanzadas de programación. 
 
-La idea de esta sección es explicar cómo se hicieron los ensayos, qué resultados se obtuvieron y analizarlos.
+<img src=https://github.com/user-attachments/assets/d10d6ddb-b495-4138-8f4e-70ae2bf64477 alt="image2" width="20%">
 
-Es muy importante que haya fotografías que sirvan de evidencia de que los ensayos realmente se hicieron.
+**Figura 3.5.1**: Logo Node-RED
 
-También es esperable que haya tablas o gráficos que presenten los resultados obtenidos.
+El diagrama de Node-RED se visualiza en la Figura 3.5.2. Los nodos violetas son conexiones al broker para publicar o para suscribirse a tópicos. Los mensajes se procesan en los nodos naranajas que son funciones programables para el manejo del paquete en lenguaje JavaScript. El nodo template permite crear la interfaz con HTML, permitiendo utilizar paquetes como entrada y generando paquetes de salida.
 
-## **4.3 Pruebas de integración** {#4.3-pruebas-de-integración}
+<img src=https://github.com/user-attachments/assets/c9f1ff49-6075-4d71-9456-07642252de78 alt="image2" width="60%">
 
-Las pruebas de integración son aquellas que se realizan en el ámbito del desarrollo de software una vez que se han aprobado las pruebas unitarias y lo que prueban es que todos los elementos unitarios que componen el software, funcionan juntos correctamente probándolos en grupo. 
+**Figura 3.5.2**: Diagrama del proyecto en Node-RED.
 
-Se pueden incluir fotos o links a vídeos donde se aprecien las pruebas de integración desarrolladas y los resultados obtenidos. En esta sección se espera encontrar un análisis similar al presentado en la Tabla 12.36 del libro. 
+Se tienen 5 tópicos MQTT principales:
+- Alive: Cada un intervalo T de tiempo, la placa NUCLEO-F429ZI manda un mensaje *alive* al tópico. Si en el tiempo T+1 (*timestap*) no se detecta el mensaje *alive*, entonces el estado es DESCONECTADO. Caso contrario, es CONECTADO.
+- Status: La placa NUCLEO-F429ZI envía a este tópico el estado de la puerta.
+- Control: A través de la aplicación, el usuario puede comandar que se abra o cierre la puerta. Estos comandos se publican en el tópico control que luego la placa NUCLEO-F429ZI recibe.
+- Logger: Unicamente para que publique la placa NUCLEO,  este tópico tiene todos los mensajes notificando cambios en el estado de la puerta con la hora y día.
+- Security: Uno de los tópicos más complejos, se encarga de recibir los IDs de nuevas tarjetas RFID leidas por la placa y luego, si el usuario decide agregar un permiso de acceso con el ID de la tarjeta y un pin, envía la solicitud de agregar dicho usuario. También puede comandar que se borren usuarios.
 
-## **4.4 Cumplimiento de requisitos**
+Por medio de los nodos template, se creó la siguiente interfaz de usuario mostrada en la Figura 3.5.3.
+<img src=https://github.com/user-attachments/assets/ec4eb17f-931d-4d5d-add4-48fec88283c6 alt="image2" width="60%">
 
-En esta sección se espera encontrar un análisis similar al presentado en la Tabla 12.35 del libro. 
+**Figura 3.5.3**: Interfáz para el usuario.
+
+La interfáz se accede mediante la introducción del url con el IP del servidor, el puerto dodne corre node red y /ui. Por ejemplo: 111.111.111.111:1880/ui . Se ve que el Smartlock 1 es el único dispositivo conectado y que se contempla la posibilidad de agregar otro Smartlock. Se tienen las acciones de control para forzar el bloqueo y para abrir la puerta manualmente. Además, se pueden agregar nuevos usuarios y eliminarlos con los botones de eliminar. Cuando se lee un RFID no conocido, un mensaje se muestra en la pantalla indicando la lectura y luego se agrega automáticamente en el campo de RFID. El logger muestra todos los datos de las dos cerraduras y guarda la información en un .txt como se muestra en la Figura 3.5.4.
+
+<img src=https://github.com/user-attachments/assets/4ca7095a-f9cf-47e6-bd08-57f3b6e2879b alt="image2" width="40%">
+
+**Figura 3.5.4**: Logger.txt.
+
+Finalmente, se incorporaron mecanismos de seguridad para que solamente las personas con permiso de acceso a la aplicación puedan conectarse para visualizar la aplicación, como se muestra en la Figura 3.5.5. 
+
+<img src=https://github.com/user-attachments/assets/67972201-607d-4955-a4c4-0dfdf35daf87 alt="image2" width="40%">
+
+**Figura 3.5.5**: Acceso a la interfaz.
+
+#**CAPÍTULO 4** 
+
+# **Ensayos y resultados** 
+
+## **4.1 Pruebas funcionales de funcionamiento**  
+
+Se separó el desarrollo de este proyecto en cuatro etapas, para las cuales se realizaron pruebas de funcionamiento específicas de cada etapa. Los módulos incorporados en cada etapa y las pruebas de funcionamiento pueden leerse en los siguientes archivos:
+- README_TP1.md : Lector RFID, indicadores de estado de la puerta y button de cerrado.
+- README_TP2.md : Sensor Magnético, Teclado Matricial.
+- README_TP3.md : Parlante, servomotor.
+- README_TP_FINAL.md : Comunicación Wi-Fi, aplicación.
+
+Cada etapa tiene un video con una prueba funcional de los módulos agregados. Adicionalmente, el TP_FINAL incluye un video con el funcionamiento integral de todos los módulos del proyecto. Se observa en el video que la prueba resultó satisfactoria, por lo que se da por finalizado el desarrollo del trabajo. Los esquemáticos correspondientes para las pruebas funcionales se encuentran en los siguientes archivos:
+- TP1_SE_esquematico.pdf
+- TP2_SE_esquematico.pdf
+- TP3_SE_esquematico.pdf
+- TP_FINAL_SE_esqumatico.pdf
+
+## **4.2 Cumplimiento de requisitos**  
+
+Una vez finalizado el trabajo, se realizó una tabla con los requisitos iniciales, agregando el estado de los mismos. Esto se observa en la tabla 4.2.
+
 
 ## **4.5 Comparación con otros sistemas similares**   {#4.5-comparación-con-otros-sistemas-similares}
 
