@@ -248,7 +248,7 @@ El segundo sistema de alimentación es una fuente transformadora marca HAMA mode
 
 
 ## **2.3.2 Microcontrolador** 
-Como controlador principal del sistema se utiliza la placa NUCLEO-F429ZI. La elección de esta placa recayó exclusivamente en la disponibilidad, teniendo además como requerimiento la cantidad de memoria, pines y periféricos de la placa. La placa se programó en C++ a través de la plataforma *Keil Studio Cloud* y se muestra en la Figura 2.3.2 .
+Como controlador principal del sistema se utiliza la placa NUCLEO-F429ZI \[4\]. La elección de esta placa recayó exclusivamente en la disponibilidad, teniendo además como requerimiento la cantidad de memoria, pines y periféricos de la placa. La placa se programó en C++ a través de la plataforma *Keil Studio Cloud* y se muestra en la Figura 2.3.2 .
 
 <img src=https://github.com/user-attachments/assets/14a92d96-6aab-463f-b4e8-22d7dc2e253b alt="image2" width="40%">
 
@@ -270,7 +270,7 @@ Para este proyecto se buscó un lector RFID de bajo costo y compacitibilidad, el
 
 **Figura 2.3.4**: Lector RFID RC522.
 
-Para comunicarse con este módulo se utiliza el protocolo SPI, y para la programación de la placa NUCLEO se utilizó una librería de software escrita por Martin Olejar y publicado en la página oficial de MBED.
+Para comunicarse con este módulo se utiliza el protocolo SPI, y para la programación de la placa NUCLEO se utilizó una librería de software escrita por Martin Olejar y publicado en la página oficial de MBED \[2\].
 
 ## **2.3.5 Teclado Matricial** 
 El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestra en la Figura 2.3.5. La selección de este teclado se hizo en base a su disponibilidad en el mercado local y su bajo costo.
@@ -279,7 +279,7 @@ El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestr
 
 **Figura 2.3.5**: Teclado matricial.
 
-Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg.
+Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg \[1\].
 
 ## **2.3.6 Sensor Magnetico** 
 El sensor magnetico utilizado consta de dos componentes: un imán y una llave magnetica (se muestra ambos en la Figura 2.3.6). La llave magnética son hilos finos que al acercar un imán hace un contacto.
@@ -359,6 +359,8 @@ En la figura 3.1.1 se muestra el circuito esquemático del hardware de alimentac
 **Figura 3.1.7**: Diseño del Módulo Wi-Fi.
 
 ## **3.1.8 Diseño del hardware con la placa NUCLEO-F429ZI** 
+
+
 
 <img src= https://github.com/user-attachments/assets/2ddeee79-c87c-4892-9026-08ff3395c338 alt="image2" width="40%">
 
@@ -446,7 +448,7 @@ Por último, el módulo de comunicaciones UART permite notificar mediante UART e
 **Figura 3.2.10**: Funciones utilizadas para la comunicación UART en el archivo *UART_comm.h*.
 
 ## **3.3 Firmware del *ESP32 DEVKIT V1*** 
-El desarrollo de este firmware se realizó con el entorno de desarrollo de Arduino, que permite programar la placa ESP32 directamente mediante la definición de la placa ESP32 como la placa objetivo. En este caso todo el firmware se implementó en un único archivo, cuyo desarrollo se basó e la implementación de MQTT hecha por Augusto Villacampa. Al comienzo del programa, luego de incluir las librerías de código necesarias, lo primero que hace es definir objetos y variables necesarias. Esto incluye los objetos que manejan la conexión Wi-Fi y MQTT, y variables como la red Wi-Fi y la contraseña, la IP del servidor MQTT y el puerto usado, o los pines que se usarán. Esto se muestra en la figura 3.3.1. 
+El desarrollo de este firmware se realizó con el entorno de desarrollo de Arduino, que permite programar la placa ESP32 directamente mediante la definición de la placa ESP32 como la placa objetivo. En este caso todo el firmware se implementó en un único archivo, cuyo desarrollo se basó e la implementación de MQTT hecha por Augusto Villacampa \[3\] . Al comienzo del programa, luego de incluir las librerías de código necesarias, lo primero que hace es definir objetos y variables necesarias. Esto incluye los objetos que manejan la conexión Wi-Fi y MQTT, y variables como la red Wi-Fi y la contraseña, la IP del servidor MQTT y el puerto usado, o los pines que se usarán. Esto se muestra en la figura 3.3.1. 
 
 <img src=https://github.com/user-attachments/assets/8e5fd336-1061-415f-a30a-6638186b97df alt="image2" width="40%">
 
@@ -525,7 +527,7 @@ Se separó el desarrollo de este proyecto en cuatro etapas, para las cuales se r
 - README_TP3.md : Parlante, servomotor.
 - README_TP_FINAL.md : Comunicación Wi-Fi, aplicación.
 
-Cada etapa tiene un video con una prueba funcional de los módulos agregados. Adicionalmente, el TP_FINAL incluye un video con el funcionamiento integral de todos los módulos del proyecto. Se observa en el video que la prueba resultó satisfactoria, por lo que se da por finalizado el desarrollo del trabajo. Los esquemáticos correspondientes para las pruebas funcionales se encuentran en los siguientes archivos:
+Cada etapa tiene un video con una prueba funcional de los módulos agregados. Adicionalmente, el TP_FINAL incluye un video con el funcionamiento integral de todos los módulos del proyecto \[5\] . Se observa en el video que la prueba resultó satisfactoria, por lo que se da por finalizado el desarrollo del trabajo. Los esquemáticos correspondientes para las pruebas funcionales se encuentran en los siguientes archivos:
 - TP1_SE_esquematico.pdf
 - TP2_SE_esquematico.pdf
 - TP3_SE_esquematico.pdf
@@ -593,28 +595,47 @@ La tabla 4.4 muestra la documentación del desarrollo de este proyecto.
 
 # **CAPÍTULO 5** 
 
-# **Conclusiones** {#conclusiones}
+# **Conclusiones** 
 
-## **5.1 Resultados obtenidos** {#5.1-resultados-obtenidos}
+## **5.1 Resultados obtenidos**
+El trabajo aquí presentado logró implementar casi todas las funcionalidades deseadas en tiempo y forma, incorporando diseños de robustez y futura adaptabilidad para el uso de microcontroladores mas chicos. La incorporación de protocolos de comuniación IoT como MQTT preparan al sistema para utilizarlo en conjunto con otros dispositivos, sin tener que rediseñar la estrategia de comunicación.
 
-La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
+Los resultados clave de este proyecto pueden resumirse en los siguientes puntos:
+- Uso de PWM para emitir señales de audio en el parlante y para controlar el motor.
+- Implementación de máquinas de estado para el funcionamiento de los módulos y para la interacción entre módulos.
+- Desarrollo de técnicas de IoT para la comunicación por Wi-Fi del proyecto.
+- Manejo de flujos de paquetes y desarrollo de una página web para visualizar los parámetros críticos del proyecto e interactuar con el sistema.
+- Desarrollo de un sistema escalable y adaptable para futuros proyectos.
 
-## **5.2 Próximos pasos** {#5.2-próximos-pasos}
+ Se concluye que al terminar este trabajo se cuenta con un nuevo y amplio abanico de conocimientos para el desarrollo de futuros proyectos de electrónica. Desde lo práctico a la teórico, el proyecto da un panorama de todos los aspectos críticos de un proyecto y enseña a transformar una idea en un producto.
 
-Acá se indica bien breve cómo se podría continuar el trabajo más adelante. Se propone incluir un análisis al respecto similar al que se realiza en el libro en relación a la mencionada Tabla 12.37, donde se discuten las mejoras adicionales que se podrían realizar en el futuro. 
+ 
+## **5.2 Próximos pasos** 
 
-# **Bibliografía** {#bibliografía}
+Se puede extender el trabajo aquí realizado con las siguientes implementaciones adicionales:
+1) Implementación del micrófono y transmisión de señales de audio a la aplicación.
+2) Implementación de alimentación con baterías.
+3) Reducción del tamaño de la placa, reemplazando la placa actual por una más chica que contenga todas las funcionalidades necesarias para el funcionamiento actual.
+4) Implementación de una base de datos que almacene los datos de acceso y los cargue automáticamente a la placa NUCLEO-F429ZI y a la página web.
+5) Incorporación de una cámara para ver al invitado.
+6) Encriptación de los datos de comunicación MQTT.
+7) Realizar un dispositivo definitivo, mediante una placa PCB incorporando los módulos utilizados y componentes de montaje superficial para disminuir el tamaño del dispositivo.
+8) Desarrollar la conexión a múltiples dispositivos.
+   
+Las mejoras son ilimitadas y dependen de la priorarización de dichas mejoras. Por suerte, el proyecto es muy flexible y abierto a la ampliación de las funcionalidades y a la escalabilidad.
 
-\[1\] IEEE (2016, Jun 26). IEEE Citation Reference \[Online\]. Available: http://www.ieee.org/documents/ieeecitationref.pdf  
+   
 
-\[2\] Proyecto CIAA (2016, Jun 26). EDU-CIAA-NXP \[Online\]. Available: http://www.proyecto-ciaa.com.ar/devwiki/doku.php 
 
-# **Anexos (sólo en caso de ser necesarios)** {#anexos-(sólo-en-caso-de-ser-necesarios)}
+# **Bibliografía** 
 
-## **A. Primer Anexo**  {#a.-primer-anexo}
+\[1\] A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers, por Ariel Lutenberg. [Online]. Available: https://www.arm.com/resources/education/books/designing-embedded-systems
 
-En caso de ser necesario utilizar anexos, siguiendo siempre el mismo formato que para el cuerpo principal de la Memoria.
+\[2\] Módulo de software para el uso del chip MFRC522, por Martin Olejar. [Online]. Available: https://os.mbed.com/users/AtomX/code/MFRC522/
 
-[^1]:  Como esta nota por ejemplo.
+\[3\] Módulo de software para el manejo de Wi-Fi en el ESP32 con MQTT, por Augusto Villacampa. [Online]. Available: https://github.com/avillacampafiuba/Proyecto_Tranquera_SE
 
-[^2]:  ARM (2016, Jun 26). ARM Cores \[Online\]. Available: http://www.arm.com/cores.html
+\[4\] Manual de usuario NUCLEO-f429ZI [Online]. Available: https://www.st.com/en/evaluation-tools/nucleo-f429zi.html
+
+\[5\] Video de presentación [Online]. Available:  https://www.youtube.com/watch?v=JHn5aLL8CIk&t=3s
+
