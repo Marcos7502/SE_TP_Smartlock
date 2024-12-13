@@ -465,7 +465,7 @@ Finalmente, todo mensaje MQTT que se reciba de la placa NUCLEO-F429ZI a través 
 
 **Figura 3.3.2**: Main Loop del firmware del ESP32.
 
-## **3.4 MOSQUITTO broker*** 
+## **3.4 MOSQUITTO broker** 
 
 Mosquitto es un broker de mensajes que implementa el protocolo MQTT (Message Queuing Telemetry Transport), diseñado para facilitar la comunicación ligera y eficiente entre dispositivos en redes IoT (logo en la Figura 3.4.1). MQTT utiliza un modelo de publicación-suscripción, donde el broker actúa como intermediario para distribuir mensajes entre clientes.
 
@@ -475,7 +475,7 @@ Mosquitto es un broker de mensajes que implementa el protocolo MQTT (Message Que
 
 En este proyecto, se configuró un broker Mosquitto en el puerto 1883, que es el puerto estándar para conexiones MQTT sin encriptación. En términos de seguridad, Mosquitto soporta encriptación mediante TLS (Transport Layer Security), lo que asegura que la transmisión de datos esté protegida contra accesos no autorizados o interceptaciones. Para este prototipo no se configuró pero se sentaron las bases para configurarlo.
 
-## **3.5 Diseño de la aplicación y manejo de paquetes*** 
+## **3.5 Diseño de la aplicación y manejo de paquetes** 
 Para el diseño de la interfaz virtual y el manejo de paquetes se utilizó Node-RED (logo en la Figura 3.5.1). Node-RED es una herramienta de desarrollo basada en flujo diseñada para conectar dispositivos, servicios y API de manera sencilla. Está construida sobre Node.js y proporciona una interfaz visual donde los usuarios pueden arrastrar y soltar nodos (representando funcionalidades o dispositivos) para crear flujos de trabajo que ejecuten tareas específicas. Cada nodo tiene un propósito particular, como procesar datos, interactuar con servicios externos, o controlar hardware. Los flujos se configuran gráficamente y pueden incluir lógica, transformaciones de datos o integraciones con protocolos como MQTT, HTTP, WebSocket y más.
 
 El uso de Node-RED facilita el escalamiento de los proyectos y la cómoda adaptabilidad para incporporar nuevos módulos. Es por esto que Node-RED es ampliamente utilizado en proyectos de IoT (Internet de las Cosas) para integrar sensores, dispositivos inteligentes y sistemas en tiempo real, permitiendo una gestión eficiente y personalizable sin requerir habilidades avanzadas de programación. 
