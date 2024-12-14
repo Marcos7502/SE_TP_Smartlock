@@ -403,7 +403,7 @@ Otra funcionalidad de este módulo es la de gestionar la base de datos interna d
 ## **3.2.2 Módulo Keypad** 
 Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura 3.2.4.
 
-<img src=https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6 alt="image2" width="50%">
+<img src=https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6 alt="image2" width="60%">
 
 **Figura 3.2.4**: Máquina de estados del módulo Keypad [1].
 
