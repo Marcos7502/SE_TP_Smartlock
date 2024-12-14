@@ -1,0 +1,561 @@
+[
+    {
+        "id": "f8aa2d2b13321f84",
+        "type": "tab",
+        "label": "Smartlock/1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0167853be5b2ead9",
+        "type": "ui_switch",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "label": "Force Block",
+        "tooltip": "",
+        "group": "dbb89b320c076cb6",
+        "order": 3,
+        "width": "7",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "force_block",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 110,
+        "y": 340,
+        "wires": [
+            [
+                "c9f19b1047768a68"
+            ]
+        ]
+    },
+    {
+        "id": "88dc0b3330dea2a4",
+        "type": "mqtt out",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "topic": "Smartlock/1/Control",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "28e263d4b4e38203",
+        "x": 450,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0dfe0ca064dc5659",
+        "type": "ui_button",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "group": "dbb89b320c076cb6",
+        "order": 4,
+        "width": "7",
+        "height": "1",
+        "passthru": false,
+        "label": "Manual Open",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "manual_open",
+        "topicType": "str",
+        "x": 100,
+        "y": 400,
+        "wires": [
+            [
+                "c9f19b1047768a68"
+            ]
+        ]
+    },
+    {
+        "id": "c9f19b1047768a68",
+        "type": "function",
+        "z": "f8aa2d2b13321f84",
+        "name": "function 1",
+        "func": "var topic = msg.topic;\nvar payload = msg.payload;\n\nmsg.payload = topic.concat(\"_\",payload);\nmsg.topic = null;\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 360,
+        "wires": [
+            [
+                "88dc0b3330dea2a4"
+            ]
+        ]
+    },
+    {
+        "id": "0f61ace8ab581f14",
+        "type": "inject",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 890,
+        "y": 180,
+        "wires": [
+            [
+                "d991ad02490a2728"
+            ]
+        ]
+    },
+    {
+        "id": "d991ad02490a2728",
+        "type": "function",
+        "z": "f8aa2d2b13321f84",
+        "name": "function 3",
+        "func": "let type = typeof msg.payload;\n\nif(type === \"number\"){\n    var alive = global.get(\"Alive\");\n    if(alive === true){\n        global.set(\"Alive\", false);\n        \n        return { payload: { status: \"CONNECTED\", color:\"green\"}};\n    }else{\n        return { payload: { status: \"DISCONNECTED\", color: \"red\" } };\n    }\n    \n    \n}else{\n    global.set(\"Alive\", true);\n}\n",
+        "outputs": 1,
+        "timeout": "0",
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nglobal.set(\"Alive\", true);",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 280,
+        "wires": [
+            [
+                "91f01d6cefe9b83f"
+            ]
+        ]
+    },
+    {
+        "id": "91f01d6cefe9b83f",
+        "type": "template",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<div style=\"text-align: center;\">\n  <p><b>Device state</b></p>\n  <p><font style=\"font-weight: bold\" color= {{payload.color}}>{{payload.status}}</font></p>\n</div>",
+        "output": "str",
+        "x": 1240,
+        "y": 280,
+        "wires": [
+            [
+                "6a70ddbe08aee90b"
+            ]
+        ]
+    },
+    {
+        "id": "6a70ddbe08aee90b",
+        "type": "ui_template",
+        "z": "f8aa2d2b13321f84",
+        "group": "dbb89b320c076cb6",
+        "name": "",
+        "order": 1,
+        "width": "4",
+        "height": "2",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1420,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "352e73bcb4ea04db",
+        "type": "function",
+        "z": "f8aa2d2b13321f84",
+        "name": "function 4",
+        "func": "var content = Number(msg.payload);\nswitch (content) {\n    case 1:\n        return { payload: { status: \"OPEN\", color:\"green\"}};\n\n    case 2:\n        return { payload: { status: \"CLOSED\", color:\"red\"}};\n        \n    case 3:\n        return { payload: { status: \"LEFT OPEN\", color: \"orange\" } };\n    \n\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 440,
+        "wires": [
+            [
+                "ba2abbadaf33d8c0"
+            ]
+        ]
+    },
+    {
+        "id": "ba2abbadaf33d8c0",
+        "type": "template",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<div style=\"text-align: center;\">\n  <p><b>Door state</b></p>\n  <p><font style=\"font-weight: bold\" color= {{payload.color}}>{{payload.status}}</font></p>\n</div>",
+        "output": "str",
+        "x": 1240,
+        "y": 440,
+        "wires": [
+            [
+                "aeac53119849a381"
+            ]
+        ]
+    },
+    {
+        "id": "aeac53119849a381",
+        "type": "ui_template",
+        "z": "f8aa2d2b13321f84",
+        "group": "dbb89b320c076cb6",
+        "name": "",
+        "order": 2,
+        "width": "3",
+        "height": "2",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1420,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "09ab927888de63d0",
+        "type": "mqtt in",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "topic": "Smartlock/1/Alive",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "28e263d4b4e38203",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 860,
+        "y": 280,
+        "wires": [
+            [
+                "d991ad02490a2728"
+            ]
+        ]
+    },
+    {
+        "id": "c6659b1ee80794b3",
+        "type": "mqtt in",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "topic": "Smartlock/1/Status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "28e263d4b4e38203",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 870,
+        "y": 440,
+        "wires": [
+            [
+                "352e73bcb4ea04db"
+            ]
+        ]
+    },
+    {
+        "id": "298878d009f1c3bb",
+        "type": "mqtt in",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "topic": "Smartlock/1/Logger",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "28e263d4b4e38203",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "4b44966464d8d796",
+                "0101acc72be57fa5"
+            ]
+        ]
+    },
+    {
+        "id": "4b44966464d8d796",
+        "type": "ui_template",
+        "z": "f8aa2d2b13321f84",
+        "group": "e3b747b0565d2e11",
+        "name": "",
+        "order": 1,
+        "width": "7",
+        "height": "10",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Logger</title>\n    <style>\n        #logger {\n            width: 90%;\n            margin: 20px auto;\n            border: 1px solid #ddd;\n            padding: 10px;\n            background-color: #f9f9f9;\n            font-family: Arial, sans-serif;\n        }\n        #logger h3 {\n            margin: 0;\n           \n            border-bottom: 1px solid #ddd;\n            text-align: center;\n        }\n        .log-message {\n            margin: 5px 0;\n            padding: 5px;\n            border-bottom: 1px dashed #ccc;\n        }\n        .log-message:last-child {\n            border-bottom: none;\n        }\n        \n     \n    </style>\n</head>\n<body>\n    <div id=\"logger\">\n        <h3>Logger</h3>\n        <div id=\"log-container\">\n            <!-- Messages will appear here -->\n        </div>\n    </div>\n\n    <script>\n        (function(scope) {\n            const logContainer = document.getElementById('log-container');\n            const messages = []; // Array to store the last 5 messages\n\n            // Function to add a message to the logger\n            function logMessage(message) {\n                // Add the new message to the array\n                messages.push(message);\n\n                // Keep only the last 5 messages\n                if (messages.length > 5) {\n                    messages.shift(); // Remove the oldest message\n                }\n\n                // Update the display\n                updateLogDisplay();\n            }\n\n            // Function to update the log display\n            function updateLogDisplay() {\n                logContainer.innerHTML = ''; // Clear the current display\n                messages.forEach((msg, index) => {\n                    const messageElement = document.createElement('div');\n                    messageElement.className = 'log-message';\n                    messageElement.textContent = `${msg}`;\n                    logContainer.appendChild(messageElement);\n                });\n            }\n\n            // Watch for incoming messages\n            scope.$watch('msg', function(msg) {\n                if (msg && msg.payload) {\n                    console.log(\"Received message:\", msg.payload);\n                    logMessage(msg.payload); // Add the new message to the logger\n                }\n            });\n        })(scope);\n    </script>\n</body>\n</html>\n",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 360,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0101acc72be57fa5",
+        "type": "file",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "filename": "C:\\Users\\Marcos\\OneDrive\\Desktop\\Smartlock\\logger.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 510,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39214e8ca0ace59a",
+        "type": "mqtt in",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "topic": "Smartlock/1/Security",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "28e263d4b4e38203",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 520,
+        "wires": [
+            [
+                "4ac2b31392aecd08"
+            ]
+        ]
+    },
+    {
+        "id": "6e5a4ac9ac66314f",
+        "type": "ui_template",
+        "z": "f8aa2d2b13321f84",
+        "group": "dbb89b320c076cb6",
+        "name": "",
+        "order": 5,
+        "width": "7",
+        "height": "9",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    \n    <style>\n        table {\n            width: 100%;\n            margin: 10px auto;\n            border-collapse: collapse;\n        }\n        th, td {\n            border: 2px solid #ddd;\n            padding: 10px;\n            text-align: center;\n        }\n        th {\n            background-color: #f4f4f4;\n        }\n        form {\n            display: flex;\n            justify-content: center;\n            gap: 5px;\n            margin-top: 10px;\n        }\n        input, button {\n            width: 25%;\n            padding: 8px;\n            font-size: 14px;\n        }\n        .delete-btn {\n        color: white;\n        background-color: red;\n        border: none;\n        cursor: pointer;\n        padding: 5px 10px; /* Adjusted padding for better visibility */\n        border-radius: 4px;\n        font-size: 14px; /* Increased font size for readability */\n        width: auto; /* Adjusted width to fit the text */\n        text-align: center;\n        }\n        .delete-btn:hover {\n            background-color: darkred;\n        }\n    </style>\n</head>\n<body>\n    <form id=\"data-form\">\n        <input type=\"text\" id=\"Name\" placeholder=\"Name\" required>\n        <input type=\"text\" id=\"Pin\" placeholder=\"Pin\" maxlength=\"4\" required>\n        <input type=\"text\" id=\"Tag_ID\" placeholder=\"Tag ID (if none: -1)\">\n        <button type=\"submit\">Add User</button>\n    </form>\n    <h1 style=\"text-align: center;font-size: 20px\">Saved Users</h1>\n    <table id=\"data-table\">\n        <thead>\n            <tr>\n                <th>Name</th>\n                <th>Pin</th>\n                <th>Tag ID</th>\n                <th>Actions</th>\n            </tr>\n        </thead>\n        <tbody>\n            <!-- Rows will be added here dynamically -->\n        </tbody>\n    </table>\n    \n    <script>\n        (function(scope) {\n            let currentRowId = 1; // Initialize a counter for row IDs\n            scope.textField = \"\"; // Initialize a placeholder for incoming messages.\n\n            // Watch for incoming messages and log them.\n            scope.$watch('msg', function(msg) {\n                document.getElementById('Tag_ID').value = msg.payload;\n            });\n\n            // Add user functionality\n            document.getElementById('data-form').addEventListener('submit', function(e) {\n                e.preventDefault(); // Prevent page reload\n\n                // Get input values\n                const nombre = document.getElementById('Name').value;\n                const codigo = document.getElementById('Pin').value;\n                const id = document.getElementById('Tag_ID').value;\n\n                // Create a new row in the table\n                const table = document.getElementById('data-table').getElementsByTagName('tbody')[0];\n                const newRow = table.insertRow();\n                \n                // Assign a unique ID to the row as a custom attribute\n                const rowId = currentRowId++;\n                newRow.setAttribute('data-row-id', rowId);\n\n                // Populate row cells\n                newRow.insertCell(0).textContent = nombre;\n                newRow.insertCell(1).textContent = codigo;\n                newRow.insertCell(2).textContent = id;\n\n                // Create delete button with functionality\n                const actionCell = newRow.insertCell(3);\n                const deleteButton = document.createElement('button');\n                deleteButton.textContent = 'Delete';\n                deleteButton.className = 'delete-btn';\n                deleteButton.addEventListener('click', function() {\n                    const deletePayload = `delete_${rowId}_${nombre}_${codigo}_${id}`;\n                    scope.send({ payload: deletePayload }); // Send delete message\n                    table.deleteRow(newRow.rowIndex - 1); // Remove row\n                });\n                actionCell.appendChild(deleteButton);\n\n                // Send add message\n                const addPayload = `add_${rowId}_${nombre}_${codigo}_${id}`;\n                scope.send({ payload: addPayload });\n\n                // Clear input fields\n                document.getElementById('Name').value = '';\n                document.getElementById('Pin').value = '';\n                document.getElementById('Tag_ID').value = '';\n            });\n        })(scope);\n    </script>\n</body>\n</html>\n",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 440,
+        "y": 520,
+        "wires": [
+            [
+                "a870fa16933107f9",
+                "a4492570ba288151"
+            ]
+        ]
+    },
+    {
+        "id": "a4492570ba288151",
+        "type": "debug",
+        "z": "f8aa2d2b13321f84",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "4ac2b31392aecd08",
+        "type": "function",
+        "z": "f8aa2d2b13321f84",
+        "name": "function 7",
+        "func": "var topic = msg.topic;\nvar payload_split = msg.payload.split('_');\n\nif (payload_split[0].localeCompare(\"NewRFID\")==0){\n    msg.payload = payload_split[1];\n    msg.topic = null;\n    return msg;\n}\n\n\n\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "6e5a4ac9ac66314f",
+                "586d13839b8faaed"
+            ]
+        ]
+    },
+    {
+        "id": "6f3123e6d1a70ee5",
+        "type": "ui_toast",
+        "z": "f8aa2d2b13321f84",
+        "position": "top right",
+        "displayTime": "10",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 650,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "586d13839b8faaed",
+        "type": "function",
+        "z": "f8aa2d2b13321f84",
+        "name": "function 8",
+        "func": "\nvar payload = msg.payload;\nmsg.payload = \"New ID Recognized: \" + payload;\nreturn msg;\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 620,
+        "wires": [
+            [
+                "6f3123e6d1a70ee5"
+            ]
+        ]
+    },
+    {
+        "id": "a870fa16933107f9",
+        "type": "mqtt out",
+        "z": "f8aa2d2b13321f84",
+        "name": "",
+        "topic": "Smartlock/1/Security",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "28e263d4b4e38203",
+        "x": 760,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "dbb89b320c076cb6",
+        "type": "ui_group",
+        "name": "Smartlock 1",
+        "tab": "bd61dead4e92df6c",
+        "order": 1,
+        "disp": true,
+        "width": "7",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "28e263d4b4e38203",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e3b747b0565d2e11",
+        "type": "ui_group",
+        "name": "Logger",
+        "tab": "bd61dead4e92df6c",
+        "order": 3,
+        "disp": true,
+        "width": "7",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "bd61dead4e92df6c",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
