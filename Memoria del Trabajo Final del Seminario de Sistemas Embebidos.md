@@ -6,7 +6,7 @@
 
 Memoria del Trabajo Final:
 
-***Smartlock* - Cerradura Inteligente con Wi-Fi -**
+***Smartlock* - Cerradura Inteligente con Wi-Fi**
 
 **Autor:**
 
@@ -20,7 +20,7 @@ Legajo: 105.055
   
 **RESUMEN**
 
-En este trabajo se realiza el diseño e implementación de una cerradura inteligente con Wi-Fi para uso cotidiano en hogares, corporaciones o industrias. Este sistema tiene por objetivo registrar y administrar el acceso de los individuoas a las distintas instalaciones, facilitando al dueño de la instalación un manejo dinámico y en tiempo real de los permisos de acceso. Para la comodidad de los usuarios, la cerradura inteligente cuenta con dos métodos de acceso: mediante tarjetas RFID o mediante un pin. Adicionalmente, el sistema cuenta con sensores magnéticos que permiten registrar los estados de las puertas en todo momento. El trabajo presenta una solución práctica y escalable para la administración de accesos a una instalación, previniendo filtraciones de seguridad y promoviendo un monitoreo transparente a través de la aplicación móvil.
+En este trabajo se realiza el diseño e implementación de una cerradura inteligente con Wi-Fi para uso cotidiano en hogares, corporaciones o industrias. Este sistema tiene por objetivo registrar y administrar el acceso de los individuos a las distintas instalaciones, facilitando al dueño de la instalación un manejo dinámico y en tiempo real de los permisos de acceso. Para la comodidad de los usuarios, la cerradura inteligente cuenta con dos métodos de acceso: mediante tarjetas RFID o mediante un pin. Adicionalmente, el sistema cuenta con sensores magnéticos que permiten registrar los estados de las puertas en todo momento. El trabajo presenta una solución práctica y escalable para la administración de accesos a una instalación, previniendo filtraciones de seguridad y promoviendo un monitoreo transparente a través de la aplicación móvil.
 
 La implementación del mismo se realizó utilizando los lenguajes de código C++ y Python mediante el uso del entorno de desarrollo de Mbed en una placa Núcleo-F429ZI proporcionada por la cátedra de Sistemas Embebidos de la Facultad de Ingeniería de la Universidad de Buenos Aires, y se utilizaron además diferentes módulos para el desarrollo del proyecto.
 
@@ -262,7 +262,7 @@ El acceso a la instalación se habilita con el accionamiento de un servomotor. E
 Este servomotor se reemplazaría para puertas grandes por otro motor con mas potencia para poder mover la perilla más pesada.
 
 ## **2.3.4 Lector RFID** 
-Para este proyecto se buscó un lector RFID de bajo costo y compacitibilidad, eligiendo el modelo RC522 mostrado en la Figura 2.3.4.Este módulo cuenta con el circuito integrado MFRC522, que es un lector inalámbrico que trabaja a 13,56 MHz con la cual se leen las tarjetas de acceso.
+Para este proyecto se buscó un lector RFID de bajo costo y compactabilidad, eligiendo el modelo RC522 mostrado en la Figura 2.3.4.Este módulo cuenta con el circuito integrado MFRC522, que es un lector inalámbrico que trabaja a 13,56 MHz con la cual se leen las tarjetas de acceso.
 
 <img src=https://github.com/user-attachments/assets/83078155-b70e-44d6-9eb2-d634a3e11e06  alt="image2" width="30%">
 
@@ -277,7 +277,7 @@ El teclado matricial elegido es un Teclado Membrana Matricial 4x4 como se muestr
 
 **Figura 2.3.5**: Teclado matricial.
 
-Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg \[1\].
+Para comunicarse con este módulo se utiliza GPIO, el código del teclado fue obtenido y adaptado del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* por Ariel Lutenberg, Pablo Gomez y Eric Pernia \[1\].
 
 ## **2.3.6 Sensor Magnético** 
 El sensor magnetico utilizado consta de dos componentes: un imán y una llave magnetica (se muestra ambos en la Figura 2.3.6). La llave magnética son hilos finos que al acercar un imán hace un contacto.
@@ -300,7 +300,7 @@ Para la comunicación por Wi-Fi se usa el ESP32-DEVKIT por su módulo Wi-Fi inco
 
 **Figura 2.3.8**: ESP32-DEVKIT.
 
-
+El código utilizado en el ESP32 para la comunicación Wi-Fi se basó en la implementación hecha por Augusto Villacampa \[3\].
 
 # **CAPÍTULO 3** 
 
@@ -328,7 +328,7 @@ En la figura 3.1.1 se muestra el circuito esquemático del hardware de alimentac
 **Figura 3.1.1**: Alimentación del sistema.
 
 ## **3.1.2 Diseño de los indicadores e interruptores** 
-La Figura 3.1.2 muestra el esquemático de los indicadores e interruptores. Para todos los indicadores se utiliza un transistor que activa la corriente en el led. La corriente máxima estimada es 4mA para cada led. EL transistor que se usa es siempre el mismo: transistor NPN BC545. La corriente de salida necesitada para encender el LED es muy baja. Los botones y sensores magnéticos se conectan a 3.3 volts y se configuran las entradas de la placa NUCLEO-F429ZI en modo Pull Down. 
+La Figura 3.1.2 muestra el esquemático de los indicadores e interruptores. Para todos los indicadores se utiliza un transistor que activa la corriente en el led. La corriente máxima estimada es 4 mA para cada led. EL transistor que se usa es siempre el mismo: transistor NPN BC545. La corriente de salida necesitada para encender el LED es muy baja. Los botones y sensores magnéticos se conectan a 3,3 V y se configuran las entradas de la placa NUCLEO-F429ZI en modo Pull Down. 
 
 <img src=https://github.com/user-attachments/assets/37805a98-bcfc-4c11-983b-6d91c570b76e  alt="image2" width="40%">
 
@@ -341,7 +341,7 @@ En la Figura 3.1.2 se muestra el circuito esquemático del hardware del módulo 
 
 **Figura 3.1.3**:  Circuito esquemático del lector RFID del sistema.
 
-## **3.1.4 Diseño del parlante**
+## **3.1.4 Diseño del circuito para controlar el parlante**
 
 Para el parlante se diseña un amplificador de audio clase A con los componentes que se tienen (Figura 3.1.4). El capacitor C3 y la resistencia R11 actuan como filtro pasabajos para hacer la señal PWM mas suave y más parecida a una senoidal. El capacitor C4 actua junto con el parlante como un filtro pasa-altos e interrupe el flujo de corriente continua, dando una mejor señal de salida en el parlante.
 
@@ -349,21 +349,21 @@ Para el parlante se diseña un amplificador de audio clase A con los componentes
 
 **Figura 3.1.4**:  Circuito esquemático del parlante del sistema.
 
-## **3.1.5 Diseño del motor** 
+## **3.1.5 Diseño del circuito para controlar el motor** 
 El esquemático del motor se muestra en la Figura 3.1.5. Se tiene una resistencia de 1kohms para restringir la corriente que puede llegar a entregar el servomotor al pin del PWM, cuando se selecciona un angulo no disponible o se traba el servomotor. El fin de la resistencia d 1kohm es proteger la placa F429ZI. La resistencia de 10 ohms en la alimentación cumple la función de limitar corrientes muy altas y picos de corriente.
 
 <img src=https://github.com/user-attachments/assets/4ce16d1c-2db0-4873-8110-544dd7427657  alt="image2" width="40%">
 
 **Figura 3.1.5**:  Circuito esquemático del motor del sistema.
 
-## **3.1.6 Diseño del teclado matricial** 
+## **3.1.6 Diseño del circuito para controlar el teclado matricial** 
 La Figura 3.1.6 muestra la conexión del teclado matricial. Se observa la conexión directa de los 8 pines a la placa NUCLEO-F429ZI, de los cuales 4 son configurados en la placa NUCLEO-F429ZI como entrada en modo Pull Down (C1, C2, C3, C4) y los otros 4 como salida. La idea es barrer el teclado matricial con los outputs (filas), detectar activaciones en los inputs (columnas) y así leer el caracter introducido.
 
 <img src=https://github.com/user-attachments/assets/ffb93399-ce71-42b2-83dc-5e8bec9a9624  alt="image2" width="40%">
 
 **Figura 3.1.6**:  Circuito esquemático del teclado matricial del sistema.
 
-## **3.1.7 Diseño del Módulo Wi-Fi** 
+## **3.1.7 Diseño del circuito para controlar el Módulo Wi-Fi** 
 En la Figura 3.1.7 se muestra el circuito esquemático del hardware para el ESP32. Notar que únicamente se hace uso de los pines UART2 (GPIO16 y GPIO17) del módulo para comunicarse con la placa NUCLEO-F429ZI.
 
 <img src=https://github.com/user-attachments/assets/66cd0279-c347-494b-bb1c-3e01c6b74f6f alt="image2" width="40%">
@@ -401,7 +401,7 @@ Este módulo se encarga de comparar los intentos de acceso con las llaves de acc
 Otra funcionalidad de este módulo es la de gestionar la base de datos interna de la placa NUCLEO-F429ZI, permitiendo recibir códigos nuevos ingresados por el dueño y guardandolos para permitir el acceso o recibiendo ordenes de borrar códigos viejos. Esta funcionalidad la realiza con la función *ProcessSecurityMessage()*, haciendo uso de memoria dinámica a través de vectores para guardar y eliminar datos estructurados.
 
 ## **3.2.2 Módulo Keypad** 
-Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura 3.2.4.
+Para este módulo el código y la FSM se incorpora del libro *A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers* escrito por Ariel Lutenberg, Pablo Gomez y Eric Pernia y se lo modifica para que sea un objeto. La máquina de estados finita del módulo se muestra en la Figura 3.2.4.
 
 <img src=https://github.com/user-attachments/assets/23a69610-ce9a-432d-a751-463a9237f7d6 alt="image2" width="60%">
 
@@ -417,7 +417,7 @@ Crea objetos llamados Motor que traducen el angulo requerido a una señal PWM qu
 **Figura 3.2.5**: Archivo Motors.cpp.
 
 ## **3.2.4 Módulo MQTT** 
-En este módulo se maneja toda la comunicación del protocolo MQTT, que en realidad es una comunicación por UART con el módulo de hardware ESP32.Esta clase cuenta con un objeto de la clase BufferedSerial para manejar la comunicación con la placa ESP32 y un objeto DigitalOut para indicar con un led cuando se recibe o envía un mensaje. Entre los métodos públicos con los que cuenta esta clase están: *keepAlive()* que manda un mensaje periodicamente para indicar que la placa NUCLEO-F429ZI está activa, *SendStatus()* que recibe el estado de la puerta y lo envía, *publish()* y *receive()* que se encargan de publicar y recibir mensajes MQTT respectivamente y *ShowRFID()* que muestra el RFID una vez se lee. Además, posee una estructura de datos *MQTTMessage* donde describe si se recibió un mensaje, el tópico y el mensaje. También cuanta con métodos para enviar mensajes de logger a la aplicación cuando sea necesario. Para más detalle sobre los métodos, se invia al lector a visitar el módulo MQTT en este repositorio. Los tópicos a suscribirse estan predefinidos en el ESP32.
+En este módulo se maneja toda la comunicación del protocolo MQTT, que en realidad es una comunicación por UART con el módulo de hardware ESP32. Esta clase cuenta con un objeto de la clase BufferedSerial para manejar la comunicación con la placa ESP32 y un objeto DigitalOut para indicar con un led cuando se recibe o envía un mensaje. Entre los métodos públicos con los que cuenta esta clase están: *keepAlive()* que manda un mensaje periodicamente para indicar que la placa NUCLEO-F429ZI está activa, *SendStatus()* que recibe el estado de la puerta y lo envía, *publish()* y *receive()* que se encargan de publicar y recibir mensajes MQTT respectivamente y *ShowRFID()* que muestra el RFID una vez se lee. Además, posee una estructura de datos *MQTTMessage* donde describe si se recibió un mensaje, el tópico y el mensaje. También cuanta con métodos para enviar mensajes de logger a la aplicación cuando sea necesario. Para más detalle sobre los métodos, se invia al lector a visitar el módulo MQTT en este repositorio. Los tópicos a suscribirse estan predefinidos en el ESP32.
 
 ## **3.2.5 Módulo RFID** 
 El módulo contiene el código de la libreria creada por un tercero, como se mencionó previamente, que define la clase MFRC522. Adicionalmente, contiene las funciones para leer el RFID e inicializarlo. Las funciones son simples y hacen uso de las funciones de la librería que estan muy bien modularizadas. Se menciona que la librería de MFRC522 tuvo que incorporarse en los archivos, con lo cual se puede ver el archivo MFRC522.cpp y MFRC522.h correspondientes a la librería del autor indicado. Las funciones más importantes del Módulo RFID son *RFID_read()* que devuelve el ID leido (si se lee) o el puntero a null (si no se lee) y la función *RFID_reader_init()* que inicializa el módulo. La Figura 3.2.6 muestra parte de la función *RFID_read()*.
@@ -509,7 +509,7 @@ Se tienen 5 tópicos MQTT principales:
 - Logger: Unicamente para que publique la placa NUCLEO,  este tópico tiene todos los mensajes notificando cambios en el estado de la puerta con la hora y día.
 - Security: Uno de los tópicos más complejos, se encarga de recibir los IDs de nuevas tarjetas RFID leidas por la placa y luego, si el usuario decide agregar un permiso de acceso con el ID de la tarjeta y un pin, envía la solicitud de agregar dicho usuario. También puede comandar que se borren usuarios.
 
-Por medio de los nodos template, se creó la siguiente interfaz de usuario mostrada en la Figura 3.5.3.
+Por medio de los nodos template, se creó la interfaz de usuario mostrada en la Figura 3.5.3.
 <img src=https://github.com/user-attachments/assets/ec4eb17f-931d-4d5d-add4-48fec88283c6 alt="image2" width="60%">
 
 **Figura 3.5.3**: Interfáz para el usuario.
@@ -640,7 +640,7 @@ Las mejoras son ilimitadas y dependen de la priorarización de dichas mejoras. P
 
 # **Bibliografía** 
 
-\[1\] A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers, por Ariel Lutenberg. [Online]. Available: https://www.arm.com/resources/education/books/designing-embedded-systems
+\[1\] A Beginner’s Guide to Designing Embedded System Applications on Arm Cortex-M Microcontrollers, por Ariel Lutenberg, Pablo Gomez y Eric Pernia. [Online]. Available: https://www.arm.com/resources/education/books/designing-embedded-systems
 
 \[2\] Módulo de software para el uso del chip MFRC522, por Martin Olejar. [Online]. Available: https://os.mbed.com/users/AtomX/code/MFRC522/
 
